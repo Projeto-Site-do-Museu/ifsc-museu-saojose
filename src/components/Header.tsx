@@ -25,7 +25,7 @@ export default function Header() {
 
         <nav className="hidden md:flex space-x-[3vw] flex-grow justify-end">
           <div className="relative">
-            <a href="#" className="font-michroma">Sobre</a>
+            <a href="/about" className="font-michroma">Sobre</a>
             <div className="absolute left-0 right-0 h-1 rounded-full bg-gradient-to-r from-purple-500 to-purple-800" />
           </div>
           <a href="#" className="font-michroma">Artigos</a>
