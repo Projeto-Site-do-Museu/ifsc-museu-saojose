@@ -13,6 +13,7 @@ export default function Header() {
     <header className="w-full max-h-10 flex flex-col relative z-20">
       <div className="flex justify-between items-center py-4 px-6 text-white bg-[#1F164D]">
         <div className="flex items-center">
+          <a href="/">
           <Image
             src="/imgs/logo.png"
             alt="Logo"
@@ -20,6 +21,7 @@ export default function Header() {
             height={128}
             className="mr-3"
           />
+          </a>
           <span className="font-michroma text-2xl max-w-[280px]">Museu Histórico de São josé</span>
         </div>
 
@@ -30,7 +32,7 @@ export default function Header() {
           </div>
           <a href="#" className="font-michroma">Artigos</a>
           <a href="#" className="font-michroma">Peça do mês</a>
-          <a href="#" className="font-michroma">Acervo</a>
+          <a href="/acervo" className="font-michroma">Acervo</a>
           <a href="#" className="font-michroma">Tour Virtual</a>
         </nav>
 

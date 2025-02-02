@@ -19,11 +19,11 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <div className="max-w-[1200px] m-auto">
       <div className="relative min-h-screen bg-cover bg-center flex flex-col items-center justify-center">
         <main className="max-w-[1200px] overflow-hidden m-auto h-screen bg-cover bg-center md:bg-[url('/imgs/bg1.png')] bg-[url('/imgs/bg1.jpg')] gap-6">
           <Header />
-          <div className=" h-screen flex flex-col items-center justify-center ">
+          <div className=" min-w-[1200px] h-screen flex flex-col items-center justify-center ">
               <div className="flex flex-col gap-4">
               <button
                 className="bg-purple-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-purple-700 transition duration-300"
