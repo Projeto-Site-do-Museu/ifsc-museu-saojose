@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { Carousel, CarouselContent, CarouselItem, CarouselApi } from '@/components/ui/carousel'; // Verifique se o caminho está correto
 
@@ -46,19 +47,19 @@ export default function SecondSection() {
           <Carousel setApi={setApi} className="pl-[5vw] md:pt-[10vh]">
             <CarouselContent className="flex">
               <CarouselItem className="carousel-item md:basis-1/2 rounded-xl">
-                <img src="/imgs/card1.png" alt="Card 1" className="rounded-2xl" />
+                <Image width="600" height="600" src="/imgs/card1.png" alt="Card 1" className="rounded-2xl" />
               </CarouselItem>
               <CarouselItem className="carousel-item md:basis-1/2">
-                <img src="/imgs/card2.png" alt="Card 2"  className="rounded-2xl" />
+                <Image width="600" height="600" src="/imgs/card2.png" alt="Card 2"  className="rounded-2xl" />
               </CarouselItem>
               <CarouselItem className="carousel-item md:basis-1/2">
-                <img src="/imgs/card3.png" alt="Card 3"  className="rounded-2xl" />
+                <Image width="600" height="600" src="/imgs/card3.png" alt="Card 3"  className="rounded-2xl" />
               </CarouselItem>
               <CarouselItem className="carousel-item md:basis-1/2">
-                <img src="/imgs/card4.png" alt="Card 4"  className="rounded-2xl" />
+                <Image width="600" height="600" src="/imgs/card4.png" alt="Card 4"  className="rounded-2xl" />
               </CarouselItem>
               <CarouselItem className="carousel-item md:basis-1/2">
-                <img src="/imgs/card5.png" alt="Card 5"  className="rounded-2xl" />
+                <Image width="600" height="600" src="/imgs/card5.png" alt="Card 5"  className="rounded-2xl" />
               </CarouselItem>
             </CarouselContent>
           </Carousel>

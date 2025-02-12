@@ -45,9 +45,6 @@ const Footer = () => {
                 </div>
             </div>
             </div>
-
-            <img src="/imgs/linha2.png" alt="Linha 2" className="w-full" />
-      
     </footer>
     );
 };
