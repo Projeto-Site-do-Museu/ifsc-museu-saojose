@@ -17,15 +17,22 @@ const Footer = () => {
                             height={128}
                             className="mr-3"
                           />
+                {/* <Image
+                            src="/imgs/logo.png"
+                            alt="Logo"
+                            width={64}
+                            height={64}
+                            className="mr-3 block md:hidden"
+                          /> */}
                 <div className="text-center">
-                    <h1 className="text-white font-michroma text-lg">Museu histórico de São José</h1>
-                    <p className="text-gray-400 text-xs">
+                    <h1 className="text-white font-michroma text-lg hidden md:block">Museu histórico de São José</h1>
+                    <p className="text-gray-400 text-xs hidden md:block">
                     Rua Gaspar Neves, 3175 -  88103-250
                     </p>
-                    <p className="text-gray-400 text-xs">
+                    <p className="text-gray-400 text-xs ">
                     (48) 3381-0000
                     </p>
-                    <p className="text-gray-400 text-xs">
+                    <p className="text-gray-400 text-xs ">
                     Horários: de segunda a sexta feira, das 8:00 às 18:00 horas. 
                     </p>
                 </div>

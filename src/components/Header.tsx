@@ -22,7 +22,7 @@ export default function Header() {
             className="mr-3"
           />
           </a>
-          <span className="font-michroma text-2xl max-w-[280px]">Museu Histórico de São josé</span>
+          <span className="font-michroma text-lg pl-5 md:pl-0 md:text-2xl max-w-[280px]">Museu Histórico de São josé</span>
         </div>
 
         <nav className="hidden md:flex space-x-[3vw] flex-grow justify-end">
@@ -33,7 +33,7 @@ export default function Header() {
           <a href="#" className="font-michroma">Artigos</a>
           <a href="#" className="font-michroma">Peça do mês</a>
           <a href="/acervo" className="font-michroma">Acervo</a>
-          <a href="#" className="font-michroma">Tour Virtual</a>
+          <a href="/tour" className="font-michroma">Tour Virtual</a>
         </nav>
 
 

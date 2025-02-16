@@ -39,27 +39,27 @@ export default function SecondSection() {
     <div className="relative min-h-screen ">
       <div className="max-w-[1200px] h-screen m-auto bg-cover bg-center md:bg-[url('/imgs/bg2.png')] bg-[url('/imgs/bg2.png')]">
         <div className="flex justify-center items-center pt-16">
-        <h2 className="text-3xl font-michroma text-white text-center z-20 py-[5vh]">Nossos serviços</h2>
+        <h2 className="text-3xl font-michroma text-white text-center z-20 py-[5vh]">Nossos itens</h2>
         </div>
 
-        <div className="mt-8 relative">
+        <div className="mt-8 relative max-w-[90%] m-auto">
 
-          <Carousel setApi={setApi} className="pl-[5vw] md:pt-[10vh]">
+          <Carousel setApi={setApi} className=" md:pt-[10vh]">
             <CarouselContent className="flex">
               <CarouselItem className="carousel-item md:basis-1/2 rounded-xl">
-                <Image width="600" height="600" src="/imgs/card1.png" alt="Card 1" className="rounded-2xl" />
+                <Image width="600" height="600" src="/imgs/card1.png" alt="Card 1" className="rounded-2xl w-full h-64" />
               </CarouselItem>
               <CarouselItem className="carousel-item md:basis-1/2">
-                <Image width="600" height="600" src="/imgs/card2.png" alt="Card 2"  className="rounded-2xl" />
+                <Image width="600" height="600" src="/imgs/img3.jpg" alt="Card 2"  className="rounded-2xl  w-full h-64" />
               </CarouselItem>
               <CarouselItem className="carousel-item md:basis-1/2">
-                <Image width="600" height="600" src="/imgs/card3.png" alt="Card 3"  className="rounded-2xl" />
+                <Image width="600" height="600" src="/imgs/img5.jpg" alt="Card 3"  className="rounded-2xl  w-full h-64" />
               </CarouselItem>
               <CarouselItem className="carousel-item md:basis-1/2">
-                <Image width="600" height="600" src="/imgs/card4.png" alt="Card 4"  className="rounded-2xl" />
+                <Image width="600" height="600" src="/imgs/img8.jpg" alt="Card 4"  className="rounded-2xl  w-full h-64" />
               </CarouselItem>
               <CarouselItem className="carousel-item md:basis-1/2">
-                <Image width="600" height="600" src="/imgs/card5.png" alt="Card 5"  className="rounded-2xl" />
+                <Image width="600" height="600" src="/imgs/img13.jpg" alt="Card 5"  className="rounded-2xl  w-full h-64" />
               </CarouselItem>
             </CarouselContent>
           </Carousel>

@@ -21,7 +21,7 @@ export default function Home() {
                 de São José
               </h1>
               
-              <p className="mt-4 font-worksans font-bold text-xs md:text-2xl">
+              <p className="mt-4 font-worksans font-bold text-xl md:text-2xl">
               O Museu Histórico de São José é um espaçodedicado à preservação da história e cultura de nossa cidade. Através de seu acervo e exposições, buscamos contar as transformações de São José e celebrar suas raízes. Venha conhecer e vivenciar essa história conosco!
               </p>
             </div>

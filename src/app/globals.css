@@ -4,6 +4,19 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Magison&family=Michroma&family=Work+Sans:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Michroma&display=swap');
+
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+      display: none;
+  }
+ /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+}
+}
+
 body {
   font-family: 'Michroma', sans-serif;
 }

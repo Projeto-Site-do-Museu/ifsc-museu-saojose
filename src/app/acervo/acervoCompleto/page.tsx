@@ -6,61 +6,65 @@ import Image from "next/image";
 
 // Simulação dos artigos (com 18 itens para testar)
 const items = [
-  { id: 1, img: "/imgs/card1.png", text: "Titulo" },
-  { id: 2, img: "/imgs/card1.png", text: "Titulo" },
-  { id: 3, img: "/imgs/card1.png", text: "Titulo" },
-  { id: 4, img: "/imgs/card1.png", text: "Titulo" },
-  { id: 5, img: "/imgs/card1.png", text: "Titulo" },
-  { id: 6, img: "/imgs/card1.png", text: "Titulo" },
-  { id: 7, img: "/imgs/card1.png", text: "Titulo" },
-  { id: 8, img: "/imgs/card1.png", text: "Titulo" },
-  { id: 9, img: "/imgs/card1.png", text: "Titulo" },
-  { id: 10, img: "/imgs/card1.png", text: "Titulo" },
-  { id: 11, img: "/imgs/card1.png", text: "Titulo" },
-  { id: 12, img: "/imgs/card1.png", text: "Titulo" },
-  { id: 13, img: "/imgs/card1.png", text: "Titulo" },
-  { id: 14, img: "/imgs/card1.png", text: "Titulo" },
-  { id: 15, img: "/imgs/card1.png", text: "Titulo" },
-  { id: 16, img: "/imgs/card1.png", text: "Titulo" },
-  { id: 17, img: "/imgs/card1.png", text: "Titulo" },
-  { id: 18, img: "/imgs/card1.png", text: "Titulo" }
+  { id: 1, img: "/imgs/img1.jpg", text: "Titulo" },
+  { id: 2, img: "/imgs/img2.jpg", text: "Titulo" },
+  { id: 3, img: "/imgs/img3.jpg", text: "Titulo" },
+  { id: 4, img: "/imgs/img4.jpg", text: "Titulo" },
+  { id: 5, img: "/imgs/img5.jpg", text: "Titulo" },
+  { id: 6, img: "/imgs/img6.jpg", text: "Titulo" },
+  { id: 7, img: "/imgs/img7.jpg", text: "Titulo" },
+  { id: 8, img: "/imgs/img8.jpg", text: "Titulo" },
+  { id: 9, img: "/imgs/img9.jpg", text: "Titulo" },
+  { id: 10, img: "/imgs/img10.jpg", text: "Titulo" },
+  { id: 11, img: "/imgs/img11.jpg", text: "Titulo" },
+  { id: 12, img: "/imgs/img12.jpg", text: "Titulo" },
+  { id: 13, img: "/imgs/img13.jpg", text: "Titulo" },
+  { id: 14, img: "/imgs/img14.jpg", text: "Titulo" },
+  { id: 15, img: "/imgs/img15.jpg", text: "Titulo" },
+  { id: 16, img: "/imgs/img16.jpg", text: "Titulo" },
+  { id: 17, img: "/imgs/img17.jpg", text: "Titulo" },
+  { id: 18, img: "/imgs/img18.jpg", text: "Titulo" },
+  { id: 19, img: "/imgs/img19.jpg", text: "Titulo" },
+  { id: 20, img: "/imgs/img20.jpg", text: "Titulo" },
+  { id: 21, img: "/imgs/img21.jpg", text: "Titulo" },
+  { id: 22, img: "/imgs/img22.jpg", text: "Titulo" },
+  { id: 23, img: "/imgs/img23.jpg", text: "Titulo" },
+  { id: 24, img: "/imgs/img24.jpg", text: "Titulo" },
 ];
-
 
 export default function Home() {
   return (
-    <div className="max-w-[1200px] m-auto">
+    <div className="max-w-[1200px] m-auto overflow-x-hidden">
       <div className="relative min-h-screen bg-cover bg-center flex flex-col items-center justify-center">
-        <main className="max-w-[1200px] overflow-hidden m-auto h-screen bg-cover bg-center md:bg-[url('/imgs/bg1.png')] bg-[url('/imgs/bg1.jpg')] gap-6">
+        <main className="w-full overflow-hidden m-auto bg-cover bg-center md:bg-[url('/imgs/bg1.png')] bg-[url('/imgs/bg1.jpg')]">
           <Header />
-          
+
           <div className="flex items-center justify-center">
-            <div className="w-full h-screen z-0 bg-gradient-to-r from-blue-500/80 to-blue-300/10">
+            <div className="w-full z-0 bg-gradient-to-r from-blue-500/80 to-blue-300/10">
               <div className="relative z-10 m-auto flex-1 flex flex-col items-center justify-center px-4 pt-[16vh] pb-[20px] text-center md:items-center md:text-left md:max-w-[50%]">
-                
-                {/* Título da Exposição */}
+
                 <h1 className="text-4xl font-bold text-white mb-10">Exposição de Arte</h1>
 
-                {/* Carrossel com Grid 3x3 */}
-                <div className="space-y-2 overflow-y-auto h-[75vh]"> {/* Rolagem vertical com altura fixa */}
-                  {/* Linhas de Grid */}
-                  {[0, 1, 2, 3, 4, 5, 6].map((rowIndex) => {
-                    // Pega 3 itens por linha
-                    const rowItems = items.slice(rowIndex * 3, rowIndex * 3 + 3);
-                    return (
-                      <div key={rowIndex} className="flex gap-8">
-                        {rowItems.map((item) => (
-                          <div key={item.id} className="flex-none bg-white rounded-lg shadow-lg overflow-hidden w-72">
-                            <Image src={item.img} alt={`Imagem do artigo ${item.id}`} width="500" height="500" className="w-50 h-50 object-cover" />
-                            <div className="p-6">
-                              {/* Título do artigo menor */}
-                              <p className="text-gray-600 text-center">{item.text}</p>
-                            </div>
-                          </div>
-                        ))}
+                <div className="w-full overflow-y-auto no-scrollbar h-[75vh] p-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {items.map((item) => (
+                      <div
+                        key={item.id}
+                        className="bg-white rounded-lg shadow-lg overflow-hidden"
+                      >
+                        <Image
+                          src={item.img}
+                          alt={`Imagem do artigo ${item.id}`}
+                          width={300}
+                          height={300}
+                          className="w-full h-64 object-cover"
+                        />
+                        <div className="p-4">
+                          <p className="text-gray-600 text-center">{item.text}</p>
+                        </div>
                       </div>
-                    );
-                  })}
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
