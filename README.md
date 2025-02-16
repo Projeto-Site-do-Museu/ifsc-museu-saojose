@@ -12,7 +12,7 @@ Este projeto é uma landing page responsiva para o Museu Histórico de São Jos�
 ## Como Rodar o Projeto
 ### 1. Clonar o Repositório
 ```bash
-git clone https://github.com/seu-repositorio.git
+git clone https://github.com/nicolasfvp/ProjetoMuseu.git
 cd nome-do-projeto
 ```
 
