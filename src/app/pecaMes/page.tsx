@@ -1,70 +1,38 @@
-"use client";
-
+// pages/index.js
+import Image from 'next/image';
 import { useState } from "react";
 import "../globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export default function Home() {
-  const [modalContent, setModalContent] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
-
-  const openModal = (content: string) => {
-    setModalContent(content);
-    setIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-
   return (
-    <div className="max-w-[1200px] m-auto">
-      <div className="relative min-h-screen bg-cover bg-center flex flex-col items-center justify-center">
-        <main className="max-w-[1200px] overflow-hidden m-auto h-screen bg-cover bg-center md:bg-[url('/imgs/bg1.png')] bg-[url('/imgs/bg1.jpg')] gap-6">
-          <Header />
-          <div className=" min-w-[1200px] h-screen flex flex-col items-center justify-center ">
-              <div className="flex flex-col gap-4">
-              <button
-                className="bg-purple-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-purple-700 transition duration-300"
-                onClick={() => openModal("O Museu de São José está aberto ao público de terça a domingo, das 8h às 18h. Planeje sua visita e aproveite para explorar as exposições permanentes e temporárias que revelam a rica história e cultura da nossa região.")}
-              >
-                Horários
-              </button>
-              <button
-                className="bg-purple-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-purple-700 transition duration-300"
-                onClick={() => openModal("Estamos localizados no coração de São José, na Rua Histórica nº 123, próximo à Praça Central. O acesso é fácil tanto para pedestres quanto para quem vem de carro, com estacionamento disponível nas proximidades. A localização privilegiada oferece uma experiência cultural imersiva em um dos pontos mais charmosos da cidade, o centro histórico de São José.")}
-              >
-                Localização
-              </button>
-              <button
-                className="bg-purple-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-purple-700 transition duration-300"
-                onClick={() => openModal("Para garantir uma experiência tranquila e personalizada, recomendamos o agendamento prévio da sua visita, especialmente para grupos e escolas. Entre em contato pelo telefone (48) 3381-0000. ")}
-              >
-                Agende sua visita
-              </button>
-            </div>
+          <div className="max-w-[1200px] m-auto overflow-x-hidden">
+
+      <div className="flex-grow">
+        <Header />
+        <section className="bg-black h-64 flex items-center justify-center">
+          <Image src="/imgs/saopedro-Photoroom.png" alt="Central Image" width={300} height={300} className="object-cover" />
+        </section>
+
+        <main className="p-7 bg-white text-black">
+          <br></br>
+          <h2 className="text-center text-2xl font-bold mb-4">ESPADA DE SÃO PEDRO</h2>
+          <p className="text-center mb-4">ANO DE 18XX</p>
+          <p className="text-justify mb-4 max-w-[50%] m-auto">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris pellentesque mattis nisi sed ultrices. Curabitur sit amet lacus eget quam finibus sollicitudin. Etiam consectetur tempus odio, sed dictum nulla tempus sed. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec in risus sit amet sapien sagittis luctus vitae sed purus.
+          </p>
+          <p className="text-justify mb-4 max-w-[50%] m-auto">
+            Vivamus auctor nunc metus, ac sodales lacus hendrerit lacinia. Nam eget ex quis nibh aliquam faucibus. Aenean ac quam ut urna varius scelerisque imperdiet vel urna. Nulla sit amet vehicula nibh, in porttitor neque. Curabitur elementum laoreet elit, at egestas sapien maximus sed.
+          </p>
+          <br></br>
+
+          <div className="flex justify-center mb-4">
+            <button className="bg-green-200 text-green-800 px-4 py-2 rounded">Modelo 3D</button>
           </div>
-          
         </main>
       </div>
-
-      <Footer />
-
-      {/* Modal */}
-      {isOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-[#1F164D] p-6 rounded-lg shadow-lg max-w-md text-center">
-            <p className="text-lg font-semibold">{modalContent}</p>
-            <button
-              className="mt-4 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300"
-              onClick={closeModal}
-            >
-              Fechar
-            </button>
-          </div>
-        </div>
-      )}
+      <Footer /> {/* O Footer agora está fora do contêiner de largura limitada */}
     </div>
   );
 }
