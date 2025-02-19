@@ -31,7 +31,7 @@ export default function Header() {
             <div className="absolute left-0 right-0 h-1 rounded-full bg-gradient-to-r from-purple-500 to-purple-800" />
           </div>
           <a href="#" className="font-michroma">Artigos</a>
-          <a href="#" className="font-michroma">Peça do mês</a>
+          <a href="/pecaMes" className="font-michroma">Peça do mês</a>
           <a href="/acervo" className="font-michroma">Acervo</a>
           <a href="/tour" className="font-michroma">Tour Virtual</a>
         </nav>
