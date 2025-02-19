@@ -8,13 +8,15 @@ const ThreeScene = () => {
   const mountRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!mountRef.current) return;
+    // Armazena o valor atual de mountRef.current em uma variável
+    const mount = mountRef.current;
+    if (!mount) return;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
-    mountRef.current.appendChild(renderer.domElement);
+    mount.appendChild(renderer.domElement);
 
     // Luzes
     const ambientLight = new THREE.AmbientLight(0x404040, 1);
@@ -39,8 +41,11 @@ const ThreeScene = () => {
     };
     animate();
 
+    // Função de cleanup
     return () => {
-      mountRef.current?.removeChild(renderer.domElement);
+      if (mount) {
+        mount.removeChild(renderer.domElement);
+      }
     };
   }, []);
 

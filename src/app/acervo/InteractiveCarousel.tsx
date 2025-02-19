@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 
@@ -20,7 +20,7 @@ export default function InteractiveCarousel() {
     setActiveItem(activeItem === id ? null : id);
   };
 
-  const handleClickOutside = (event: MouseEvent) => {
+  const handleClickOutside = useCallback((event: MouseEvent) => {
     if (
       carouselRef.current &&
       !carouselRef.current.contains(event.target as Node) &&
@@ -28,14 +28,14 @@ export default function InteractiveCarousel() {
     ) {
       setActiveItem(null);
     }
-  };
+  }, [activeItem]); // Dependência: activeItem
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [handleClickOutside]);
+  }, [handleClickOutside]); // Dependência: handleClickOutside
 
   return (
     <div className="w-full flex flex-col md:flex-row" ref={carouselRef}>

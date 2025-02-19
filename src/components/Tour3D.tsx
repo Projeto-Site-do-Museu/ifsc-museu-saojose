@@ -8,7 +8,9 @@ const Tour3D = () => {
   const [modalInfo, setModalInfo] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!mountRef.current) return;
+    // Armazena o valor atual de mountRef.current em uma variável
+    const mount = mountRef.current;
+    if (!mount) return;
 
     // Criar a cena
     const scene = new THREE.Scene();
@@ -22,7 +24,7 @@ const Tour3D = () => {
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 0.6;
-    mountRef.current.appendChild(renderer.domElement);
+    mount.appendChild(renderer.domElement);
 
     // Carregar textura panorâmica
     const textureLoader = new THREE.TextureLoader();
@@ -139,7 +141,9 @@ const Tour3D = () => {
 
     // Cleanup
     return () => {
-      mountRef.current?.removeChild(renderer.domElement);
+      if (mount) {
+        mount.removeChild(renderer.domElement);
+      }
       window.removeEventListener("mousedown", onMouseDown);
       window.removeEventListener("mouseup", onMouseUp);
       window.removeEventListener("mousemove", onMouseMove);
