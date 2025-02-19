@@ -41,7 +41,7 @@ export default function Home() {
 
           <div className="flex items-center justify-center">
             <div className="w-full z-0 bg-gradient-to-r from-blue-500/80 to-blue-300/10">
-              <div className="relative z-10 m-auto flex-1 flex flex-col items-center justify-center px-4 pt-[16vh] pb-[20px] text-center md:items-center md:text-left md:max-w-[50%]">
+              <div className="relative z-10 m-auto flex-1 flex flex-col items-center justify-center px-4 pt-[16vh] pb-[20px] text-center md:items-center md:text-left md:max-w-[80%]">
 
                 <h1 className="text-4xl font-bold text-white mb-10">Exposição de Arte</h1>
 

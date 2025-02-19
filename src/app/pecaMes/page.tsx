@@ -27,9 +27,9 @@ export default function Home() {
           </p>
           <br></br>
 
-          <div className="flex justify-center mb-4">
+          <a href="/exposicoes/" className="flex justify-center mb-4">
             <button className="bg-green-200 text-green-800 px-4 py-2 rounded">Modelo 3D</button>
-          </div>
+          </a>
         </main>
       </div>
       <Footer /> {/* O Footer agora está fora do contêiner de largura limitada */}
