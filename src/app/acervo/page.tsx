@@ -1,6 +1,6 @@
 "use client";
 
-import InteractiveCarousel from "./InteractiveCarousel";
+import InteractiveCarousel from "@/components/InteractiveCarousel";
 import "../globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
