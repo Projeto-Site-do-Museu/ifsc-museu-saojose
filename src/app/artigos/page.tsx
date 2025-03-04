@@ -65,7 +65,7 @@ export default function Artigos() {
       <main className="max-w-[1200px] m-auto h-screen mb-10">
         <Header />
         <div className="pb-20"></div>
-        {currentArticle?.templates.map((item, index) =>
+        {currentArticle?.templates.map((item) =>
           renderTemplate(item.template as keyof typeof templates, item.image, item.text)
         )}
 
