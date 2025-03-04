@@ -32,6 +32,7 @@ export default function Header() {
           </div>
           {/* <a href="#" className="font-michroma">Artigos</a> */}
           <a href="/pecaMes" className="font-michroma">Peça do mês</a>
+          <a href="/artigos" className="font-michroma">Artigos</a>
           <a href="/acervo" className="font-michroma">Acervo</a>
           <a href="/tour" className="font-michroma">Tour Virtual</a>
           <a href="/videos" className="font-michroma">Nossos Videos</a>
