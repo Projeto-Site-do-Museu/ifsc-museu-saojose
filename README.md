@@ -63,6 +63,10 @@ mantendo esta estrutura a responsividade do site deve ser facilmente ajustada.
 
 todas as maiores funcionalidades do site estão feitas conforme as boas práticas das versões mais recentes do next, então, em caso de novas alterações, olhe para o restante do código e não adicione nenhuma sintaxe nova, pois provavelmente estará errada.
 
+# Futuras alterações 
+
+O site foi desenhado para que todos as imagens e textos sejam dinamicos a partir de uma API. Esta API deve ser criada, juntamente ao banco de dados e uma interface gráfica para o gestor administrar o site de forma simples e segura apenas realizando requisições para a API. Após a conclusão da mesma, os Mocks de imagens e texto do site devem ser substituidos pelo retorno da requisição para a API, tornando o site dinâmico às alterações.
+
 ## Estrutura do Projeto
 ```
 /
