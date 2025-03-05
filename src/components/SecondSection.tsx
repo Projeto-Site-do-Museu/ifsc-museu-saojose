@@ -8,7 +8,7 @@ export default function SecondSection() {
   const [api, setApi] = useState<CarouselApi | undefined>(undefined);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [totalSlides, setTotalSlides] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+  const [ setIsMobile] = useState(false);
 
   useEffect(() => {
     if (!api) return;

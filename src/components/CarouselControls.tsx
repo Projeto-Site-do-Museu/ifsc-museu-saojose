@@ -1,14 +1,11 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-
 interface CarouselControlsProps {
   totalSlides: number;
   currentIndex: number;
-  isMobile: boolean;
 }
 
-export function CarouselControls({ totalSlides, currentIndex, isMobile }: CarouselControlsProps) {
+export function CarouselControls({ totalSlides, currentIndex}: CarouselControlsProps) {
   return (
     <div className="flex justify-center items-center mt-4 space-x-2 z-20 relative">
       {Array.from({ length: totalSlides }).map((_, index) => (
