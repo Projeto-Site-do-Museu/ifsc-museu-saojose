@@ -39,7 +39,7 @@ Inicialmente, execute:
 npm run build
 ```
 
-#Este comando irá gerar uma versão otimizada do site, porém qualquer erro no código pode impossibilizar o build e deve ser corrigido
+Este comando irá gerar uma versão otimizada do site, porém qualquer erro no código pode impossibilizar o build e deve ser corrigido
 
 após o build
 
@@ -49,9 +49,9 @@ npm run start
 
 Acesse `http://localhost:3000` no navegador para ver a aplicação em funcionamento.
 
-### Boas práticas
+# Boas práticas
 
-# O projeto foi criado em Next.JS com Tailwind.CSS, utilizando conceitos de MobileFirst.
+### O projeto foi criado em Next.JS com Tailwind.CSS, utilizando conceitos de MobileFirst.
 Em resumo, caso altere a estrutura do código, tome *MUITO* cuidado para não alterar as boas práticas.
 Toda a responsividade do site gira em torno do MobileFirst. Os estilos em comum permanecem inalterados, mas os estilos que são diferentes para mobile e web devem ser feitos da seguinte forma:
 
