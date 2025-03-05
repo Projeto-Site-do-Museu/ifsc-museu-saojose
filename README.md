@@ -31,6 +31,37 @@ yarn dev
 ```
 
 Acesse `http://localhost:3000` no navegador para ver a aplicação em funcionamento.
+### 4. Rodar o Servidor definitivo
+
+Inicialmente, execute: 
+
+```bash
+npm run build
+```
+
+#Este comando irá gerar uma versão otimizada do site, porém qualquer erro no código pode impossibilizar o build e deve ser corrigido
+
+após o build
+
+```bash
+npm run start
+```
+
+Acesse `http://localhost:3000` no navegador para ver a aplicação em funcionamento.
+
+### Boas práticas
+
+# O projeto foi criado em Next.JS com Tailwind.CSS, utilizando conceitos de MobileFirst.
+Em resumo, caso altere a estrutura do código, tome *MUITO* cuidado para não alterar as boas práticas.
+Toda a responsividade do site gira em torno do MobileFirst. Os estilos em comum permanecem inalterados, mas os estilos que são diferentes para mobile e web devem ser feitos da seguinte forma:
+
+ClassName=" estilo-para-mobile md:estilo-para-web"
+
+mantendo esta estrutura a responsividade do site deve ser facilmente ajustada.
+
+#Utilize apenas as novas versões do Next!
+
+todas as maiores funcionalidades do site estão feitas conforme as boas práticas das versões mais recentes do next, então, em caso de novas alterações, olhe para o restante do código e não adicione nenhuma sintaxe nova, pois provavelmente estará errada.
 
 ## Estrutura do Projeto
 ```
