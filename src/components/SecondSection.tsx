@@ -8,7 +8,6 @@ export default function SecondSection() {
   const [api, setApi] = useState<CarouselApi | undefined>(undefined);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [totalSlides, setTotalSlides] = useState(0);
-  const [ setIsMobile] = useState(false);
 
   useEffect(() => {
     if (!api) return;
@@ -23,16 +22,6 @@ export default function SecondSection() {
 
     api.on("select", updateCurrentIndex);
 
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
   }, [api]);
 
   return (
