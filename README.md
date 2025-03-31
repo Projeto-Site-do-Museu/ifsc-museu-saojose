@@ -99,5 +99,5 @@ O site foi desenhado para que todos as imagens e textos sejam dinamicos a partir
 ## Considerações Finais
 Caso precise adicionar novas funcionalidades ou realizar manutenção, siga os padrões estabelecidos e consulte a documentação do Next.js e Tailwind CSS.
 
-Se tiver dúvidas, entre em contato comigo pelo email: nicolasfvp11@gmail.com. 🚀
+Se tiver dúvidas, entre em contato com o antigo coordenador do projeto pelo email: nicolasfvp11@gmail.com. 🚀
 
