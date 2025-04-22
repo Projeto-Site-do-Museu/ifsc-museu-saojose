@@ -8,7 +8,7 @@ type TemplateProps = {
 
 const TemplateA: FC<TemplateProps> = ({ image, text }) => {
   return (
-    <div className="px-5 flex items-center gap-4 my-4 bg-gradient-to-r from-purple-500/80 to-purple-300/10">
+    <div className="px-5 flex items-center gap-4 my-4 gradient-purple">
       <div className="w-1/3 relative">
         <Image src={image} alt="Imagem" width={300} height={300} className="rounded-lg w-[200px] h-[250px] md:w-[600px] md:h-[600px]" />
       </div>
@@ -19,7 +19,7 @@ const TemplateA: FC<TemplateProps> = ({ image, text }) => {
 
 const TemplateB: FC<TemplateProps> = ({ image, text }) => {
   return (
-    <div className="px-5 flex items-center gap-4 my-4 flex-row-reverse bg-gradient-to-l from-purple-500/80 to-purple-300/10">
+    <div className="px-5 flex items-center gap-4 my-4 flex-row-reverse gradient-purple-reverse">
       <div className="w-1/3 relative">
         <Image src={image} alt="Imagem" width={300} height={300} className="rounded-lg w-[200px] h-[250px] md:w-[600px] md:h-[600px]" />
       </div>
@@ -34,10 +34,9 @@ const TemplateC: FC<TemplateProps> = ({ image, text }) => {
       <div className="w-1/2 mx-auto relative">
         <Image src={image} alt="Imagem" width={400} height={300} className="rounded-lg w-[200px] h-[250px] md:w-[600px] md:h-[600px]" />
       </div>
-      <div className="px-5 bg-gradient-to-r from-purple-500/80 to-purple-300/10">
-      <p className=" text-sm md:text-lg mt-4">{text}</p>
+      <div className="px-5 gradient-purple">
+        <p className="text-sm md:text-lg mt-4">{text}</p>
       </div>
-      
     </div>
   );
 };

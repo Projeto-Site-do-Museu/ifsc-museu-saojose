@@ -58,7 +58,11 @@ module.exports = {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
-  			}
+  			},
+            'gradient-purple': {
+                start: 'hsl(var(--gradient-purple-start))',
+                end: 'hsl(var(--gradient-purple-end))'
+            }
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

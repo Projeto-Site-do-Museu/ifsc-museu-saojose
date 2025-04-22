@@ -28,7 +28,7 @@ export default function SecondSection() {
     <div className="relative min-h-[500px]">
       <div className="max-w-[1200px] h-[600px] mx-auto bg-cover bg-center bg-[url('/imgs/bg2.png')]">
         <div className="flex justify-center items-center pt-16">
-          <h2 className="text-3xl font-michroma text-white text-center py-[5vh]">Nossos itens</h2>
+          <h2 className="text-3xl font-michroma text-primary-foreground text-center py-[5vh]">Nossos itens</h2>
         </div>
 
         <div className="mt-8 relative max-w-[90%] mx-auto">
@@ -57,11 +57,13 @@ export default function SecondSection() {
           {Array.from({ length: totalSlides }).map((_, index) => (
             <div key={index} className="relative flex items-center">
               <div
-                className={`w-4 h-4 rounded-full ml-2 ${currentIndex === index ? "bg-white" : "bg-transparent border-2 border-white"}`}
+                className={`w-4 h-4 rounded-full ml-2 ${
+                  currentIndex === index ? "bg-primary-foreground" : "bg-transparent border-2 border-primary-foreground"
+                }`}
               ></div>
 
               {(currentIndex + 1 === index && currentIndex !== 4) && (
-                <div className="absolute left-[-7px] top-1/2 transform -translate-y-1/2 h-[2px] bg-white animate-slide-in"></div>
+                <div className="absolute left-[-7px] top-1/2 transform -translate-y-1/2 h-[2px] bg-primary-foreground animate-slide-in"></div>
               )}
             </div>
           ))}
