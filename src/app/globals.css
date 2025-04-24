@@ -34,19 +34,19 @@ body {
 
 @layer base {
   :root {
-    --background: 230 96% 7%;
+    --background: 0, 0%, 95%; 
     --foreground: 0 0% 100%;
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
-    --primary: 249 54% 19%;
+    --primary: 0, 0%, 0%;
     --primary-foreground: 0 0% 100%;
     --secondary: 240 5% 96%;
     --secondary-foreground: 240 6% 10%;
     --muted: 240 5% 96%;
     --muted-foreground: 240 4% 65%;
-    --accent: 273 75% 42%;
+    --accent: 355, 95%, 28%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
@@ -54,8 +54,12 @@ body {
     --input: 240 6% 90%;
     --ring: 240 6% 70%;
     
-    --gradient-purple-start: 272 95% 30%;
-    --gradient-purple-end: 260 80% 19%;
+    --gradient-purple-start: 0 0% 0%;
+    --gradient-purple-end: 0 0% 100%;
+    
+    /* Variáveis para o gradiente da página */
+    --gradient-page-start: 0 0% 27%; /* equivalente ao gray-700 */
+    --gradient-page-end: 0 0% 38%; /* equivalente ao gray-600 */
     
     --radius: 0.5rem;
   }
@@ -85,5 +89,10 @@ body {
   
   .gradient-primary-reverse {
     @apply bg-gradient-to-l from-primary/80 to-primary/10;
+  }
+  
+  /* Classe utilitária para o gradiente da página */
+  .gradient-page {
+    @apply bg-gradient-to-t from-page-gradient-start to-page-gradient-end opacity-50;
   }
 }

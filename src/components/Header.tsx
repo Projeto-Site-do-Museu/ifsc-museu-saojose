@@ -26,10 +26,7 @@ export default function Header() {
         </div>
 
         <nav className="hidden md:flex space-x-[3vw] flex-grow justify-end">
-          <div className="relative">
-            <a href="/about" className="font-michroma">Sobre</a>
-            <div className="absolute left-0 right-0 h-1 rounded-full gradient-purple" />
-          </div>
+          <a href="/about" className="font-michroma">Sobre</a>
           <a href="/pecaMes" className="font-michroma">Peça do mês</a>
           <a href="/artigos" className="font-michroma">Artigos</a>
           <a href="/acervo" className="font-michroma">Acervo</a>

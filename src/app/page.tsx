@@ -10,20 +10,24 @@ export default function Home() {
   return (
     <div>
     <div className="relative min-h-screen bg-cover bg-center">
-      <main className="max-w-[1200px] overflow-hidden m-auto h-screen bg-cover bg-center md:bg-[url('/imgs/bg1.png')] bg-[url('/imgs/bg1.jpg')]">
+      <main className="overflow-hidden bg-cover bg-center md:bg-[url('/imgs/bg1.png')] bg-[url('/imgs/bg1.jpg')]">
+        <div className="absolute inset-0 gradient-page"></div>
+        
         <Header />
-        <div className="flex items-center justify-center">
-          <div className="w-full h-screen z-0 gradient-primary">
-            <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 pt-[16vh] text-center md:items-start md:text-left md:max-w-[50%] md:ml-0">
-              <h1 className="text-4xl font-michroma font-bold mb-2">
-                Museu histórico
-                <br />
-                de São José
-              </h1>
-              
-              <p className="mt-4 font-worksans font-bold text-xl md:text-2xl">
-              O Museu Histórico de São José é um espaçode dicado à preservação da história e cultura de nossa cidade. Através de seu acervo e exposições, buscamos contar as transformações de São José e celebrar suas raízes. Venha conhecer e vivenciar essa história conosco!
-              </p>
+        <div className="flex items-center justify-center relative z-10">
+          <div className="w-full h-screen">
+            <div className="relative flex-1 flex flex-col items-center justify-center px-4 pt-[16vh] text-center md:items-start md:text-left md:max-w-[30%] md:ml-0">
+              <div className='flex flex-col bg-white py-12 px-6'>
+                <h1 className="text-3xl font-bold text-primary ">
+                  Museu histórico
+                  <br />
+                  de São José
+                </h1>
+                
+                <p className="mt-4 font-worksans text-primary">
+                O Museu Histórico de São José é um espaço dedicado à preservação da história e cultura de nossa cidade. Através de seu acervo e exposições, buscamos contar as transformações de São José e celebrar suas raízes. Venha conhecer e vivenciar essa história conosco!
+                </p>
+              </div>
             </div>
 
           </div>
