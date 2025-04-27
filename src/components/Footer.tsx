@@ -4,7 +4,7 @@ import { FaInstagram, FaTiktok } from "react-icons/fa";
 
 const Footer = () => {
     return(
-    <footer className="bg-primary max-w-[1200px] m-auto">
+    <footer className="bg-primary w-auto m-auto">
             <div className="flex flex-row items-center justify-between p-4">
             
             <div className="flex flex-row justify-left">
