@@ -26,7 +26,7 @@ export default function SecondSection() {
 
   return (
     <div className="relative min-h-[500px]">
-      <div className="max-w-[1200px] h-[600px] mx-auto bg-cover bg-center bg-[url('/imgs/bg2.png')]">
+      <div className="h-[600px] mx-auto bg-cover bg-center bg-[url('/imgs/bg2.png')]">
         <div className="flex justify-center items-center pt-16">
           <h2 className="text-3xl font-michroma text-primary-foreground text-center py-[5vh]">Nossos itens</h2>
         </div>

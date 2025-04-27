@@ -6,7 +6,7 @@ import GallerySection from "@/components/GallerySection";
 
 export default function Home() {
   return (
-    <div className="max-w-[1200px] m-auto overflow-x-hidden">
+    <div className=" m-auto overflow-x-hidden">
       <div className="relative min-h-screen bg-cover bg-center flex flex-col items-center justify-center">
         <main className="w-full overflow-hidden m-auto bg-cover bg-center md:bg-[url('/imgs/bg1.png')] bg-[url('/imgs/bg1.jpg')]">
           <Header />
