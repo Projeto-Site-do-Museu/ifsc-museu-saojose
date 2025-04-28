@@ -16,14 +16,14 @@ export default function Home() {
         <div className="flex items-center justify-center relative z-10">
           <div className="w-full h-screen">
             <div className="relative flex-1 flex flex-col items-center justify-center px-4 pt-[16vh] text-center md:items-start md:text-left md:max-w-[30%] md:ml-0">
-              <div className='flex flex-col bg-white py-12 px-6'>
+              <div className='flex flex-col bg-white py-12 px-6 border-2 border-primary rounded-xl shadow-lg'>
                 <h1 className="text-3xl font-bold text-primary ">
                   Museu histórico
                   <br />
                   de São José
                 </h1>
                 
-                <p className="mt-4 font-worksans text-primary">
+                <p className="text-xl mt-4 font-worksans text-primary">
                 O Museu Histórico de São José é um espaço dedicado à preservação da história e cultura de nossa cidade. Através de seu acervo e exposições, buscamos contar as transformações de São José e celebrar suas raízes. Venha conhecer e vivenciar essa história conosco!
                 </p>
               </div>
