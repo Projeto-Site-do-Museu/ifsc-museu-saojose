@@ -32,7 +32,7 @@ export default function SecondSection() {
   };
 
   return (
-    <div className="relative min-h-screen bg-black py-10">
+    <div className="relative min-h-full bg-black py-10">
       <div className="max-w-[1200px] w-full px-4 mx-auto flex flex-col justify-center items-center">
         <h2 className="text-3xl md:text-3xl font-worksans text-primary-foreground text-center mb-8 md:mb-10">
           Artigos Históricos
