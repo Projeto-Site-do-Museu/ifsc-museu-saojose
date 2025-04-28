@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div>
     <div className="relative min-h-screen bg-cover bg-center">
-      <main className="overflow-hidden bg-cover bg-center bg-[url('/imgs/bg1.jpg')] md:bg-[url('/imgs/novo-bg1.jpg')] md:object-[0%_0%]">
+      <main className="overflow-hidden bg-cover bg-center bg-[url('/imgs/bg-mb.jpg')] md:bg-[url('/imgs/novo-bg1.jpg')] md:object-[0%_0%]">
         
         <Header />
         <div className="flex items-center justify-center relative z-10">
