@@ -19,7 +19,7 @@ export default function Home() {
   };
 
   return (
-    <div className="max-w-[1200px] m-auto overflow-x-hidden">
+    <div className=" m-auto overflow-x-hidden">
       <div className="relative min-h-screen bg-cover bg-center flex flex-col items-center justify-center">
         <main className="w-full overflow-hidden m-auto bg-cover bg-center md:bg-[url('/imgs/bg1.png')] bg-[url('/imgs/bg1.jpg')] gap-6">
           <Header />
@@ -52,7 +52,7 @@ export default function Home() {
 
       {isOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-background/50">
-          <div className="bg-primary p-6 rounded-lg shadow-lg max-w-[90%] md:max-w-md text-center">
+          <div className="bg-primary p-6 rounded-lg shadow-lg text-center">
             <p className="text-lg font-semibold text-primary-foreground">{modalContent}</p>
             <button
               className="mt-4 bg-destructive text-destructive-foreground px-4 py-2 rounded-lg hover:bg-destructive/90 transition duration-300"

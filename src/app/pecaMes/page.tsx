@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className="max-w-[1200px] m-auto overflow-x-hidden">
+    <div className=" m-auto overflow-x-hidden">
       <div className="flex-grow">
         <Header />
         <section className="bg-background h-64 flex items-center justify-center">
@@ -14,7 +14,7 @@ export default function Home() {
         </section>
 
         <main className="w-full h-full z-10 gradient-primary-reverse text-card-foreground">
-          <div className="max-w-[50%] m-auto bg-card z-0">
+          <div className=" m-auto bg-card z-0">
             <br></br>
             <h2 className="text-center text-2xl font-bold mb-4">ESPADA DE DOM PEDRO</h2>
             <p className="text-center mb-4">ANO DE 18XX</p>

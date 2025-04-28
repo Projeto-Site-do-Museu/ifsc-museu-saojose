@@ -58,7 +58,7 @@ export default function Artigos() {
 
   return (
     <div className="relative min-h-screen bg-background">
-      <main className="max-w-[1200px] m-auto h-screen mb-10">
+      <main className=" m-auto h-screen mb-10">
         <Header />
         <div className="pb-20"></div>
         {currentArticle?.templates.map((item, index) =>
