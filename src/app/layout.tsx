@@ -11,7 +11,6 @@ export const metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="pt-BR">
-      <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
       <body className={`${inter.className} bg-background text-white`}>
         {children}
       </body>
