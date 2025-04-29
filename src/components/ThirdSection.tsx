@@ -2,24 +2,23 @@
 
 export default function ThirdSection() {
   return (
-    <div className="relative min-h-screen bg-cover bg-center flex flex-col justify-center items-center">
-      <div className=" md:min-w-[1200px] h-screen bg-cover bg-center md:bg-[url('/imgs/bg3.png')] bg-[url('/imgs/bg3.png')] flex flex-col justify-around items-center gap-10">
-      <div>
-        <h1 className="text-4xl font-michroma text-primary-foreground text-center font-bold pb-10">
+    <section className="relative h-screen bg-cover bg-center bg-[url('/imgs/bg3-edit.png')] flex items-center justify-center px-4">
+      {/* Caixa flutuante */}
+      <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl p-8 md:p-12 max-w-xl text-center flex flex-col items-center space-y-6">
+        <h2 className="text-3xl md:text-4xl font-michroma text-primary-foreground font-bold">
           Quer conhecer nosso museu?
-        </h1>
+        </h2>
 
-        <p className="text-xl font-michroma text-primary-foreground text-center font-bold">
+        <p className="text-lg md:text-2xl font-michroma text-primary-foreground">
           Temos um tour 3D interativo por todo nosso museu! Que tal experimentar?
         </p>
-      </div>
-        
+
         <a href="/tour">
-        <button className="bg-accent text-accent-foreground px-12 py-6 rounded-xl text-2xl font-semibold hover:bg-accent/90 transition duration-300">
-          Faça um tour!
-        </button>
+          <button className="mt-4 bg-accent text-accent-foreground px-8 py-4 md:px-12 md:py-5 rounded-xl text-lg md:text-2xl font-semibold hover:bg-accent/90 transition duration-300 shadow-md">
+            Faça um tour!
+          </button>
         </a>
       </div>
-    </div>
+    </section>
   );
 }
