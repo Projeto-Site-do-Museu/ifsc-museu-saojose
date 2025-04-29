@@ -26,16 +26,16 @@ export default function Header() {
             className="mr-3"
           />
           </a>
-          <span className="font-michroma text-lg pl-5 md:pl-0 md:text-2xl max-w-[280px]">Museu Histórico de São josé</span>
+          <span className="font-worksans font- text-lg pl-5 md:pl-0 md:text-2xl max-w-[280px]">Museu Histórico <br/> de São José</span>
         </div>
 
         <nav className="hidden md:flex space-x-[3vw] flex-grow justify-end">
-          <a href="/about" className="font-michroma">Sobre</a>
-          <a href="/pecaMes" className="font-michroma">Peça do mês</a>
-          <a href="/artigos" className="font-michroma">Artigos</a>
-          <a href="/acervo" className="font-michroma">Acervo</a>
-          <a href="/tour" className="font-michroma">Tour Virtual</a>
-          <a href="/videos" className="font-michroma">Nossos Videos</a>
+          <a href="/about" className="font-worksans hover:text-accent hover:underline">Sobre</a>
+          <a href="/pecaMes" className="font-worksans hover:text-accent hover:underline">Peça do mês</a>
+          <a href="/artigos" className="font-worksans hover:text-accent hover:underline">Artigos</a>
+          <a href="/acervo" className="font-worksans hover:text-accent hover:underline">Acervo</a>
+          <a href="/tour" className="font-worksans hover:text-accent hover:underline">Tour Virtual</a>
+          <a href="/videos" className="font-worksans hover:text-accent hover:underline">Nossos Videos</a>
         </nav>
 
 

@@ -65,14 +65,14 @@ export default function SecondSection() {
           <button
             onClick={handlePrev}
             aria-label="Anterior"
-            className="absolute top-1/2 left-2 md:left-[-50px] transform -translate-y-1/2 bg-primary-foreground text-black rounded-full p-2 md:p-3 shadow-md hover:bg-primary transition focus:outline-none focus:ring-2 focus:ring-white"
+            className="absolute top-1/2 left-2 md:left-[-50px] transform -translate-y-1/2 bg-primary-foreground text-black rounded-full p-2 md:p-3 shadow-md hover:bg-accent transition focus:outline-none focus:ring-2 focus:ring-white"
           >
             <ChevronLeft size={24} />
           </button>
           <button
             onClick={handleNext}
             aria-label="Próximo"
-            className="absolute top-1/2 right-2 md:right-[-50px] transform -translate-y-1/2 bg-primary-foreground text-black rounded-full p-2 md:p-3 shadow-md hover:bg-primary transition focus:outline-none focus:ring-2 focus:ring-white"
+            className="absolute top-1/2 right-2 md:right-[-50px] transform -translate-y-1/2 bg-primary-foreground text-black rounded-full p-2 md:p-3 shadow-md hover:bg-accent transition focus:outline-none focus:ring-2 focus:ring-white"
           >
             <ChevronRight size={24} />
           </button>

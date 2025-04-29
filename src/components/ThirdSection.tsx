@@ -14,7 +14,7 @@ export default function ThirdSection() {
         </p>
 
         <a href="/tour">
-          <button className="mt-4 bg-accent text-accent-foreground px-8 py-4 md:px-12 md:py-5 rounded-xl text-lg md:text-2xl font-semibold hover:bg-accent/90 transition duration-300 shadow-md">
+          <button className="mt-4 bg-accent text-accent-foreground px-8 py-4 md:px-12 md:py-5 rounded-xl text-lg md:text-2xl font-semibold hover:bg-red-950 transition duration-300 shadow-md">
             Faça um tour!
           </button>
         </a>
