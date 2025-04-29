@@ -16,7 +16,7 @@ const Footer = () => {
                             className="mr-3"
                           />
                 <div className="text-center">
-                    <h1 className="text-primary-foreground font-michroma text-lg hidden md:block">Museu histórico de São José</h1>
+                    <h1 className="text-primary-foreground font-worksans text-lg hidden md:block">Museu histórico de São José</h1>
                     <p className="text-muted-foreground text-xs hidden md:block">
                     Rua Gaspar Neves, 3175 -  88103-250
                     </p>
@@ -32,7 +32,7 @@ const Footer = () => {
             
 
             <div className="flex flex-col items-center">
-                <h2 className="text-primary-foreground font-michroma text-sm">Nos acompanhe</h2>
+                <h2 className="text-primary-foreground font-worksans text-sm">Nossas Redes</h2>
                 <div className="flex space-x-4 mt-2">
                 <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
                     <FaInstagram className="text-primary-foreground text-2xl hover:text-muted-foreground" />
