@@ -1,13 +1,17 @@
 "use client";
 
 import { useState } from 'react';
-import { Button } from './ui/button';
 import Image from 'next/image';
 import { GiHamburgerMenu } from 'react-icons/gi'; 
 import { FaArrowLeft } from "react-icons/fa";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    console.log('Menu clicked, current state:', isMenuOpen);
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   return (
     <header className="w-full max-h-10 flex flex-col relative z-20">
@@ -35,22 +39,25 @@ export default function Header() {
         </nav>
 
 
-        <Button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="md:hidden bg-transparent"
+        <button
+          onClick={toggleMenu}
+          className="md:hidden block p-2 cursor-pointer z-30 text-primary-foreground"
           aria-label="Menu"
         >
           <GiHamburgerMenu size={24} />
-        </Button>
+        </button>
       </div>
 
       {isMenuOpen && (
-        <div className="fixed inset-y-0 right-0 w-1/2 gradient-purple-reverse z-50 p-6">
+        <div className="fixed inset-y-0 right-0 w-1/2 bg-primary z-50 p-6">
           <nav className="flex flex-col space-y-4">
-            <a href="#" className="font-michroma text-primary-foreground">Home</a>
-            <a href="#" className="font-michroma text-primary-foreground">O que fazemos</a>
-            <a href="#" className="font-michroma text-primary-foreground">Cases</a>
-            <a href="#" className="font-michroma text-primary-foreground">Talentos</a>
+            <a href="/" className="font-michroma text-primary-foreground">Home</a>
+            <a href="/about" className="font-michroma text-primary-foreground">Sobre</a>
+            <a href="/pecaMes" className="font-michroma text-primary-foreground">Peça do mês</a>
+            <a href="/artigos" className="font-michroma text-primary-foreground">Artigos</a>
+            <a href="/acervo" className="font-michroma text-primary-foreground">Acervo</a>
+            <a href="/tour" className="font-michroma text-primary-foreground">Tour Virtual</a>
+            <a href="/videos" className="font-michroma text-primary-foreground">Nossos Videos</a>
             <button
               onClick={() => setIsMenuOpen(false)}
               className="mt-auto flex items-center text-primary-foreground"
