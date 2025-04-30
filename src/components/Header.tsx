@@ -26,7 +26,7 @@ export default function Header() {
               className="mr-3"
             />
           </a>
-          <span className="font-worksans font- text-lg pl-5 md:pl-0 md:text-2xl max-w-[280px]">
+          <span className="font-worksans text-lg pl-5 md:pl-0 md:text-2xl max-w-[280px]">
             Museu Histórico <br /> de São José
           </span>
         </div>
