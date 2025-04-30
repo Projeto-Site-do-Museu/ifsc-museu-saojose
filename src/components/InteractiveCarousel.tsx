@@ -105,7 +105,7 @@ export default function InteractiveCarousel() {
         </Carousel>
         <div className="m-auto w-full flex justify-center md:pt-10">
           <a href="/acervo/acervoCompleto">
-            <button className="bg-purple-600 text-white px-12 py-6 rounded-xl text-2xl font-semibold hover:bg-purple-700 transition duration-300">
+            <button className="bg-accent text-accent-foreground px-12 py-6 rounded-xl text-2xl font-semibold hover:bg-accent/90 transition duration-300">
               Ver acervo completo
             </button>
           </a>

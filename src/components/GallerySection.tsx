@@ -36,17 +36,14 @@ const items: Item[] = [
 export default function GallerySection() {
   return (
     <>
-      {/* Hero */}
-      <h1 className="text-4xl font-bold text-white mb-10">Exposição de Arte</h1>
+      <h1 className="text-4xl font-bold text-primary-foreground mb-10">Exposição de Arte</h1>
 
-      {/* Gallery */}
       <div className="w-full overflow-y-auto no-scrollbar h-[75vh] p-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {items.map((item) => (
-            // GalleryItem
             <div
               key={item.id}
-              className="bg-white rounded-lg shadow-lg overflow-hidden"
+              className="bg-card rounded-lg shadow-lg overflow-hidden"
             >
               <Image
                 src={item.img}
@@ -56,7 +53,7 @@ export default function GallerySection() {
                 className="w-full h-64 object-cover"
               />
               <div className="p-4">
-                <p className="text-gray-600 text-center">{item.text}</p>
+                <p className="text-secondary-foreground text-center">{item.text}</p>
               </div>
             </div>
           ))}

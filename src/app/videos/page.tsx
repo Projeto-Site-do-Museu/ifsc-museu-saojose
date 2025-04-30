@@ -9,7 +9,7 @@ export default function Home() {
       <div className="flex-grow">
         <Header />
         <div className="py-20 h-32 mb-20">
-          <p className="text-3xl font-bold text-center text-white pb-20">
+          <p className="text-3xl font-bold text-center text-primary-foreground pb-20">
             Veja alguns de nossos vídeos do Tiktok!
           </p>
         </div>

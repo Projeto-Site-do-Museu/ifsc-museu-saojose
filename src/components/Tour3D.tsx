@@ -157,10 +157,10 @@ const Tour3D = () => {
 
       {/* Modal */}
       {modalInfo && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-80">
-          <div className="bg-white text-black p-6 rounded-lg text-lg">
+        <div className="absolute inset-0 flex items-center justify-center bg-background/80">
+          <div className="bg-card text-card-foreground p-6 rounded-lg text-lg">
             <p>{modalInfo}</p>
-            <button className="mt-4 px-4 py-2 bg-red-500 text-white rounded" onClick={() => setModalInfo(null)}>
+            <button className="mt-4 px-4 py-2 bg-destructive text-destructive-foreground rounded" onClick={() => setModalInfo(null)}>
               Fechar
             </button>
           </div>
