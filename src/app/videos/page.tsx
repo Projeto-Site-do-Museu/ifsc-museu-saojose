@@ -1,7 +1,7 @@
-import "../globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import VideoGallery from "@/components/VideoGallery";
+import '../globals.css';
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
+import VideoGallery from '@/components/VideoGallery';
 
 export default function Home() {
   return (

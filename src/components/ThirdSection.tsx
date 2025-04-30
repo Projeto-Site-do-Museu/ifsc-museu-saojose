@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 export default function ThirdSection() {
   return (
@@ -10,11 +10,15 @@ export default function ThirdSection() {
         </h2>
 
         <p className="text-2xl md:text-3xl font-worksans text-primary-foreground">
-          Temos um tour 3D interativo por todo nosso museu! Que tal experimentar?
+          Temos um tour 3D interativo por todo nosso museu! Que tal
+          experimentar?
         </p>
 
         <a href="/tour">
-          <button className="mt-4 bg-accent text-accent-foreground px-8 py-4 md:px-12 md:py-5 rounded-xl text-lg md:text-2xl font-semibold hover:bg-red-950 transition duration-300 shadow-md">
+          <button
+            type="button"
+            className="mt-4 bg-accent text-accent-foreground px-8 py-4 md:px-12 md:py-5 rounded-xl text-lg md:text-2xl font-semibold hover:bg-red-950 transition duration-300 shadow-md"
+          >
             Faça um tour!
           </button>
         </a>

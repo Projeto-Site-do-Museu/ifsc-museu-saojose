@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useEffect, useRef, useState } from "react";
-import * as THREE from "three";
+import { useEffect, useRef, useState } from 'react';
+import * as THREE from 'three';
 
 const Tour3D = () => {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -14,9 +14,14 @@ const Tour3D = () => {
 
     // Criar a cena
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000,
+    );
     camera.position.set(0, 0, 0);
-    camera.rotation.order = "YXZ";
+    camera.rotation.order = 'YXZ';
 
     // Criar o renderizador
     const renderer = new THREE.WebGLRenderer();
@@ -29,14 +34,17 @@ const Tour3D = () => {
     // Carregar textura panorâmica
     const textureLoader = new THREE.TextureLoader();
     const texture = textureLoader.load('/imgs/panorama-teste.jpg', () => {
-        texture.colorSpace = THREE.SRGBColorSpace;
-        animate();
+      texture.colorSpace = THREE.SRGBColorSpace;
+      animate();
     });
 
     // Criar esfera invertida para o panorama
     const geometry = new THREE.SphereGeometry(500, 60, 40);
     geometry.scale(-1, 1, 1);
-    const material = new THREE.MeshBasicMaterial({ map: texture, toneMapped: true });
+    const material = new THREE.MeshBasicMaterial({
+      map: texture,
+      toneMapped: true,
+    });
     const sphere = new THREE.Mesh(geometry, material);
     scene.add(sphere);
 
@@ -45,10 +53,18 @@ const Tour3D = () => {
     scene.add(ambientLight);
 
     // Ícones de marcação
-    const spriteMaterial = new THREE.SpriteMaterial({ map: textureLoader.load("/imgs/info-icon.png") });
+    const spriteMaterial = new THREE.SpriteMaterial({
+      map: textureLoader.load('/imgs/info-icon.png'),
+    });
     const markPoints = [
-      { position: new THREE.Vector3(100, 50, -200), info: "Art Piece 1: Description goes here." },
-      { position: new THREE.Vector3(-150, 20, 300), info: "Integrantes do grupo: Arthur, Gustavo, Caio, Danilo, Kaua" },
+      {
+        position: new THREE.Vector3(100, 50, -200),
+        info: 'Art Piece 1: Description goes here.',
+      },
+      {
+        position: new THREE.Vector3(-150, 20, 300),
+        info: 'Integrantes do grupo: Arthur, Gustavo, Caio, Danilo, Kaua',
+      },
     ];
 
     const sprites: { sprite: THREE.Sprite; info: string }[] = [];
@@ -89,10 +105,14 @@ const Tour3D = () => {
         mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
         mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
         raycaster.setFromCamera(mouse, camera);
-        const intersects = raycaster.intersectObjects(sprites.map((s) => s.sprite));
+        const intersects = raycaster.intersectObjects(
+          sprites.map((s) => s.sprite),
+        );
 
         if (intersects.length > 0) {
-          const selected = sprites.find((s) => s.sprite === intersects[0].object);
+          const selected = sprites.find(
+            (s) => s.sprite === intersects[0].object,
+          );
           if (selected) {
             setModalInfo(selected.info);
           }
@@ -126,10 +146,10 @@ const Tour3D = () => {
       renderer.setSize(window.innerWidth, window.innerHeight);
     };
 
-    window.addEventListener("mousedown", onMouseDown);
-    window.addEventListener("mouseup", onMouseUp);
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("resize", onResize);
+    window.addEventListener('mousedown', onMouseDown);
+    window.addEventListener('mouseup', onMouseUp);
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('resize', onResize);
 
     // Loop de animação
     const animate = () => {
@@ -144,10 +164,10 @@ const Tour3D = () => {
       if (mount) {
         mount.removeChild(renderer.domElement);
       }
-      window.removeEventListener("mousedown", onMouseDown);
-      window.removeEventListener("mouseup", onMouseUp);
-      window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("resize", onResize);
+      window.removeEventListener('mousedown', onMouseDown);
+      window.removeEventListener('mouseup', onMouseUp);
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('resize', onResize);
     };
   }, []);
 
@@ -160,7 +180,11 @@ const Tour3D = () => {
         <div className="absolute inset-0 flex items-center justify-center bg-background/80">
           <div className="bg-card text-card-foreground p-6 rounded-lg text-lg">
             <p>{modalInfo}</p>
-            <button className="mt-4 px-4 py-2 bg-destructive text-destructive-foreground rounded" onClick={() => setModalInfo(null)}>
+            <button
+              type="button"
+              className="mt-4 px-4 py-2 bg-destructive text-destructive-foreground rounded"
+              onClick={() => setModalInfo(null)}
+            >
               Fechar
             </button>
           </div>

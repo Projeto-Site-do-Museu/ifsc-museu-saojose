@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import InteractiveCarousel from "@/components/InteractiveCarousel";
-import "../globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import InteractiveCarousel from '@/components/InteractiveCarousel';
+import '../globals.css';
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
 
 export default function Home() {
   return (
@@ -20,7 +20,9 @@ export default function Home() {
                   do museu
                 </h1>
                 <p className="mt-4 font-worksans font-bold text-xs md:text-2xl">
-                  O Museu Histórico de São José contém diversos itens em seu acervo que contam um pouco mais sobre a história e cultura de São José, que tal conhecer?
+                  O Museu Histórico de São José contém diversos itens em seu
+                  acervo que contam um pouco mais sobre a história e cultura de
+                  São José, que tal conhecer?
                 </p>
               </div>
               <InteractiveCarousel />
