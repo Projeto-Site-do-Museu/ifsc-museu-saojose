@@ -1,15 +1,9 @@
 services:
-  frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  app:
+    build: .
     ports:
       - "3000:3000"
     environment:
-      - HOSTNAME=0.0.0.0
-    networks:
-      - app-network
-
-networks:
-  app-network:
-    driver: bridge
+      - NODE_ENV=production
+      - HOST=0.0.0.0
+    restart: unless-stopped
