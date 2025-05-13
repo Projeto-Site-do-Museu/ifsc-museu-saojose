@@ -1,0 +1,15 @@
+# Imagem base de Node.js
+FROM node:20-alpine
+
+# Diretório de trabalho
+WORKDIR /app
+
+# Instalação de dependências
+COPY package.json package-lock.json* ./
+RUN npm install
+
+# Expor a porta de desenvolvimento do Next.js
+EXPOSE 3000
+
+# Comando para iniciar o servidor de desenvolvimento
+CMD ["npm", "run", "dev"] 

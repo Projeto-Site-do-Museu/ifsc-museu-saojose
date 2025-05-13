@@ -8,6 +8,7 @@ Este projeto é uma landing page responsiva para o Museu Histórico de São Jos�
 - **Tailwind CSS** (Estilização)
 - **TypeScript** (Tipagem)
 - **Three.js** (para o tour 3D)
+- **Docker** (Containerização)
 
 ## Como Rodar o Projeto
 ### 1. Clonar o Repositório
@@ -31,7 +32,38 @@ yarn dev
 ```
 
 Acesse `http://localhost:3000` no navegador para ver a aplicação em funcionamento.
-### 4. Rodar o Servidor definitivo
+
+### 4. Rodar o Projeto com Docker
+
+#### Ambiente de Desenvolvimento
+Para rodar o projeto em ambiente de desenvolvimento com Docker (com hot reload):
+
+```bash
+docker-compose -f docker-compose.dev.yml up --build
+```
+
+Este comando irá:
+- Construir a imagem Docker para desenvolvimento
+- Montar o código-fonte como um volume para permitir hot reload
+- Iniciar o servidor de desenvolvimento com `next dev`
+
+Acesse `http://localhost:3000` no navegador para ver a aplicação em funcionamento.
+
+#### Ambiente de Produção
+Para rodar o projeto em ambiente de produção com Docker:
+
+```bash
+docker-compose up --build
+```
+
+Este comando irá:
+- Construir a imagem Docker para produção
+- Executar o build da aplicação
+- Iniciar o servidor otimizado com `next start`
+
+Acesse `http://localhost:3000` no navegador para ver a aplicação em funcionamento.
+
+### 5. Rodar o Servidor definitivo sem Docker
 
 Inicialmente, execute: 
 
@@ -39,7 +71,7 @@ Inicialmente, execute:
 npm run build
 ```
 
-Este comando irá gerar uma versão otimizada do site, porém qualquer erro no código pode impossibilizar o build e deve ser corrigido
+Este comando irá gerar uma versão otimizada do site, porém qualquer erro no código pode impossibilitar o build e deve ser corrigido
 
 após o build
 
@@ -87,7 +119,11 @@ O site foi desenhado para que todos as imagens e textos sejam dinamicos a partir
 │     ├── ...         # dentre outros
 ├── package.json      # Configuração de dependências
 ├── tsconfig.json     # Configuração do TypeScript
-└── next.config.js    # Configuração do Next.js
+├── next.config.js    # Configuração do Next.js
+├── Dockerfile        # Configuração Docker para produção
+├── Dockerfile.dev    # Configuração Docker para desenvolvimento
+├── docker-compose.yml       # Configuração docker-compose para produção
+└── docker-compose.dev.yml   # Configuração docker-compose para desenvolvimento
 ```
 
 ## Padrões e Boas Práticas
