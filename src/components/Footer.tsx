@@ -4,18 +4,18 @@ import { FaInstagram, FaTiktok } from 'react-icons/fa';
 
 const Footer = () => {
   return (
-    <footer className="bg-primary w-auto m-auto">
-      <div className="flex flex-row items-center justify-between p-4">
-        <div className="flex flex-row justify-left">
+    <footer className="bg-primary w-full">
+      <div className="flex flex-col md:flex-row items-center justify-between p-4 gap-4 md:gap-0">
+        <div className="flex flex-row items-center justify-center md:justify-start w-full md:w-auto">
           <Image
             src="/imgs/logo.png"
             alt="Logo"
-            width={128}
-            height={128}
-            className="mr-3"
+            width={48}
+            height={48}
+            className="mr-2 md:mr-3"
           />
-          <div className="text-center">
-            <h1 className="text-primary-foreground font-worksans text-lg hidden md:block">
+          <div className="text-center md:text-left">
+            <h1 className="text-primary-foreground font-worksans text-base md:text-lg">
               Museu histórico de São José
             </h1>
             <p className="text-muted-foreground text-xs hidden md:block">
@@ -27,7 +27,6 @@ const Footer = () => {
             </p>
           </div>
         </div>
-
         <div className="flex flex-col items-center">
           <h2 className="text-primary-foreground font-worksans text-sm">
             Nossas Redes

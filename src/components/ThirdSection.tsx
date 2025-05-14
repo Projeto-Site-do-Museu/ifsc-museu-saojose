@@ -2,9 +2,9 @@
 
 export default function ThirdSection() {
   return (
-    <section className="relative h-screen bg-cover bg-center bg-[url('/imgs/bg3-edit.png')] flex items-center justify-center px-4">
+    <section className="relative min-h-screen bg-cover bg-center bg-[url('/imgs/bg3-edit.png')] flex items-center justify-center px-2 py-8 sm:px-4">
       {/* Caixa flutuante */}
-      <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl p-8 md:p-12 max-w-xl text-center flex flex-col items-center space-y-6">
+      <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl p-4 sm:p-8 md:p-12 max-w-xs sm:max-w-xl text-center flex flex-col items-center space-y-4 sm:space-y-6">
         <h2 className="text-3xl md:text-4xl font-worksans  text-primary-foreground font-bold">
           Quer conhecer nosso museu?
         </h2>

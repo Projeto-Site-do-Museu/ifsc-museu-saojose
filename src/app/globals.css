@@ -95,4 +95,14 @@ body {
   .gradient-page {
     @apply bg-gradient-to-t from-page-gradient-start to-page-gradient-end opacity-50;
   }
+
+  @keyframes modalIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.animate-modalIn {
+  animation: modalIn 0.2s forwards;
+}
 }

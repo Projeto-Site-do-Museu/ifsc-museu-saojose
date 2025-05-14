@@ -64,7 +64,7 @@ export default function SecondSection() {
                     height={1080}
                     src={src}
                     alt={`Card ${index + 1}`}
-                    className="rounded-xl object-cover w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px]"
+                    className="rounded-xl object-cover w-full h-[180px] sm:h-[300px] md:h-[400px] lg:h-[500px]"
                   />
                 </CarouselItem>
               ))}
