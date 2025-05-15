@@ -16,7 +16,8 @@ export default function Home() {
               <div className="relative z-10 m-auto flex-1 flex flex-col items-center justify-center px-4 pt-[16vh] pb-[20px] text-center md:items-center md:text-left md:max-w-[50%]">
                 <h1 className="text-4xl font-michroma font-bold mb-2">
                   Acervo
-                  <br />
+                  <span className="block sm:hidden"></span>
+                  <span className="hidden sm:inline">&nbsp;</span>
                   do museu
                 </h1>
                 <p className="mt-4 font-worksans font-bold text-xs md:text-2xl">
