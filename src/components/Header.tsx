@@ -14,7 +14,7 @@ export default function Header() {
   };
 
   return (
-    <header className="w-full max-h-10 flex flex-col relative z-20">
+    <header className="w-full sticky top-0 z-30 bg-primary">
       <div className="flex justify-between items-center py-4 px-6 text-primary-foreground bg-primary">
         <div className="flex items-center">
           <a href="/">
