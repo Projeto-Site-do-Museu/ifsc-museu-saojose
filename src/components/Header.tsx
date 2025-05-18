@@ -39,22 +39,16 @@ export default function Header() {
             Sobre
           </a>
           <a
-            href="/pecaMes"
+            href="/acervo"
             className="font-worksans hover:text-accent hover:underline"
           >
-            Peça do mês
+            Acervo
           </a>
           <a
             href="/artigos"
             className="font-worksans hover:text-accent hover:underline"
           >
             Artigos
-          </a>
-          <a
-            href="/acervo"
-            className="font-worksans hover:text-accent hover:underline"
-          >
-            Acervo
           </a>
           <a
             href="/tour"

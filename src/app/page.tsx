@@ -7,6 +7,8 @@ import ThirdSection from '@/components/ThirdSection';
 import Header from '../components/Header';
 import { useState, useEffect } from 'react';
 import VideoBanner from '@/components/VideoBanner';
+import IntroAcervo from '@/components/IntroAcervo';
+import IntroArtigos from '@/components/IntroArtigos';
 
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
@@ -88,6 +90,8 @@ export default function Home() {
       </div>
 
       <SecondSection />
+      <IntroAcervo />
+      <IntroArtigos />
       <ThirdSection />
       <Footer />
     </div>

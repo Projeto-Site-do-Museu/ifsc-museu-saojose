@@ -9,7 +9,7 @@ export default function ThirdSection() {
           Quer conhecer nosso museu?
         </h2>
 
-        <p className="text-base md:text-3xl font-worksans text-primary-foreground">
+        <p className="text-base md:text-xl font-worksans text-primary-foreground">
           Temos um tour 3D interativo por todo nosso museu! Que tal
           experimentar?
         </p>
