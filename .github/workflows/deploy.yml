@@ -16,7 +16,7 @@ jobs:
     - name: Execute SSH Commands
       uses: appleboy/ssh-action@v1.2.2
       with:
-        host: extensaoads.sj.ifsc.edu.br
+        host: ${{ secrets.HOST }}
         username: siteextensao
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
