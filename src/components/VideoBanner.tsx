@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface VideoBannerProps {
   src: string;
@@ -10,18 +10,18 @@ interface VideoBannerProps {
 const VideoBanner: React.FC<VideoBannerProps> = ({
   src,
   poster,
-  aspect = "aspect-video",
-  className = "",
+  aspect = 'aspect-video',
+  className = '',
 }) => (
-      <video
-        className="w-full h-full object-cover"
-        src={src}
-        poster={poster}
-        autoPlay
-        muted
-        loop
-        playsInline
-      />
+  <video
+    className="w-full h-full object-cover"
+    src={src}
+    poster={poster}
+    autoPlay
+    muted
+    loop
+    playsInline
+  />
 );
 
 export default VideoBanner;
