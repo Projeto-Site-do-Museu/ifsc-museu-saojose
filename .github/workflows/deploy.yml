@@ -1,0 +1,27 @@
+name: Deploy on New Tag
+
+on:
+  push:
+    tags:
+      - '*'
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to Server
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Execute SSH Commands
+      uses: appleboy/ssh-action@v1.2.2
+      with:
+        host: ${{ secrets.HOST }}
+        username: siteextensao
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          cd /home/siteextensao/ProjetoMuseu
+          git pull origin main
+          docker-compose down
+          docker-compose build --no-cache
+          docker-compose up -d
