@@ -1,26 +1,26 @@
-# Use a Node.js base image
+# Use a imagem base do Node.js
 FROM node:20-alpine
 
-# Set the working directory
+# Define o diretório de trabalho
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copia o package.json e o package-lock.json
 COPY package.json package-lock.json* ./
 
-# Install dependencies
+# Instala as dependências
 RUN npm install --omit=optional --no-optional
 
-# Copy the rest of the application code
+# Copia o restante do código da aplicação
 COPY . .
 
-# Set environment variables
+# Define variáveis de ambiente
 ENV NODE_ENV=production
 
-# Build the application
+# Constrói a aplicação
 RUN npm run build
 
-# Expose the application port
+# Expõe a porta da aplicação
 EXPOSE 3000
 
-# Start the application
+# Inicia a aplicação
 CMD ["npm", "run", "start"]
