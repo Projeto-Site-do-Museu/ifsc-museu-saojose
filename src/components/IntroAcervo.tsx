@@ -10,7 +10,7 @@ export default function IntroAcervo() {
         {/* Objeto 3D à esquerda no desktop, em cima no mobile */}
         <div className="w-full md:w-1/2 flex justify-center items-center">
           <iframe
-            src="https://00thiago.github.io/onlineMaca3D/"
+            src="https://00thiago.github.io/Imagem3Donline/"
             title="Exemplo de Objeto 3D"
             className="w-full h-64 md:h-[400px] rounded-xl border shadow-lg"
             allow="autoplay; fullscreen; xr-spatial-tracking"
