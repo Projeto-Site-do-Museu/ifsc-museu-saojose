@@ -13,7 +13,9 @@ export default function Home() {
           Vídeos nas Redes Sociais
         </h1>
         <p className="text-lg md:text-xl max-w-3xl mx-auto text-white/80 font-medium">
-          Confira uma seleção de vídeos do nosso museu que fizeram sucesso nas redes sociais! Um olhar descontraído e educativo sobre nosso acervo e curiosidades históricas.
+          Confira uma seleção de vídeos do nosso museu que fizeram sucesso nas
+          redes sociais! Um olhar descontraído e educativo sobre nosso acervo e
+          curiosidades históricas.
         </p>
         <div className="flex justify-center mt-8">
           <a
@@ -39,7 +41,9 @@ export default function Home() {
       </section>
 
       <section className="px-4 md:px-8 mb-20">
-        <h2 className="text-2xl font-bold text-center mb-8">Galeria de Vídeos</h2>
+        <h2 className="text-2xl font-bold text-center mb-8">
+          Galeria de Vídeos
+        </h2>
         <VideoGallery />
       </section>
 
