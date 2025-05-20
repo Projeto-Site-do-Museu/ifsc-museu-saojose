@@ -8,9 +8,9 @@ import Header from '@/components/Header';
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden bg-gray-50">
-      <main className="relative flex-1 bg-cover bg-center md:bg-[url('/imgs/bg1.png')] bg-[url('/imgs/bg1.jpg')]">
+      <main className="relative flex-1 bg-white">
         <Header />
-        <section className="w-full h-screen flex items-center justify-center bg-gradient-to-b from-black/70 to-black/30 text-white">
+        <section className="w-full h-screen flex items-center justify-center bg-gradient-to-b from-black via-black/80 to-black text-white">
           <div className="max-w-5xl mx-auto px-6 text-center md:text-left space-y-12">
             <h1 className="text-5xl md:text-6xl font-bold font-michroma mb-6 leading-tight drop-shadow-lg text-center">
               Acervo
