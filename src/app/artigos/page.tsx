@@ -1,138 +1,88 @@
 'use client';
 
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
-import { TemplateA, TemplateB, TemplateC } from '@/components/Templates';
 import { useState } from 'react';
+import Image from 'next/image';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
-const templates = {
-  A: TemplateA,
-  B: TemplateB,
-  C: TemplateC,
-} as const;
-
-const renderTemplate = (
-  templateKey: keyof typeof templates,
-  image: string,
-  text: string,
-) => {
-  const Component = templates[templateKey];
-  return <Component image={image} text={text} />;
-};
-
-// Dados de exemplo dos artigos
-const mockData = [
+const images = [
   {
-    id: 1,
-    templates: [
-      {
-        template: 'A',
-        image: '/imgs/img1.jpg',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet quam fringilla libero rutrum lobortis. Nam id vulputate odio. Cras molestie quis ante et vestibulum. Nullam viverra leo quis libero vulputate ultricies sit amet et lorem.',
-      },
-      {
-        template: 'B',
-        image: '/imgs/img2.jpg',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet quam fringilla libero rutrum lobortis. Nam id vulputate odio. Cras molestie quis ante et vestibulum. Nullam viverra leo quis libero vulputate ultricies sit amet et lorem.',
-      },
-    ],
+    src: '/imgs/img1.jpg',
+    alt: 'Imagem 1',
+    descricao: 'Descrição da imagem 1',
   },
   {
-    id: 2,
-    templates: [
-      {
-        template: 'C',
-        image: '/imgs/img3.jpg',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet quam fringilla libero rutrum lobortis. Nam id vulputate odio. Cras molestie quis ante et vestibulum. Nullam viverra leo quis libero vulputate ultricies sit amet et lorem.',
-      },
-      {
-        template: 'A',
-        image: '/imgs/img4.jpg',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet quam fringilla libero rutrum lobortis. Nam id vulputate odio. Cras molestie quis ante et vestibulum. Nullam viverra leo quis libero vulputate ultricies sit amet et lorem.',
-      },
-    ],
+    src: '/imgs/img2.jpg',
+    alt: 'Imagem 2',
+    descricao: 'Descrição da imagem 2',
   },
   {
-    id: 3,
-    templates: [
-      {
-        template: 'B',
-        image: '/imgs/img5.jpg',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet quam fringilla libero rutrum lobortis. Nam id vulputate odio. Cras molestie quis ante et vestibulum. Nullam viverra leo quis libero vulputate ultricies sit amet et lorem.',
-      },
-      {
-        template: 'C',
-        image: '/imgs/img6.jpg',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet quam fringilla libero rutrum lobortis. Nam id vulputate odio. Cras molestie quis ante et vestibulum. Nullam viverra leo quis libero vulputate ultricies sit amet et lorem.',
-      },
-      {
-        template: 'A',
-        image: '/imgs/img6.jpg',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet quam fringilla libero rutrum lobortis. Nam id vulputate odio. Cras molestie quis ante et vestibulum. Nullam viverra leo quis libero vulputate ultricies sit amet et lorem.',
-      },
-      {
-        template: 'B',
-        image: '/imgs/img6.jpg',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet quam fringilla libero rutrum lobortis.',
-      },
-    ],
+    src: '/imgs/img3.jpg',
+    alt: 'Imagem 3',
+    descricao: 'Descrição da imagem 3',
+  },
+  {
+    src: '/imgs/img4.jpg',
+    alt: 'Imagem 4',
+    descricao: 'Descrição da imagem 4',
+  },
+  {
+    src: '/imgs/img5.jpg',
+    alt: 'Imagem 5',
+    descricao: 'Descrição da imagem 5',
   },
 ];
 
-export default function Artigos() {
-  const [currentArticleId, setCurrentArticleId] = useState<number>(1);
-
-  const prevArticle = () => {
-    setCurrentArticleId((prev) => (prev > 1 ? prev - 1 : mockData.length));
-  };
-
-  const nextArticle = () => {
-    setCurrentArticleId((prev) => (prev < mockData.length ? prev + 1 : 1));
-  };
-
-  const currentArticle = mockData.find(
-    (article) => article.id === currentArticleId,
-  );
+export default function Galeria() {
+  const [selected, setSelected] = useState(images[0]);
 
   return (
-    <div className="relative min-h-screen bg-background">
-      <main className=" m-auto h-screen mb-10">
-        <Header />
-        <div className="pb-20" />
-        {currentArticle?.templates.map((item) =>
-          renderTemplate(
-            item.template as keyof typeof templates,
-            item.image,
-            item.text,
-          ),
-        )}
+    <div className="min-h-screen flex flex-col bg-background">
+      <Header />
 
-        <div className="flex justify-center items-center mt-8">
-          <button
-            type="button"
-            className="px-4 py-2 bg-secondary text-secondary-foreground rounded-l-full hover:bg-secondary/90 transition-colors"
-            onClick={prevArticle}
-          >
-            Anterior
-          </button>
-
-          <div className="flex items-center mx-4">
-            <span className="text-lg text-primary-foreground">
-              Artigo {currentArticleId} de {mockData.length}
-            </span>
+      <main className="flex-grow bg-white py-10">
+        <div className="max-w-5xl mx-auto px-4">
+          {/* Imagem principal */}
+          <div className="mb-2 border rounded-xl bg-black flex items-center justify-center h-[550px]">
+            <Image
+              src={selected.src}
+              alt={selected.alt}
+              width={800}
+              height={500}
+              className="max-h-full max-w-full object-contain"
+            />
+          </div>
+          <div className="text-center text-gray-800 text-lg font-medium mb-6">
+            {selected.descricao}
           </div>
 
-          <button
-            type="button"
-            className="px-4 py-2 bg-secondary text-secondary-foreground rounded-r-full hover:bg-secondary/90 transition-colors"
-            onClick={nextArticle}
-          >
-            Próximo
-          </button>
+          {/* Miniaturas */}
+          <div className="flex gap-4 justify-center flex-wrap pb-2">
+            {images.map((img) => (
+              <button
+                key={img.src}
+                onClick={() => setSelected(img)}
+                className={`border-2 rounded-md overflow-hidden hover:scale-105 transition-transform ${
+                  selected.src === img.src
+                    ? 'border-blue-500'
+                    : 'border-transparent'
+                }`}
+              >
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  width={100}
+                  height={80}
+                  className="object-contain w-24 h-16 bg-white"
+                />
+              </button>
+            ))}
+          </div>
         </div>
-
-        <Footer />
       </main>
+
+      <Footer />
     </div>
   );
 }
+
