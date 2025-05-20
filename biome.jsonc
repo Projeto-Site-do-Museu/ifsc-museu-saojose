@@ -24,8 +24,8 @@
     "rules": {
       "recommended": true,
       "a11y": {
-        "useHtmlLang": "warn", // Not in recommended ruleset, turning on manually
-        "noHeaderScope": "warn", // Not in recommended ruleset, turning on manually
+        "useHtmlLang": "warn",
+        "noHeaderScope": "warn",
         "useValidAriaRole": {
           "level": "warn",
           "options": {
@@ -33,43 +33,43 @@
             "allowInvalidRoles": ["none", "text"]
           }
         },
-        "useSemanticElements": "off", // Rule is buggy, revisit later
-        "noSvgWithoutTitle": "off", // We do not intend to adhere to this rule
-        "useMediaCaption": "off", // We would need a cultural change to turn this on
-        "noAutofocus": "off", // We're highly intentional about when we use autofocus
-        "noBlankTarget": "off", // Covered by Conformance
-        "useFocusableInteractive": "off", // Disable focusable interactive element requirement
-        "useAriaPropsForRole": "off", // Disable required ARIA attributes check
-        "useKeyWithClickEvents": "off" // Disable keyboard event requirement with click events
+        "useSemanticElements": "warn",
+        "noSvgWithoutTitle": "warn",
+        "useMediaCaption": "off",
+        "noAutofocus": "off",
+        "noBlankTarget": "warn",
+        "useFocusableInteractive": "warn",
+        "useAriaPropsForRole": "warn",
+        "useKeyWithClickEvents": "warn"
       },
       "complexity": {
-        "noUselessStringConcat": "warn", // Not in recommended ruleset, turning on manually
-        "noForEach": "off", // forEach is too familiar to ban
-        "noUselessSwitchCase": "off", // Turned off due to developer preferences
-        "noUselessThisAlias": "off" // Turned off due to developer preferences
+        "noUselessStringConcat": "warn",
+        "noForEach": "off",
+        "noUselessSwitchCase": "off",
+        "noUselessThisAlias": "off"
       },
       "suspicious": {
-        "noExplicitAny": "warn" // We trust Vercelians to use any only when necessary
+        "noExplicitAny": "warn"
       },
       "correctness": {
-        "noUnusedImports": "warn", // Not in recommended ruleset, turning on manually
-        "useArrayLiterals": "warn", // Not in recommended ruleset, turning on manually
-        "noNewSymbol": "warn", // Not in recommended ruleset, turning on manually
-        "useJsxKeyInIterable": "off", // Rule is buggy, revisit later
-        "noUnnecessaryContinue": "off", // Turned off due to developer preferences
+        "noUnusedImports": "warn",
+        "useArrayLiterals": "warn",
+        "noNewSymbol": "warn",
+        "useJsxKeyInIterable": "warn",
+        "noUnnecessaryContinue": "off",
         "useExhaustiveDependencies": "warn"
       },
       "security": {
-        "noDangerouslySetInnerHtml": "off" // Covered by Conformance
+        "noDangerouslySetInnerHtml": "warn"
       },
       "style": {
-        "useFragmentSyntax": "warn", // Not in recommended ruleset, turning on manually
-        "noYodaExpression": "warn", // Not in recommended ruleset, turning on manually
-        "useDefaultParameterLast": "warn", // Not in recommended ruleset, turning on manually
-        "useExponentiationOperator": "off", // Obscure and arguably not easily readable
-        "noUnusedTemplateLiteral": "off", // Stylistic opinion
-        "noUselessElse": "off", // Stylistic opinion
-        "useImportType": "off" // Turned off manually
+        "useFragmentSyntax": "warn",
+        "noYodaExpression": "warn",
+        "useDefaultParameterLast": "warn",
+        "useExponentiationOperator": "off",
+        "noUnusedTemplateLiteral": "warn",
+        "noUselessElse": "warn",
+        "useImportType": "warn"
       },
       "nursery": {
         "noStaticElementInteractions": "warn",

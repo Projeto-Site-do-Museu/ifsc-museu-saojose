@@ -19,8 +19,9 @@ export default function Home() {
               do museu
             </h1>
             <p className="text-lg md:text-2xl font-worksans font-medium drop-shadow-md text-center">
-              O Museu Histórico de São José contém diversos itens em seu acervo que contam um pouco mais
-              sobre a história e cultura de São José. Que tal conhecer?
+              O Museu Histórico de São José contém diversos itens em seu acervo
+              que contam um pouco mais sobre a história e cultura de São José.
+              Que tal conhecer?
             </p>
             <div className="max-w-6xl mx-auto px-4">
               <InteractiveCarousel />
