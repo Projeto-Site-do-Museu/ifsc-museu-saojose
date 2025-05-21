@@ -1,8 +1,8 @@
-"use client";
-import { useEffect, useRef } from "react";
-import * as THREE from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+'use client';
+import { useEffect, useRef } from 'react';
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 const ThreeScene = () => {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -13,7 +13,12 @@ const ThreeScene = () => {
     if (!mount) return;
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000,
+    );
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     mount.appendChild(renderer.domElement);
@@ -27,7 +32,7 @@ const ThreeScene = () => {
     scene.add(directionalLight);
 
     const loader = new GLTFLoader();
-    loader.load("/modelos-3d/dunot.glb", (gltf) => {
+    loader.load('/modelos-3d/dunot.glb', (gltf) => {
       scene.add(gltf.scene);
     });
 
@@ -49,7 +54,7 @@ const ThreeScene = () => {
     };
   }, []);
 
-  return <div ref={mountRef} style={{ width: "1200px", height: "1200px" }} />;
+  return <div ref={mountRef} style={{ width: '1200px', height: '1200px' }} />;
 };
 
 export default ThreeScene;

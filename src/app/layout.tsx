@@ -1,11 +1,11 @@
-import "./globals.css";
-import { Inter } from "next/font/google";
-import { ReactNode } from "react";
+import './globals.css';
+import { Inter } from 'next/font/google';
+import type { ReactNode } from 'react';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: "Museu de São José",
+  title: 'Museu de São José',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

@@ -1,0 +1,36 @@
+name: Biome
+
+on:
+  push:
+    branches: 
+      - main
+      - dev
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - name: Lint and Format
+        run: |
+          if [ "$GITHUB_REF_NAME" = "dev" ]; then
+            npm run lint:fix
+            npm run format:fix
+            git config --local user.email "github-actions[bot]@users.noreply.github.com"
+            git config --local user.name "github-actions[bot]"
+            if [[ -n "$(git status --porcelain)" ]]; then
+              git add .
+              git commit --amend --no-edit
+              git push --force-with-lease
+            fi
+          else
+            npm run lint
+            npm run format
+          fi 

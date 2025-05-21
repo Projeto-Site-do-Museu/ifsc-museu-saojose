@@ -2,21 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Magison&family=Michroma&family=Work+Sans:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Michroma&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Magison&family=Michroma&family=Work+Sans:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Michroma&display=swap");
 
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
-      display: none;
+    display: none;
   }
   .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
 
 body {
-  font-family: 'Michroma', sans-serif;
+  font-family: "Michroma", sans-serif;
 }
 
 @layer utilities {
@@ -26,15 +26,15 @@ body {
 }
 
 @font-face {
-  font-family: 'Magison';
-  src: url('../../public/fonts/Magison.ttf') format('truetype');
+  font-family: "Magison";
+  src: url("../../public/fonts/Magison.ttf") format("truetype");
   font-weight: 200;
   font-style: normal;
 }
 
 @layer base {
   :root {
-    --background: 0, 0%, 95%; 
+    --background: 0, 0%, 95%;
     --foreground: 0 0% 100%;
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
@@ -53,14 +53,14 @@ body {
     --border: 240 6% 90%;
     --input: 240 6% 90%;
     --ring: 240 6% 70%;
-    
+
     --gradient-purple-start: 0 0% 0%;
     --gradient-purple-end: 0 0% 100%;
-    
+
     /* Variáveis para o gradiente da página */
     --gradient-page-start: 0 0% 27%; /* equivalente ao gray-700 */
     --gradient-page-end: 0 0% 38%; /* equivalente ao gray-600 */
-    
+
     --radius: 0.5rem;
   }
 }
@@ -78,21 +78,31 @@ body {
   .gradient-purple {
     @apply bg-gradient-to-r from-[hsl(var(--gradient-purple-start))] to-[hsl(var(--gradient-purple-end))];
   }
-  
+
   .gradient-purple-reverse {
     @apply bg-gradient-to-l from-[hsl(var(--gradient-purple-start))] to-[hsl(var(--gradient-purple-end))];
   }
-  
+
   .gradient-primary {
     @apply bg-gradient-to-r from-primary/80 to-primary/10;
   }
-  
+
   .gradient-primary-reverse {
     @apply bg-gradient-to-l from-primary/80 to-primary/10;
   }
-  
+
   /* Classe utilitária para o gradiente da página */
   .gradient-page {
     @apply bg-gradient-to-t from-page-gradient-start to-page-gradient-end opacity-50;
   }
+
+  @keyframes modalIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.animate-modalIn {
+  animation: modalIn 0.2s forwards;
+}
 }

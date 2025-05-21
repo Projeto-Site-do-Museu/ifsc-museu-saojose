@@ -1,94 +1,119 @@
-"use client"
+'use client';
 
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
-import { TemplateA, TemplateB, TemplateC } from '@/components/Templates';
+import Image from 'next/image';
 import { useState } from 'react';
 
-const templates = {
-  A: TemplateA,
-  B: TemplateB,
-  C: TemplateC,
-} as const;
-
-const renderTemplate = (templateKey: keyof typeof templates, image: string, text: string) => {
-  const Component = templates[templateKey];
-  return <Component image={image} text={text} />;
-};
-
-// Dados de exemplo dos artigos
-const mockData = [
+const images = [
   {
-    id: 1,
-    templates: [
-      { template: 'A', image: '/imgs/img1.jpg', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet quam fringilla libero rutrum lobortis. Nam id vulputate odio. Cras molestie quis ante et vestibulum. Nullam viverra leo quis libero vulputate ultricies sit amet et lorem.' },
-      { template: 'B', image: '/imgs/img2.jpg', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet quam fringilla libero rutrum lobortis. Nam id vulputate odio. Cras molestie quis ante et vestibulum. Nullam viverra leo quis libero vulputate ultricies sit amet et lorem.' },
-    ],
+    src: '/imgs/img1.jpg',
+    alt: 'Imagem 1',
+    descricao:
+      'Esta é a descrição da imagem 1. Um item importante do nosso acervo.',
   },
   {
-    id: 2,
-    templates: [
-      { template: 'C', image: '/imgs/img3.jpg', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet quam fringilla libero rutrum lobortis. Nam id vulputate odio. Cras molestie quis ante et vestibulum. Nullam viverra leo quis libero vulputate ultricies sit amet et lorem.' },
-      { template: 'A', image: '/imgs/img4.jpg', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet quam fringilla libero rutrum lobortis. Nam id vulputate odio. Cras molestie quis ante et vestibulum. Nullam viverra leo quis libero vulputate ultricies sit amet et lorem.' },
-    ],
+    src: '/imgs/img2.jpg',
+    alt: 'Imagem 2',
+    descricao:
+      'Descrição da imagem 2, explicando seu contexto e importância histórica.',
   },
   {
-    id: 3,
-    templates: [
-      { template: 'B', image: '/imgs/img5.jpg', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet quam fringilla libero rutrum lobortis. Nam id vulputate odio. Cras molestie quis ante et vestibulum. Nullam viverra leo quis libero vulputate ultricies sit amet et lorem.' },
-      { template: 'C', image: '/imgs/img6.jpg', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet quam fringilla libero rutrum lobortis. Nam id vulputate odio. Cras molestie quis ante et vestibulum. Nullam viverra leo quis libero vulputate ultricies sit amet et lorem.' },
-      { template: 'A', image: '/imgs/img6.jpg', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet quam fringilla libero rutrum lobortis. Nam id vulputate odio. Cras molestie quis ante et vestibulum. Nullam viverra leo quis libero vulputate ultricies sit amet et lorem.' },
-      { template: 'B', image: '/imgs/img6.jpg', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet quam fringilla libero rutrum lobortis.' },
-    ],
+    src: '/imgs/img3.jpg',
+    alt: 'Imagem 3',
+    descricao:
+      'Detalhes sobre a imagem 3, parte fundamental da exposição atual.',
+  },
+  {
+    src: '/imgs/img4.jpg',
+    alt: 'Imagem 4',
+    descricao: 'Informações sobre a imagem 4 e sua relevância para o museu.',
+  },
+  {
+    src: '/imgs/img5.jpg',
+    alt: 'Imagem 5',
+    descricao: 'A imagem 5 representa um momento marcante da história local.',
   },
 ];
 
-export default function Artigos() {
-  const [currentArticleId, setCurrentArticleId] = useState<number>(1);
+export default function Galeria() {
+  const [modalImage, setModalImage] = useState<null | (typeof images)[0]>(null);
 
-  const prevArticle = () => {
-    setCurrentArticleId((prev) => (prev > 1 ? prev - 1 : mockData.length));
-  };
-
-  const nextArticle = () => {
-    setCurrentArticleId((prev) => (prev < mockData.length ? prev + 1 : 1));
-  };
-
-  const currentArticle = mockData.find((article) => article.id === currentArticleId);
+  const closeModal = () => setModalImage(null);
 
   return (
-    <div className="relative min-h-screen bg-background">
-      <main className=" m-auto h-screen mb-10">
-        <Header />
-        <div className="pb-20"></div>
-        {currentArticle?.templates.map((item) =>
-          renderTemplate(item.template as keyof typeof templates, item.image, item.text)
-        )}
+    <div className="min-h-screen flex flex-col bg-background">
+      <Header />
 
-        <div className="flex justify-center items-center mt-8">
-          <button
-            className="px-4 py-2 bg-secondary text-secondary-foreground rounded-l-full hover:bg-secondary/90 transition-colors"
-            onClick={prevArticle}
-          >
-            Anterior
-          </button>
+      <main className="flex-grow bg-white py-10 px-4">
+        <div className="max-w-6xl mx-auto space-y-12">
+          <h1 className="text-3xl font-bold text-center text-primary mb-8">
+            Artigos do Museu
+          </h1>
 
-          <div className="flex items-center mx-4">
-            <span className="text-lg text-primary-foreground">
-              Artigo {currentArticleId} de {mockData.length}
-            </span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            {images.map((item) => (
+              <button
+                type="button"
+                key={item.src}
+                onClick={() => setModalImage(item)}
+                className="flex flex-col md:flex-row bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition"
+              >
+                <Image
+                  src={item.src}
+                  alt={item.alt}
+                  width={300}
+                  height={200}
+                  className="object-contain w-full md:w-[300px] h-[200px] bg-gray-100"
+                />
+                <div className="p-4 flex items-center text-gray-800 text-left">
+                  <p className="text-base">{item.descricao}</p>
+                </div>
+              </button>
+            ))}
           </div>
-
-          <button
-            className="px-4 py-2 bg-secondary text-secondary-foreground rounded-r-full hover:bg-secondary/90 transition-colors"
-            onClick={nextArticle}
-          >
-            Próximo
-          </button>
         </div>
 
-        <Footer />
+        {/* Modal */}
+        {modalImage && (
+          <dialog
+            open
+            aria-modal="true"
+            onClick={closeModal}
+            onKeyDown={(e) => e.key === 'Escape' && closeModal()}
+            className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50 m-0 p-0 w-full h-full border-none"
+          >
+            <div
+              role="document"
+              onClick={(e) => e.stopPropagation()}
+              onKeyDown={(e) => e.stopPropagation()}
+              className="bg-white p-6 rounded-lg max-w-4xl w-full flex flex-col md:flex-row gap-6"
+            >
+              <div className="flex justify-center items-center">
+                <Image
+                  src={modalImage.src}
+                  alt={modalImage.alt}
+                  width={600}
+                  height={400}
+                  className="object-contain max-h-[80vh]"
+                />
+              </div>
+              <div className="flex items-center text-gray-800">
+                <p className="text-lg">{modalImage.descricao}</p>
+              </div>
+              <button
+                type="button"
+                onClick={closeModal}
+                className="absolute top-4 right-4 text-white text-3xl font-bold"
+              >
+                &times;
+              </button>
+            </div>
+          </dialog>
+        )}
       </main>
+
+      <Footer />
     </div>
   );
 }

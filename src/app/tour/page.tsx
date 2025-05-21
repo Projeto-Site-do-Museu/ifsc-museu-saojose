@@ -1,4 +1,4 @@
-import Tour3D from "@/components/Tour3D";
+import Tour3D from '@/components/Tour3D';
 
 export default function TourPage() {
   return (

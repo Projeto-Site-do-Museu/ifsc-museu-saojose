@@ -1,33 +1,39 @@
-"use client";
+'use client';
 
-import InteractiveCarousel from "@/components/InteractiveCarousel";
-import "../globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import InteractiveCarousel from '@/components/InteractiveCarousel';
+import '../globals.css';
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
 
 export default function Home() {
   return (
-    <div className=" m-auto overflow-x-hidden">
-      <div className="relative min-h-screen bg-cover bg-center flex flex-col items-center justify-center">
-        <main className="w-full h-screen overflow-hidden m-auto bg-cover bg-center md:bg-[url('/imgs/bg1.png')] bg-[url('/imgs/bg1.jpg')] gap-6">
-          <Header />
-          <div className="flex items-center justify-center">
-            <div className="w-full h-screen z-0 gradient-primary">
-              <div className="relative z-10 m-auto flex-1 flex flex-col items-center justify-center px-4 pt-[16vh] pb-[20px] text-center md:items-center md:text-left md:max-w-[50%]">
-                <h1 className="text-4xl font-michroma font-bold mb-2">
-                  Acervo
-                  <br />
-                  do museu
-                </h1>
-                <p className="mt-4 font-worksans font-bold text-xs md:text-2xl">
-                  O Museu Histórico de São José contém diversos itens em seu acervo que contam um pouco mais sobre a história e cultura de São José, que tal conhecer?
-                </p>
-              </div>
+    <div
+      className="min-h-screen flex flex-col overflow-x-hidden"
+      style={{ backgroundColor: '#f2f2f2', color: '#111' }}
+    >
+      <main className="relative flex-1">
+        <Header />
+        <section className="w-full min-h-screen flex flex-col items-center justify-start pt-20">
+          <div className="max-w-5xl w-full mx-auto px-6">
+            <div className="bg-white/90 border border-gray-300 rounded-2xl shadow-lg shadow-gray-300/40 p-10 mb-12">
+              <h1 className="text-5xl md:text-6xl font-bold font-michroma mb-6 leading-tight drop-shadow-lg text-center text-black">
+                Acervo
+                <span className="sm:inline hidden">&nbsp;</span>
+                <span className="block sm:hidden" />
+                do museu
+              </h1>
+              <p className="text-lg md:text-2xl font-worksans font-medium drop-shadow-md text-center text-black">
+                O Museu Histórico de São José contém diversos itens em seu
+                acervo que contam um pouco mais sobre a história e cultura de
+                São José. Que tal conhecer?
+              </p>
+            </div>
+            <div className="max-w-6xl mx-auto px-4">
               <InteractiveCarousel />
             </div>
           </div>
-        </main>
-      </div>
+        </section>
+      </main>
       <Footer />
     </div>
   );
