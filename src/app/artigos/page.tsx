@@ -9,27 +9,22 @@ const images = [
   {
     src: '/imgs/img1.jpg',
     alt: 'Imagem 1',
-    descricao: 'Descrição da imagem 1',
   },
   {
     src: '/imgs/img2.jpg',
     alt: 'Imagem 2',
-    descricao: 'Descrição da imagem 2',
   },
   {
     src: '/imgs/img3.jpg',
     alt: 'Imagem 3',
-    descricao: 'Descrição da imagem 3',
   },
   {
     src: '/imgs/img4.jpg',
     alt: 'Imagem 4',
-    descricao: 'Descrição da imagem 4',
   },
   {
     src: '/imgs/img5.jpg',
     alt: 'Imagem 5',
-    descricao: 'Descrição da imagem 5',
   },
 ];
 
@@ -53,7 +48,6 @@ export default function Galeria() {
             />
           </div>
           <div className="text-center text-gray-800 text-lg font-medium mb-6">
-            {selected.descricao}
           </div>
 
           {/* Miniaturas */}
