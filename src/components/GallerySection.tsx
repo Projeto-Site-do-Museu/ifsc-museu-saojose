@@ -36,10 +36,6 @@ const items: Item[] = [
 export default function GallerySection() {
   return (
     <>
-      <h1 className="text-4xl font-bold text-primary-foreground mb-10">
-        Exposição de Arte
-      </h1>
-
       <div className="w-full overflow-y-auto no-scrollbar h-[75vh] p-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {items.map((item) => (

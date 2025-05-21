@@ -87,12 +87,6 @@ export default function Header() {
               href="/pecaMes"
               className="font-michroma text-primary-foreground"
             >
-              Peça do mês
-            </a>
-            <a
-              href="/artigos"
-              className="font-michroma text-primary-foreground"
-            >
               Artigos
             </a>
             <a href="/acervo" className="font-michroma text-primary-foreground">
