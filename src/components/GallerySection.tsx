@@ -23,8 +23,8 @@ export default function GallerySection() {
         }
         const data = await response.json();
         setItems(data);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : 'Erro desconhecido');
       } finally {
         setLoading(false);
       }

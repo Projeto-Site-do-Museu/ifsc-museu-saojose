@@ -1,6 +1,6 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import { NextResponse } from 'next/server';
-import path from 'path';
-import fs from 'fs/promises';
 
 export async function GET() {
   try {
@@ -15,4 +15,4 @@ export async function GET() {
       { status: 500 },
     );
   }
-} 
+}

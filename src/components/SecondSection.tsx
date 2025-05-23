@@ -56,7 +56,7 @@ export default function SecondSection() {
               ].map((src, index) => (
                 <CarouselItem
                   key={`slide-image-${src}`}
-                  className="w-full md:w-1/2 flex justify-center items-center px-2" 
+                  className="w-full md:w-1/2 flex justify-center items-center px-2"
                 >
                   <Image
                     width={1920}

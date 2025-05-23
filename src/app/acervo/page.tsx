@@ -1,9 +1,11 @@
 import '../globals.css';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
-import InteractiveCarousel, { type Item as CarouselItemData } from '@/components/InteractiveCarousel';
-import path from 'path';
-import fs from 'fs/promises';
+import InteractiveCarousel, {
+  type Item as CarouselItemData,
+} from '@/components/InteractiveCarousel';
 
 async function getCarouselData(): Promise<CarouselItemData[]> {
   try {
@@ -46,7 +48,9 @@ export default async function AcervoPage() {
               {carouselItems.length > 0 ? (
                 <InteractiveCarousel items={carouselItems} />
               ) : (
-                <p className="text-center text-gray-500">Não foi possível carregar o carrossel de obras.</p>
+                <p className="text-center text-gray-500">
+                  Não foi possível carregar o carrossel de obras.
+                </p>
               )}
             </div>
 
@@ -60,7 +64,6 @@ export default async function AcervoPage() {
                 </button>
               </a>
             </div>
-
           </div>
         </section>
       </main>

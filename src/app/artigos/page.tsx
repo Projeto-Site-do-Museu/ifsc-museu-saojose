@@ -26,8 +26,8 @@ export default function Galeria() {
         }
         const data = await response.json();
         setImages(data);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : 'Erro desconhecido');
       } finally {
         setLoading(false);
       }

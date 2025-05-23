@@ -9,7 +9,7 @@ export default function VideoGallery() {
 
   useEffect(() => {
     const fetchVideos = async () => {
-      setLoading(true); 
+      setLoading(true);
       try {
         const response = await fetch('/api/videos');
         if (!response.ok) {
@@ -17,8 +17,8 @@ export default function VideoGallery() {
         }
         const data = await response.json();
         setVideos(data);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : 'Erro desconhecido');
       } finally {
         setLoading(false);
       }
@@ -30,7 +30,9 @@ export default function VideoGallery() {
   if (loading) {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-7xl mx-auto p-4 justify-center items-center">
-        <p className="text-xl text-gray-700 col-span-full text-center">Carregando vídeos...</p>
+        <p className="text-xl text-gray-700 col-span-full text-center">
+          Carregando vídeos...
+        </p>
       </div>
     );
   }
@@ -38,7 +40,9 @@ export default function VideoGallery() {
   if (error) {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-7xl mx-auto p-4 justify-center items-center">
-        <p className="text-xl text-red-500 col-span-full text-center">Erro: {error}</p>
+        <p className="text-xl text-red-500 col-span-full text-center">
+          Erro: {error}
+        </p>
       </div>
     );
   }
@@ -46,7 +50,9 @@ export default function VideoGallery() {
   if (videos.length === 0) {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-7xl mx-auto p-4 justify-center items-center">
-        <p className="text-xl text-gray-700 col-span-full text-center">Nenhum vídeo encontrado.</p>
+        <p className="text-xl text-gray-700 col-span-full text-center">
+          Nenhum vídeo encontrado.
+        </p>
       </div>
     );
   }
