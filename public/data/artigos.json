@@ -1,0 +1,27 @@
+[
+  {
+    "src": "/imgs/img1.jpg",
+    "alt": "Imagem 1",
+    "descricao": "Esta é a descrição da imagem 1. Um item importante do nosso acervo."
+  },
+  {
+    "src": "/imgs/img2.jpg",
+    "alt": "Imagem 2",
+    "descricao": "Descrição da imagem 2, explicando seu contexto e importância histórica."
+  },
+  {
+    "src": "/imgs/img3.jpg",
+    "alt": "Imagem 3",
+    "descricao": "Detalhes sobre a imagem 3, parte fundamental da exposição atual."
+  },
+  {
+    "src": "/imgs/img4.jpg",
+    "alt": "Imagem 4",
+    "descricao": "Informações sobre a imagem 4 e sua relevância para o museu."
+  },
+  {
+    "src": "/imgs/img5.jpg",
+    "alt": "Imagem 5",
+    "descricao": "A imagem 5 representa um momento marcante da história local."
+  }
+] 

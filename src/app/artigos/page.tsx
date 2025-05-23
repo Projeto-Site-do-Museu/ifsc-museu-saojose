@@ -3,43 +3,64 @@
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const images = [
-  {
-    src: '/imgs/img1.jpg',
-    alt: 'Imagem 1',
-    descricao:
-      'Esta é a descrição da imagem 1. Um item importante do nosso acervo.',
-  },
-  {
-    src: '/imgs/img2.jpg',
-    alt: 'Imagem 2',
-    descricao:
-      'Descrição da imagem 2, explicando seu contexto e importância histórica.',
-  },
-  {
-    src: '/imgs/img3.jpg',
-    alt: 'Imagem 3',
-    descricao:
-      'Detalhes sobre a imagem 3, parte fundamental da exposição atual.',
-  },
-  {
-    src: '/imgs/img4.jpg',
-    alt: 'Imagem 4',
-    descricao: 'Informações sobre a imagem 4 e sua relevância para o museu.',
-  },
-  {
-    src: '/imgs/img5.jpg',
-    alt: 'Imagem 5',
-    descricao: 'A imagem 5 representa um momento marcante da história local.',
-  },
-];
+interface ImageItem {
+  src: string;
+  alt: string;
+  descricao: string;
+}
 
 export default function Galeria() {
-  const [modalImage, setModalImage] = useState<null | (typeof images)[0]>(null);
+  const [images, setImages] = useState<ImageItem[]>([]);
+  const [modalImage, setModalImage] = useState<null | ImageItem>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const response = await fetch('/api/artigos');
+        if (!response.ok) {
+          throw new Error('Falha ao buscar imagens');
+        }
+        const data = await response.json();
+        setImages(data);
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchImages();
+  }, []);
 
   const closeModal = () => setModalImage(null);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col bg-background">
+        <Header />
+        <main className="flex-grow bg-white py-10 px-4 flex justify-center items-center">
+          <p className="text-xl text-gray-700">Carregando artigos...</p>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex flex-col bg-background">
+        <Header />
+        <main className="flex-grow bg-white py-10 px-4 flex justify-center items-center">
+          <p className="text-xl text-red-500">Erro: {error}</p>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -74,7 +95,6 @@ export default function Galeria() {
           </div>
         </div>
 
-        {/* Modal */}
         {modalImage && (
           <dialog
             open

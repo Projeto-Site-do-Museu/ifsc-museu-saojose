@@ -1,10 +1,56 @@
-interface VideoGalleryProps {
-  videos?: string[];
-}
+'use client';
 
-export default function VideoGallery({
-  videos = ['1.mp4', '2.mp4', '3.mp4', '4.mp4', '5.mp4', '6.mp4'],
-}: VideoGalleryProps) {
+import { useEffect, useState } from 'react';
+
+export default function VideoGallery() {
+  const [videos, setVideos] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      setLoading(true); 
+      try {
+        const response = await fetch('/api/videos');
+        if (!response.ok) {
+          throw new Error('Falha ao buscar vídeos');
+        }
+        const data = await response.json();
+        setVideos(data);
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchVideos();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-7xl mx-auto p-4 justify-center items-center">
+        <p className="text-xl text-gray-700 col-span-full text-center">Carregando vídeos...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-7xl mx-auto p-4 justify-center items-center">
+        <p className="text-xl text-red-500 col-span-full text-center">Erro: {error}</p>
+      </div>
+    );
+  }
+
+  if (videos.length === 0) {
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-7xl mx-auto p-4 justify-center items-center">
+        <p className="text-xl text-gray-700 col-span-full text-center">Nenhum vídeo encontrado.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-7xl mx-auto">
       {videos.map((video) => (

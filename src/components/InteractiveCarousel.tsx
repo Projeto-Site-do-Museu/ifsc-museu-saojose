@@ -6,62 +6,50 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+  type CarouselApi,
 } from '@/components/ui/carousel';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-interface Item {
+export interface Item {
   id: number;
   img: string;
   text: string;
 }
 
-const items: Item[] = [
-  {
-    id: 1,
-    img: '/imgs/card1.png',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque molestie, diam in condimentum consectetur, nibh tortor facilisis massa, in convallis velit enim nec enim.',
-  },
-  {
-    id: 2,
-    img: '/imgs/img3.jpg',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque molestie, diam in condimentum consectetur, nibh tortor facilisis massa, in convallis velit enim nec enim.',
-  },
-  {
-    id: 3,
-    img: '/imgs/img5.jpg',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque molestie, diam in condimentum consectetur, nibh tortor facilisis massa, in convallis velit enim nec enim.',
-  },
-  {
-    id: 4,
-    img: '/imgs/img13.jpg',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque molestie, diam in condimentum consectetur, nibh tortor facilisis massa, in convallis velit enim nec enim.',
-  },
-  {
-    id: 5,
-    img: '/imgs/img18.jpg',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque molestie, diam in condimentum consectetur, nibh tortor facilisis massa, in convallis velit enim nec enim.',
-  },
-];
+interface InteractiveCarouselProps {
+  items: Item[];
+}
 
-export default function InteractiveCarousel() {
-  const [activeItem, setActiveItem] = useState<number | null>(null);
+export default function InteractiveCarousel({ items: initialItems }: InteractiveCarouselProps) {
+  const [items, setItems] = useState<Item[]>(initialItems || []);
+  const [expandedItemId, setExpandedItemId] = useState<number | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
 
-  const handleClick = (id: number) => {
-    setActiveItem(activeItem === id ? null : id);
-  };
+  useEffect(() => {
+    setItems(initialItems || []);
+  }, [initialItems]);
+
+  const handleCardClick = useCallback((id: number) => {
+    setExpandedItemId(id);
+  }, []);
+
+  const handleCloseExpandedCard = useCallback(() => {
+    setExpandedItemId(null);
+  }, []);
 
   const handleClickOutside = useCallback(
     (event: MouseEvent) => {
       if (
         carouselRef.current &&
         !carouselRef.current.contains(event.target as Node) &&
-        activeItem !== null
+        expandedItemId !== null
       ) {
-        setActiveItem(null);
+        handleCloseExpandedCard();
       }
     },
-    [activeItem],
+    [expandedItemId, handleCloseExpandedCard],
   );
 
   useEffect(() => {
@@ -71,54 +59,74 @@ export default function InteractiveCarousel() {
     };
   }, [handleClickOutside]);
 
+  if (!items || items.length === 0) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <p className="text-xl text-gray-700">Nenhum item para exibir no carrossel.</p>
+      </div>
+    );
+  }
+  
+  const expandedItem = items.find(item => item.id === expandedItemId);
+
   return (
-    <div className="w-full flex flex-col md:flex-row" ref={carouselRef}>
+    <div className="w-full flex flex-col md:flex-row items-start" ref={carouselRef}>
       <div
-        className={`flex-shrink-0 ${
-          activeItem !== null
-            ? 'w-full md:w-[1000px] px-4 md:px-10'
-            : 'w-0 px-0'
+        className={`transition-all duration-500 ease-in-out flex-shrink-0 ${
+          expandedItem
+            ? 'w-full md:w-1/2 lg:w-2/5 p-4' 
+            : 'w-0 p-0 overflow-hidden'
         }`}
       >
-        {activeItem !== null &&
-          items.find((item) => item.id === activeItem) && (
-            <ExpandedCard
-              item={items.find((item) => item.id === activeItem) || items[0]}
-            />
-          )}
+        {expandedItem && (
+          <div className="bg-white rounded-lg shadow-xl p-6">
+            <ExpandedCard item={expandedItem} />
+            <button 
+              onClick={handleCloseExpandedCard} 
+              className="mt-4 text-sm text-blue-600 hover:text-blue-800"
+            >
+              Fechar
+            </button>
+          </div>
+        )}
       </div>
 
       <div
-        className={`${activeItem === null ? 'w-full opacity-100' : 'w-0 opacity-0'}`}
+        className={`transition-all duration-500 ease-in-out flex flex-col items-center ${
+          expandedItem
+            ? 'w-full md:w-1/2 lg:w-3/5' 
+            : 'w-full' 
+        }`}
       >
-        <Carousel
-          opts={{
-            dragFree: activeItem !== null,
-          }}
-        >
-          <CarouselContent>
-            {items.map((item) => (
-              <CarouselItem key={item.id}>
-                <CarouselCard
-                  item={item}
-                  isActive={activeItem !== null}
-                  onClick={handleClick}
-                />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-
-        {/* Button */}
-        <div className="mt-10 flex justify-center">
-          <a href="/acervo/acervoCompleto">
-            <button
-              type="button"
-              className="bg-destructive text-white px-10 py-4 rounded-2xl text-xl md:text-2xl font-semibold shadow-md hover:shadow-xl hover:scale-105 transition-transform duration-300 ease-in-out"
+        <div className="w-full flex items-center justify-center">
+          <div className="relative w-full px-16">
+            <Carousel
+              opts={{
+                align: "start",
+                loop: items.length > 4, 
+              }}
+              className="w-full max-w-none py-4 overflow-visible"
             >
-              Ver acervo completo
-            </button>
-          </a>
+              <CarouselContent className="-ml-2 sm:-ml-3 md:-ml-4"> 
+                {items.map((item, index) => (
+                  <CarouselItem 
+                    key={item.id} 
+                    className="pl-2 sm:pl-3 md:pl-4 basis-[95%] sm:basis-[80%] md:basis-[60%] lg:basis-[45%] xl:basis-[32%]"
+                  >
+                    <div className="p-1 h-full">
+                      <CarouselCard
+                        item={item}
+                        isActive={expandedItemId === item.id}
+                        onClick={handleCardClick}
+                      />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="bg-black hover:bg-gray-800 text-white border-black" />
+              <CarouselNext className="bg-black hover:bg-gray-800 text-white border-black" />
+            </Carousel>
+          </div>
         </div>
       </div>
     </div>
