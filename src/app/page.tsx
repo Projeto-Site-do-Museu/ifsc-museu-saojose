@@ -7,6 +7,7 @@ import IntroArtigos from '@/components/IntroArtigos';
 import SecondSection from '@/components/SecondSection';
 import ThirdSection from '@/components/ThirdSection';
 import VideoBanner from '@/components/VideoBanner';
+import VisitorCounter from '@/components/VisitorCounter';
 import { useEffect, useState } from 'react';
 import Header from '../components/Header';
 
@@ -107,6 +108,9 @@ export default function Home() {
       <IntroAcervo />
       <IntroArtigos />
       <ThirdSection />
+
+      <VisitorCounter />
+
       <Footer />
     </div>
   );
