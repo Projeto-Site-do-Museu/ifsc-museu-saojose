@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function RegisterForm({ onClose }: { onClose: () => void }) {
+export default function RegisterForm({ onClose, onRegisterSuccess }: { onClose: () => void, onRegisterSuccess: (usuario: { nome: string, email: string }) => void }) {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -20,10 +20,13 @@ export default function RegisterForm({ onClose }: { onClose: () => void }) {
     if (!res.ok) {
       setErro(data.error || 'Erro ao cadastrar.');
     } else {
-      setSucesso('Cadastro realizado! Faça login.');
+      setSucesso('Cadastro realizado!');
       setNome('');
       setEmail('');
       setSenha('');
+      // Loga automaticamente
+      onRegisterSuccess({ nome: data.nome, email: data.email });
+      onClose();
     }
   }
 

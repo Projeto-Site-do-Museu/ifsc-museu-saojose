@@ -13,21 +13,28 @@ export default function Header() {
   const [showRegister, setShowRegister] = useState(false);
   const [user, setUser] = useState<{ nome: string; email: string } | null>(null);
   const [showAccountMenu, setShowAccountMenu] = useState(false);
+  const [notificacao, setNotificacao] = useState('');
 
   // Carrega usuário do localStorage ao montar
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const userData = localStorage.getItem('usuario');
-      if (userData) setUser(JSON.parse(userData));
+      if (userData) {
+        setUser(JSON.parse(userData));
+        setNotificacao('Login realizado com sucesso!');
+        setTimeout(() => setNotificacao(''), 3000);
+      }
     }
   }, []);
 
   // Função chamada após login
   const handleLoginSuccess = (usuario: { nome: string; email: string }) => {
-    setUser(usuario);
+  setUser(usuario);
     localStorage.setItem('usuario', JSON.stringify(usuario));
     setShowLogin(false);
     setShowRegister(false);
+    setNotificacao('Login realizado com sucesso!');
+    setTimeout(() => setNotificacao(''), 3000);
   };
 
   // Função para logout
@@ -47,6 +54,11 @@ export default function Header() {
 
   return (
     <header className="w-full sticky top-0 z-30 bg-primary">
+      {notificacao && (
+          <div className="fixed top-4 left-1/2 -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded shadow-lg z-[9999] transition">
+          {notificacao}
+          </div>
+        )}
       <div className="flex justify-between items-center py-4 px-6 text-primary-foreground bg-primary">
         <div className="flex items-center">
           <a href="/">
@@ -184,7 +196,7 @@ export default function Header() {
       {showRegister && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
           <div className="bg-white rounded-lg shadow-lg max-w-sm w-full mx-2 relative">
-            <RegisterForm onClose={closeModals} />
+            <RegisterForm onClose={closeModals} onRegisterSuccess={handleLoginSuccess} />
           </div>
         </div>
       )}
