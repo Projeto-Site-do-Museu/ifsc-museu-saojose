@@ -81,6 +81,107 @@ npm run start
 
 Acesse `http://localhost:3000` no navegador para ver a aplicação em funcionamento.
 
+### 6. Banco de Dados: MySQL + Prisma
+
+#### Dependências
+
+- [MySQL](https://www.mysql.com/) (Servidor de banco de dados relacional)
+- [Prisma ORM](https://www.prisma.io/) (`prisma` e `@prisma/client`)
+- [bcryptjs](https://www.npmjs.com/package/bcryptjs) (para hash de senhas)
+
+Instale as dependências do Prisma no projeto:
+
+```bash
+npm install prisma @prisma/client bcryptjs
+npx prisma init
+```
+
+#### Configuração do MySQL
+
+1. **Instale o MySQL** (caso não tenha):
+
+   ```bash
+   sudo apt update
+   sudo apt install mysql-server
+   ```
+
+2. **Crie um usuário e banco de dados:**
+
+   ```bash
+   sudo mysql
+   ```
+
+   No prompt do MySQL:
+
+   ```sql
+   CREATE USER 'admin'@'localhost' IDENTIFIED BY 'password';
+   CREATE DATABASE database_museu;
+   GRANT ALL PRIVILEGES ON database_museu.* TO 'admin'@'localhost';
+   FLUSH PRIVILEGES;
+   EXIT;
+   ```
+
+3. **Configure a string de conexão no arquivo `.env`:**
+
+   ```env
+   DATABASE_URL="mysql://admin:password@localhost:3306/database_museu"
+   ```
+
+#### Comandos Prisma
+
+- **Gerar as tabelas no banco:**
+
+  ```bash
+  npx prisma migrate dev --name init
+  ```
+
+- **Visualizar e editar dados via interface web:**
+
+  ```bash
+  npx prisma studio
+  ```
+
+- **Gerar o client do Prisma (após alterar o schema):**
+
+  ```bash
+  npx prisma generate
+  ```
+
+#### Boas Práticas
+
+- **Nunca salve senhas em texto puro**: Sempre utilize hash (exemplo: `bcryptjs`).
+- **Versione o schema do banco**: Use migrations do Prisma para manter o histórico das alterações.
+- **Use variáveis de ambiente**: Nunca exponha senhas ou dados sensíveis no código.
+- **Faça backup regular do banco**: Especialmente em produção.
+- **Utilize o Prisma Client para todas as queries**: Evita SQL Injection e facilita manutenção.
+- **Mantenha o schema.prisma atualizado**: Sempre que alterar entidades ou relacionamentos.
+
+#### Acesso ao Banco de Dados
+
+- **Acesso via terminal:**
+
+  ```bash
+  mysql -u admin -p -h localhost -P 3306 database_museu
+  ```
+
+- **Acesso via Prisma Studio:**
+
+  ```bash
+  npx prisma studio
+  ```
+
+#### Referências
+
+- [Documentação Prisma](https://www.prisma.io/docs/)
+- [Documentação MySQL](https://dev.mysql.com/doc/)
+- [Prisma + Next.js](https://www.prisma.io/docs/guides/development-environment/nextjs)
+
+---
+
+**Observação:**  
+Sempre que alterar o arquivo `prisma/schema.prisma`, rode `npx prisma migrate dev` para atualizar o banco de dados.
+
+
 # Boas práticas
 
 ### O projeto foi criado em Next.JS com Tailwind.CSS, utilizando conceitos de MobileFirst.
