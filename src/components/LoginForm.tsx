@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function LoginForm({ onClose }: { onClose: () => void }) {
+export default function LoginForm({ onClose, onLoginSuccess }: { onClose: () => void, onLoginSuccess: (usuario: { nome: string, email: string }) => void }) {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [erro, setErro] = useState('');
@@ -20,9 +20,9 @@ export default function LoginForm({ onClose }: { onClose: () => void }) {
       setErro(data.error || 'Erro ao logar.');
     } else {
       setSucesso('Login realizado!');
-      // Aqui você pode salvar o usuário no estado global/contexto/cookie
       setEmail('');
       setSenha('');
+      onLoginSuccess({ nome: data.nome, email: data.email });
       onClose();
     }
   }

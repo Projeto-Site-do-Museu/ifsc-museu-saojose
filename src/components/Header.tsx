@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import LoginForm from './LoginForm';
@@ -11,6 +11,31 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
+  const [user, setUser] = useState<{ nome: string; email: string } | null>(null);
+  const [showAccountMenu, setShowAccountMenu] = useState(false);
+
+  // Carrega usuário do localStorage ao montar
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const userData = localStorage.getItem('usuario');
+      if (userData) setUser(JSON.parse(userData));
+    }
+  }, []);
+
+  // Função chamada após login
+  const handleLoginSuccess = (usuario: { nome: string; email: string }) => {
+    setUser(usuario);
+    localStorage.setItem('usuario', JSON.stringify(usuario));
+    setShowLogin(false);
+    setShowRegister(false);
+  };
+
+  // Função para logout
+  const handleLogout = () => {
+    setUser(null);
+    localStorage.removeItem('usuario');
+    setShowAccountMenu(false);
+  };
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -45,18 +70,44 @@ export default function Header() {
           <a href="/artigos" className="font-worksans hover:text-accent hover:underline">Artigos</a>
           <a href="/tour" className="font-worksans hover:text-accent hover:underline">Tour Virtual</a>
           <a href="/videos" className="font-worksans hover:text-accent hover:underline">Nossos Videos</a>
-          <button
-            onClick={() => setShowLogin(true)}
-            className="ml-4 px-4 py-2 bg-white text-primary rounded font-bold border border-primary hover:bg-primary hover:text-white transition"
-          >
-            Entrar
-          </button>
-          <button
-            onClick={() => setShowRegister(true)}
-            className="ml-2 px-4 py-2 bg-accent text-white rounded font-bold border border-accent hover:bg-white hover:text-accent transition"
-          >
-            Cadastrar
-          </button>
+          {!user ? (
+            <>
+              <button
+                onClick={() => setShowLogin(true)}
+                className="ml-4 px-4 py-2 bg-white text-primary rounded font-bold border border-primary hover:bg-primary hover:text-white transition"
+              >
+                Entrar
+              </button>
+              <button
+                onClick={() => setShowRegister(true)}
+                className="ml-2 px-4 py-2 bg-accent text-white rounded font-bold border border-accent hover:bg-white hover:text-accent transition"
+              >
+                Cadastrar
+              </button>
+            </>
+          ) : (
+            <div className="relative ml-4">
+              <button
+                className="px-4 py-2 bg-white text-primary rounded font-bold border border-primary hover:bg-primary hover:text-white transition"
+                onClick={() => setShowAccountMenu((open) => !open)}
+                aria-haspopup="true"
+                aria-expanded={showAccountMenu}
+              >
+                Minha conta
+              </button>
+              {showAccountMenu && (
+                <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg z-50">
+                  <div className="px-4 py-2 text-primary font-semibold border-b">{user.nome}</div>
+                  <button
+                    onClick={handleLogout}
+                    className="text-black w-full text-left px-4 py-2 hover:bg-accent hover:text-white transition"
+                  >
+                    Sair
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </nav>
 
         {/* Botão menu mobile */}
@@ -80,18 +131,34 @@ export default function Header() {
             <a href="/acervo" className="font-michroma text-primary-foreground" onClick={() => setIsMenuOpen(false)}>Acervo</a>
             <a href="/tour" className="font-michroma text-primary-foreground" onClick={() => setIsMenuOpen(false)}>Tour Virtual</a>
             <a href="/videos" className="font-michroma text-primary-foreground" onClick={() => setIsMenuOpen(false)}>Nossos Videos</a>
-            <button
-              onClick={() => { setShowLogin(true); setIsMenuOpen(false); }}
-              className="mt-4 px-4 py-2 bg-white text-primary rounded font-bold border border-primary hover:bg-primary hover:text-white transition"
-            >
-              Entrar
-            </button>
-            <button
-              onClick={() => { setShowRegister(true); setIsMenuOpen(false); }}
-              className="mt-2 px-4 py-2 bg-accent text-white rounded font-bold border border-accent hover:bg-white hover:text-accent transition"
-            >
-              Cadastrar
-            </button>
+            {!user ? (
+              <>
+                <button
+                  onClick={() => { setShowLogin(true); setIsMenuOpen(false); }}
+                  className="mt-4 px-4 py-2 bg-white text-primary rounded font-bold border border-primary hover:bg-primary hover:text-white transition"
+                >
+                  Entrar
+                </button>
+                <button
+                  onClick={() => { setShowRegister(true); setIsMenuOpen(false); }}
+                  className="mt-2 px-4 py-2 bg-accent text-white rounded font-bold border border-accent hover:bg-white hover:text-accent transition"
+                >
+                  Cadastrar
+                </button>
+              </>
+            ) : (
+              <div className="mt-4 flex flex-col gap-2">
+                <span className="px-4 py-2 bg-white text-primary rounded font-bold border border-primary">
+                  {user.nome}
+                </span>
+                <button
+                  onClick={() => { handleLogout(); setIsMenuOpen(false); }}
+                  className="px-4 py-2 bg-accent text-black rounded font-bold border border-accent hover:bg-white hover:text-accent transition"
+                >
+                  Sair
+                </button>
+              </div>
+            )}
             <button
               type="button"
               onClick={() => setIsMenuOpen(false)}
@@ -108,7 +175,7 @@ export default function Header() {
       {showLogin && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
           <div className="bg-white rounded-lg shadow-lg max-w-sm w-full mx-2 relative">
-            <LoginForm onClose={closeModals} />
+            <LoginForm onClose={closeModals} onLoginSuccess={handleLoginSuccess} />
           </div>
         </div>
       )}
