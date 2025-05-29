@@ -170,6 +170,22 @@ npx prisma init
   npx prisma studio
   ```
 
+### Como gerar o hash da senha do admin
+
+Para criar um usuário admin manualmente no banco, você precisa gerar o hash da senha.  
+No terminal, execute:
+
+```sh
+node
+```
+E então, dentro do prompt do Node.js, digite:
+
+```js
+const bcrypt = require('bcryptjs');
+bcrypt.hashSync('ifsc.br.museu!##&', 10);
+```
+O resultado será o hash da senha. Use esse valor no campo `senhaHash` ao criar o usuário admin no banco de dados.
+
 #### Referências
 
 - [Documentação Prisma](https://www.prisma.io/docs/)
