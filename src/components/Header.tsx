@@ -4,13 +4,20 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
 import { GiHamburgerMenu } from 'react-icons/gi';
+import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
 
-  const toggleMenu = () => {
-    console.log('Menu clicked, current state:', isMenuOpen);
-    setIsMenuOpen(!isMenuOpen);
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  // Fecha todos os modais
+  const closeModals = () => {
+    setShowLogin(false);
+    setShowRegister(false);
   };
 
   return (
@@ -31,39 +38,28 @@ export default function Header() {
           </span>
         </div>
 
-        <nav className="hidden md:flex space-x-[3vw] flex-grow justify-end">
-          <a
-            href="/about"
-            className="font-worksans hover:text-accent hover:underline"
+        {/* Navegação Desktop */}
+        <nav className="hidden md:flex space-x-[3vw] flex-grow justify-end items-center">
+          <a href="/about" className="font-worksans hover:text-accent hover:underline">Sobre</a>
+          <a href="/acervo" className="font-worksans hover:text-accent hover:underline">Acervo</a>
+          <a href="/artigos" className="font-worksans hover:text-accent hover:underline">Artigos</a>
+          <a href="/tour" className="font-worksans hover:text-accent hover:underline">Tour Virtual</a>
+          <a href="/videos" className="font-worksans hover:text-accent hover:underline">Nossos Videos</a>
+          <button
+            onClick={() => setShowLogin(true)}
+            className="ml-4 px-4 py-2 bg-white text-primary rounded font-bold border border-primary hover:bg-primary hover:text-white transition"
           >
-            Sobre
-          </a>
-          <a
-            href="/acervo"
-            className="font-worksans hover:text-accent hover:underline"
+            Entrar
+          </button>
+          <button
+            onClick={() => setShowRegister(true)}
+            className="ml-2 px-4 py-2 bg-accent text-white rounded font-bold border border-accent hover:bg-white hover:text-accent transition"
           >
-            Acervo
-          </a>
-          <a
-            href="/artigos"
-            className="font-worksans hover:text-accent hover:underline"
-          >
-            Artigos
-          </a>
-          <a
-            href="/tour"
-            className="font-worksans hover:text-accent hover:underline"
-          >
-            Tour Virtual
-          </a>
-          <a
-            href="/videos"
-            className="font-worksans hover:text-accent hover:underline"
-          >
-            Nossos Videos
-          </a>
+            Cadastrar
+          </button>
         </nav>
 
+        {/* Botão menu mobile */}
         <button
           type="button"
           onClick={toggleMenu}
@@ -74,30 +70,28 @@ export default function Header() {
         </button>
       </div>
 
+      {/* Menu Mobile */}
       {isMenuOpen && (
-        <div className="fixed inset-y-0 right-0 w-1/2 bg-primary z-50 p-6">
+        <div className="fixed inset-y-0 right-0 w-2/3 max-w-xs bg-primary z-50 p-6 flex flex-col">
           <nav className="flex flex-col space-y-4">
-            <a href="/" className="font-michroma text-primary-foreground">
-              Home
-            </a>
-            <a href="/about" className="font-michroma text-primary-foreground">
-              Sobre
-            </a>
-            <a
-              href="/pecaMes"
-              className="font-michroma text-primary-foreground"
+            <a href="/" className="font-michroma text-primary-foreground" onClick={() => setIsMenuOpen(false)}>Home</a>
+            <a href="/about" className="font-michroma text-primary-foreground" onClick={() => setIsMenuOpen(false)}>Sobre</a>
+            <a href="/artigos" className="font-michroma text-primary-foreground" onClick={() => setIsMenuOpen(false)}>Artigos</a>
+            <a href="/acervo" className="font-michroma text-primary-foreground" onClick={() => setIsMenuOpen(false)}>Acervo</a>
+            <a href="/tour" className="font-michroma text-primary-foreground" onClick={() => setIsMenuOpen(false)}>Tour Virtual</a>
+            <a href="/videos" className="font-michroma text-primary-foreground" onClick={() => setIsMenuOpen(false)}>Nossos Videos</a>
+            <button
+              onClick={() => { setShowLogin(true); setIsMenuOpen(false); }}
+              className="mt-4 px-4 py-2 bg-white text-primary rounded font-bold border border-primary hover:bg-primary hover:text-white transition"
             >
-              Artigos
-            </a>
-            <a href="/acervo" className="font-michroma text-primary-foreground">
-              Acervo
-            </a>
-            <a href="/tour" className="font-michroma text-primary-foreground">
-              Tour Virtual
-            </a>
-            <a href="/videos" className="font-michroma text-primary-foreground">
-              Nossos Videos
-            </a>
+              Entrar
+            </button>
+            <button
+              onClick={() => { setShowRegister(true); setIsMenuOpen(false); }}
+              className="mt-2 px-4 py-2 bg-accent text-white rounded font-bold border border-accent hover:bg-white hover:text-accent transition"
+            >
+              Cadastrar
+            </button>
             <button
               type="button"
               onClick={() => setIsMenuOpen(false)}
@@ -107,6 +101,24 @@ export default function Header() {
               <FaArrowLeft />
             </button>
           </nav>
+        </div>
+      )}
+
+      {/* Modal Login */}
+      {showLogin && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
+          <div className="bg-white rounded-lg shadow-lg max-w-sm w-full mx-2 relative">
+            <LoginForm onClose={closeModals} />
+          </div>
+        </div>
+      )}
+
+      {/* Modal Cadastro */}
+      {showRegister && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
+          <div className="bg-white rounded-lg shadow-lg max-w-sm w-full mx-2 relative">
+            <RegisterForm onClose={closeModals} />
+          </div>
         </div>
       )}
     </header>
