@@ -1,6 +1,12 @@
 import { useState } from 'react';
 
-export default function RegisterForm({ onClose, onRegisterSuccess }: { onClose: () => void, onRegisterSuccess: (usuario: { nome: string, email: string }) => void }) {
+export default function RegisterForm({
+  onClose,
+  onRegisterSuccess,
+}: {
+  onClose: () => void;
+  onRegisterSuccess: (usuario: { nome: string; email: string }) => void;
+}) {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -37,7 +43,7 @@ export default function RegisterForm({ onClose, onRegisterSuccess }: { onClose: 
         type="text"
         placeholder="Nome"
         value={nome}
-        onChange={e => setNome(e.target.value)}
+        onChange={(e) => setNome(e.target.value)}
         className="border rounded px-3 py-2 text-black"
         required
       />
@@ -45,7 +51,7 @@ export default function RegisterForm({ onClose, onRegisterSuccess }: { onClose: 
         type="email"
         placeholder="E-mail"
         value={email}
-        onChange={e => setEmail(e.target.value)}
+        onChange={(e) => setEmail(e.target.value)}
         className="border rounded px-3 py-2 text-black"
         required
       />
@@ -53,14 +59,22 @@ export default function RegisterForm({ onClose, onRegisterSuccess }: { onClose: 
         type="password"
         placeholder="Senha"
         value={senha}
-        onChange={e => setSenha(e.target.value)}
+        onChange={(e) => setSenha(e.target.value)}
         className="border rounded px-3 py-2 text-black"
         required
       />
       {erro && <div className="text-red-600 text-sm">{erro}</div>}
       {sucesso && <div className="text-green-600 text-sm">{sucesso}</div>}
-      <button type="submit" className="bg-primary text-white rounded py-2 mt-2">Cadastrar</button>
-      <button type="button" onClick={onClose} className="text-black text-sm mt-2 underline">Fechar</button>
+      <button type="submit" className="bg-primary text-white rounded py-2 mt-2">
+        Cadastrar
+      </button>
+      <button
+        type="button"
+        onClick={onClose}
+        className="text-black text-sm mt-2 underline"
+      >
+        Fechar
+      </button>
     </form>
   );
 }

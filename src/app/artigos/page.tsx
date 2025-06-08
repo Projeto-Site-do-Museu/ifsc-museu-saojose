@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
-import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Header from '@/components/Header';
+import Image from 'next/image';
+import { useState } from 'react';
 
 const artigos = [
   {
@@ -54,7 +54,9 @@ const artigos = [
 ];
 
 export default function Artigos() {
-  const [modalAtivo, setModalAtivo] = useState<null | typeof artigos[0]>(null);
+  const [modalAtivo, setModalAtivo] = useState<null | (typeof artigos)[0]>(
+    null,
+  );
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
@@ -67,9 +69,10 @@ export default function Artigos() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {artigos.map((artigo) => (
-            <div
+            <button
               key={artigo.src}
-              className="cursor-pointer group"
+              type="button"
+              className="cursor-pointer group text-left block w-full"
               onClick={() => setModalAtivo(artigo)}
             >
               <div className="relative overflow-hidden shadow-md">
@@ -100,7 +103,7 @@ export default function Artigos() {
                 </p>
                 <p className="text-xs text-gray-400 mt-1">{artigo.data}</p>
               </div>
-            </div>
+            </button>
           ))}
         </div>
 
@@ -109,9 +112,16 @@ export default function Artigos() {
             open
             className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 w-full h-full"
             onClick={() => setModalAtivo(null)}
+            onKeyDown={(e) => {
+              if (e.key === 'Escape') {
+                setModalAtivo(null);
+              }
+            }}
           >
             <div
+              role="document"
               onClick={(e) => e.stopPropagation()}
+              onKeyDown={(e) => e.stopPropagation()}
               className="bg-white rounded-lg p-6 max-w-3xl w-full mx-4 overflow-y-auto max-h-[90vh]"
             >
               <div className="mb-4">
@@ -142,6 +152,7 @@ export default function Artigos() {
               </p>
               <div className="text-right mt-4">
                 <button
+                  type="button"
                   onClick={() => setModalAtivo(null)}
                   className="text-sm text-gray-600 hover:underline"
                 >
@@ -157,8 +168,3 @@ export default function Artigos() {
     </div>
   );
 }
-
-
-
-
-

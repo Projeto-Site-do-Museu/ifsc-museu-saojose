@@ -8,12 +8,20 @@ export async function POST(request: Request) {
   const { nome, email, senha } = await request.json();
 
   if (!nome || !email || !senha) {
-    return NextResponse.json({ error: 'Preencha todos os campos.' }, { status: 400 });
+    return NextResponse.json(
+      { error: 'Preencha todos os campos.' },
+      { status: 400 },
+    );
   }
 
-  const usuarioExistente = await prisma.usuario.findUnique({ where: { email } });
+  const usuarioExistente = await prisma.usuario.findUnique({
+    where: { email },
+  });
   if (usuarioExistente) {
-    return NextResponse.json({ error: 'E-mail já cadastrado.' }, { status: 400 });
+    return NextResponse.json(
+      { error: 'E-mail já cadastrado.' },
+      { status: 400 },
+    );
   }
 
   const senhaHash = await bcrypt.hash(senha, 10);
@@ -22,5 +30,9 @@ export async function POST(request: Request) {
     data: { nome, email, senhaHash, role: 'viewer' },
   });
 
-  return NextResponse.json({ id: usuario.id, nome: usuario.nome, email: usuario.email });
+  return NextResponse.json({
+    id: usuario.id,
+    nome: usuario.nome,
+    email: usuario.email,
+  });
 }

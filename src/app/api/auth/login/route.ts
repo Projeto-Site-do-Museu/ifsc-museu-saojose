@@ -8,12 +8,18 @@ export async function POST(request: Request) {
   const { email, senha } = await request.json();
 
   if (!email || !senha) {
-    return NextResponse.json({ error: 'Preencha todos os campos.' }, { status: 400 });
+    return NextResponse.json(
+      { error: 'Preencha todos os campos.' },
+      { status: 400 },
+    );
   }
 
   const usuario = await prisma.usuario.findUnique({ where: { email } });
   if (!usuario) {
-    return NextResponse.json({ error: 'Usuário não encontrado.' }, { status: 401 });
+    return NextResponse.json(
+      { error: 'Usuário não encontrado.' },
+      { status: 401 },
+    );
   }
 
   const senhaCorreta = await bcrypt.compare(senha, usuario.senhaHash);
@@ -22,5 +28,9 @@ export async function POST(request: Request) {
   }
 
   // Aqui você pode gerar um token JWT ou usar cookies para autenticação
-  return NextResponse.json({ id: usuario.id, nome: usuario.nome, email: usuario.email });
+  return NextResponse.json({
+    id: usuario.id,
+    nome: usuario.nome,
+    email: usuario.email,
+  });
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import LoginForm from './LoginForm';
@@ -11,7 +11,9 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  const [user, setUser] = useState<{ nome: string; email: string } | null>(null);
+  const [user, setUser] = useState<{ nome: string; email: string } | null>(
+    null,
+  );
   const [showAccountMenu, setShowAccountMenu] = useState(false);
   const [notificacao, setNotificacao] = useState('');
 
@@ -29,7 +31,7 @@ export default function Header() {
 
   // Função chamada após login
   const handleLoginSuccess = (usuario: { nome: string; email: string }) => {
-  setUser(usuario);
+    setUser(usuario);
     localStorage.setItem('usuario', JSON.stringify(usuario));
     setShowLogin(false);
     setShowRegister(false);
@@ -55,10 +57,10 @@ export default function Header() {
   return (
     <header className="w-full sticky top-0 z-30 bg-primary">
       {notificacao && (
-          <div className="fixed top-4 left-1/2 -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded shadow-lg z-[9999] transition">
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded shadow-lg z-[9999] transition">
           {notificacao}
-          </div>
-        )}
+        </div>
+      )}
       <div className="flex justify-between items-center py-4 px-6 text-primary-foreground bg-primary">
         <div className="flex items-center">
           <a href="/">
@@ -77,20 +79,47 @@ export default function Header() {
 
         {/* Navegação Desktop */}
         <nav className="hidden md:flex space-x-[3vw] flex-grow justify-end items-center">
-          <a href="/about" className="font-worksans hover:text-accent hover:underline">Sobre</a>
-          <a href="/acervo" className="font-worksans hover:text-accent hover:underline">Acervo</a>
-          <a href="/artigos" className="font-worksans hover:text-accent hover:underline">Artigos</a>
-          <a href="/tour" className="font-worksans hover:text-accent hover:underline">Tour Virtual</a>
-          <a href="/videos" className="font-worksans hover:text-accent hover:underline">Nossos Videos</a>
+          <a
+            href="/about"
+            className="font-worksans hover:text-accent hover:underline"
+          >
+            Sobre
+          </a>
+          <a
+            href="/acervo"
+            className="font-worksans hover:text-accent hover:underline"
+          >
+            Acervo
+          </a>
+          <a
+            href="/artigos"
+            className="font-worksans hover:text-accent hover:underline"
+          >
+            Artigos
+          </a>
+          <a
+            href="/tour"
+            className="font-worksans hover:text-accent hover:underline"
+          >
+            Tour Virtual
+          </a>
+          <a
+            href="/videos"
+            className="font-worksans hover:text-accent hover:underline"
+          >
+            Nossos Videos
+          </a>
           {!user ? (
             <>
               <button
+                type="button"
                 onClick={() => setShowLogin(true)}
                 className="ml-4 px-4 py-2 bg-white text-primary rounded font-bold border border-primary hover:bg-primary hover:text-white transition"
               >
                 Entrar
               </button>
               <button
+                type="button"
                 onClick={() => setShowRegister(true)}
                 className="ml-2 px-4 py-2 bg-accent text-white rounded font-bold border border-accent hover:bg-white hover:text-accent transition"
               >
@@ -100,6 +129,7 @@ export default function Header() {
           ) : (
             <div className="relative ml-4">
               <button
+                type="button"
                 className="px-4 py-2 bg-white text-primary rounded font-bold border border-primary hover:bg-primary hover:text-white transition"
                 onClick={() => setShowAccountMenu((open) => !open)}
                 aria-haspopup="true"
@@ -109,8 +139,11 @@ export default function Header() {
               </button>
               {showAccountMenu && (
                 <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg z-50">
-                  <div className="px-4 py-2 text-primary font-semibold border-b">{user.nome}</div>
+                  <div className="px-4 py-2 text-primary font-semibold border-b">
+                    {user.nome}
+                  </div>
                   <button
+                    type="button"
                     onClick={handleLogout}
                     className="text-black w-full text-left px-4 py-2 hover:bg-accent hover:text-white transition"
                   >
@@ -137,22 +170,66 @@ export default function Header() {
       {isMenuOpen && (
         <div className="fixed inset-y-0 right-0 w-2/3 max-w-xs bg-primary z-50 p-6 flex flex-col">
           <nav className="flex flex-col space-y-4">
-            <a href="/" className="font-michroma text-primary-foreground" onClick={() => setIsMenuOpen(false)}>Home</a>
-            <a href="/about" className="font-michroma text-primary-foreground" onClick={() => setIsMenuOpen(false)}>Sobre</a>
-            <a href="/artigos" className="font-michroma text-primary-foreground" onClick={() => setIsMenuOpen(false)}>Artigos</a>
-            <a href="/acervo" className="font-michroma text-primary-foreground" onClick={() => setIsMenuOpen(false)}>Acervo</a>
-            <a href="/tour" className="font-michroma text-primary-foreground" onClick={() => setIsMenuOpen(false)}>Tour Virtual</a>
-            <a href="/videos" className="font-michroma text-primary-foreground" onClick={() => setIsMenuOpen(false)}>Nossos Videos</a>
+            <a
+              href="/"
+              className="font-michroma text-primary-foreground"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Home
+            </a>
+            <a
+              href="/about"
+              className="font-michroma text-primary-foreground"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Sobre
+            </a>
+            <a
+              href="/artigos"
+              className="font-michroma text-primary-foreground"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Artigos
+            </a>
+            <a
+              href="/acervo"
+              className="font-michroma text-primary-foreground"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Acervo
+            </a>
+            <a
+              href="/tour"
+              className="font-michroma text-primary-foreground"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Tour Virtual
+            </a>
+            <a
+              href="/videos"
+              className="font-michroma text-primary-foreground"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Nossos Videos
+            </a>
             {!user ? (
               <>
                 <button
-                  onClick={() => { setShowLogin(true); setIsMenuOpen(false); }}
+                  type="button"
+                  onClick={() => {
+                    setShowLogin(true);
+                    setIsMenuOpen(false);
+                  }}
                   className="mt-4 px-4 py-2 bg-white text-primary rounded font-bold border border-primary hover:bg-primary hover:text-white transition"
                 >
                   Entrar
                 </button>
                 <button
-                  onClick={() => { setShowRegister(true); setIsMenuOpen(false); }}
+                  type="button"
+                  onClick={() => {
+                    setShowRegister(true);
+                    setIsMenuOpen(false);
+                  }}
                   className="mt-2 px-4 py-2 bg-accent text-white rounded font-bold border border-accent hover:bg-white hover:text-accent transition"
                 >
                   Cadastrar
@@ -164,7 +241,11 @@ export default function Header() {
                   {user.nome}
                 </span>
                 <button
-                  onClick={() => { handleLogout(); setIsMenuOpen(false); }}
+                  type="button"
+                  onClick={() => {
+                    handleLogout();
+                    setIsMenuOpen(false);
+                  }}
                   className="px-4 py-2 bg-accent text-black rounded font-bold border border-accent hover:bg-white hover:text-accent transition"
                 >
                   Sair
@@ -187,7 +268,10 @@ export default function Header() {
       {showLogin && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
           <div className="bg-white rounded-lg shadow-lg max-w-sm w-full mx-2 relative">
-            <LoginForm onClose={closeModals} onLoginSuccess={handleLoginSuccess} />
+            <LoginForm
+              onClose={closeModals}
+              onLoginSuccess={handleLoginSuccess}
+            />
           </div>
         </div>
       )}
@@ -196,7 +280,10 @@ export default function Header() {
       {showRegister && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
           <div className="bg-white rounded-lg shadow-lg max-w-sm w-full mx-2 relative">
-            <RegisterForm onClose={closeModals} onRegisterSuccess={handleLoginSuccess} />
+            <RegisterForm
+              onClose={closeModals}
+              onRegisterSuccess={handleLoginSuccess}
+            />
           </div>
         </div>
       )}
