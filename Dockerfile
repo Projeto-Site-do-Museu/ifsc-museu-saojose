@@ -10,6 +10,12 @@ COPY package.json package-lock.json* ./
 # Instala as dependências
 RUN npm install --omit=optional --no-optional
 
+# Copy Prisma schema
+COPY prisma ./prisma/
+
+# Generate Prisma Client
+RUN npx prisma generate
+
 # Copia o restante do código da aplicação
 COPY . .
 
