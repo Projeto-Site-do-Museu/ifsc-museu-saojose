@@ -243,6 +243,147 @@ O site foi desenhado para que todos as imagens e textos sejam dinamicos a partir
 └── docker-compose.dev.yml   # Configuração docker-compose para desenvolvimento
 ```
 
+## Diagrama do Banco de Dados
+```mermaid
+erDiagram
+    Usuario {
+        Int id PK "autoincrement()"
+        String nome
+        String email "unique"
+        String senhaHash
+        String role
+        Boolean ativo
+        DateTime createdAt
+        DateTime updatedAt
+    }
+    Categoria {
+        Int id PK "autoincrement()"
+        String nome
+        String descricao
+        String slug "unique"
+        Boolean ativo
+        DateTime createdAt
+    }
+    Midia {
+        Int id PK "autoincrement()"
+        String nome
+        String arquivo
+        String tipo
+        String altText
+        String descricao
+        Int categoriaId FK
+        Int usuarioId FK
+        Int tamanhoArquivo
+        Int largura
+        Int altura
+        Boolean ativo
+        DateTime createdAt
+        DateTime updatedAt
+    }
+    Galeria {
+        Int id PK "autoincrement()"
+        Int midiaId FK
+        String titulo
+        String descricao
+        Int ordem
+        Boolean ativo
+        DateTime createdAt
+    }
+    Carousel {
+        Int id PK "autoincrement()"
+        Int midiaId FK
+        String titulo
+        String texto
+        String linkExterno
+        Int ordem
+        Boolean ativo
+        DateTime createdAt
+    }
+    Artigo {
+        Int id PK "autoincrement()"
+        String titulo
+        String slug "unique"
+        String resumo
+        String conteudo
+        Int imagemDestaqueId FK
+        Int categoriaId FK
+        Int usuarioId FK
+        String status
+        DateTime dataPublicacao
+        Boolean destaque
+        Int visualizacoes
+        DateTime createdAt
+        DateTime updatedAt
+    }
+    ArtigoMidia {
+        Int id PK "autoincrement()"
+        Int artigoId FK
+        Int midiaId FK
+        String legenda
+        Int ordem
+    }
+    VideoEspecial {
+        Int id PK "autoincrement()"
+        Int midiaId FK
+        String titulo
+        String descricao
+        String tipo
+        Int thumbnailId FK
+        Int duracao
+        Int ordem
+        Boolean ativo
+        DateTime createdAt
+    }
+    ContadorVisitante {
+        Int id PK "autoincrement()"
+        Int contador
+        DateTime dataRegistro
+        String ipOrigem
+        String userAgent
+        DateTime createdAt
+    }
+    Configuracao {
+        Int id PK "autoincrement()"
+        String chave "unique"
+        String valor
+        String tipo
+        String descricao
+        DateTime createdAt
+        DateTime updatedAt
+    }
+    LogAtividade {
+        Int id PK "autoincrement()"
+        Int usuarioId FK
+        String acao
+        String tabelaAfetada
+        Int idRegistro
+        Json dadosAnteriores
+        Json dadosNovos
+        String ipOrigem
+        String userAgent
+        DateTime createdAt
+    }
+
+    Usuario ||--o{ Midia : "possui"
+    Usuario ||--o{ Artigo : "escreve"
+    Usuario ||--o{ LogAtividade : "registra"
+    Categoria ||--o{ Midia : "possui"
+    Categoria ||--o{ Artigo : "possui"
+    Midia ||--o{ Galeria : "possui"
+    Midia ||--o{ Carousel : "possui"
+    Midia }o--|| VideoEspecial : "principal"
+    Midia }o--|| VideoEspecial : "thumbnail"
+    Midia ||--o{ ArtigoMidia : "possui"
+    Midia }o--|| Artigo : "destaque"
+    Artigo ||--o{ ArtigoMidia : "possui"
+    Artigo }o--|| Midia : "destaque"
+    Artigo ||--o{ Categoria : "pertence"
+    Artigo ||--o{ Usuario : "escrito por"
+    VideoEspecial }o--|| Midia : "midia"
+    VideoEspecial }o--|| Midia : "thumbnail"
+    LogAtividade }o--|| Usuario : "relacionado a"
+```
+
 ## Padrões e Boas Práticas
 - **Componentização**: Componentes reutilizáveis para facilitar a manutenção.
 - **Responsividade**: Uso de Tailwind CSS para adaptação a diferentes tamanhos de tela.
@@ -252,5 +393,5 @@ O site foi desenhado para que todos as imagens e textos sejam dinamicos a partir
 ## Considerações Finais
 Caso precise adicionar novas funcionalidades ou realizar manutenção, siga os padrões estabelecidos e consulte a documentação do Next.js e Tailwind CSS.
 
-Se tiver dúvidas, entre em contato com o antigo coordenador do projeto pelo email: nicolasfvp11@gmail.com. 🚀
+
 
