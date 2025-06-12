@@ -24,7 +24,10 @@ export async function POST(request: Request) {
 
   const senhaCorreta = await bcrypt.compare(senha, usuario.senhaHash);
   if (!senhaCorreta) {
-    return NextResponse.json({ error: 'Credenciais inválidas.' }, { status: 401 });
+    return NextResponse.json(
+      { error: 'Credenciais inválidas.' },
+      { status: 401 },
+    );
   }
 
   // Aqui você pode gerar um token JWT ou usar cookies para autenticação
