@@ -1,0 +1,18 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { NextResponse } from 'next/server';
+
+export async function GET() {
+  try {
+    const jsonPath = path.resolve(process.cwd(), 'public/data/artigos.json');
+    const jsonData = await fs.readFile(jsonPath, 'utf-8');
+    const data = JSON.parse(jsonData);
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error('Erro ao ler dados dos artigos:', error);
+    return NextResponse.json(
+      { message: 'Erro ao buscar dados dos artigos' },
+      { status: 500 },
+    );
+  }
+}

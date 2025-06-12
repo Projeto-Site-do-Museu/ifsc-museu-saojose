@@ -43,7 +43,6 @@ export default function SecondSection() {
           Artefatos Históricos
         </h2>
 
-        {/* Carousel */}
         <div className="relative w-full">
           <Carousel setApi={setApi} className="w-full overflow-hidden">
             <CarouselContent className="flex transition-transform ease-in-out">
@@ -57,7 +56,7 @@ export default function SecondSection() {
               ].map((src, index) => (
                 <CarouselItem
                   key={`slide-image-${src}`}
-                  className="w-full md:w-1/2 flex justify-center items-center px-2" // 1 imagem no mobile, 2 no desktop
+                  className="w-full md:w-1/2 flex justify-center items-center px-2"
                 >
                   <Image
                     width={1920}
@@ -71,7 +70,6 @@ export default function SecondSection() {
             </CarouselContent>
           </Carousel>
 
-          {/* Botões de navegação */}
           <button
             type="button"
             onClick={handlePrev}
@@ -90,10 +88,8 @@ export default function SecondSection() {
           </button>
         </div>
 
-        {/* Indicadores de página */}
         <div className="flex justify-center items-center mt-6 space-x-2 md:space-x-3">
           {Array.from({ length: totalSlides }).map((_, index) => {
-            // Create a unique ID based on position
             const slideId = `slide-${index + 1}-of-${totalSlides}`;
             return (
               <button

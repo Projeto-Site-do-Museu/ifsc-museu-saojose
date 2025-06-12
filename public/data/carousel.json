@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "img": "/imgs/card1.png",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque molestie, diam in condimentum consectetur, nibh tortor facilisis massa, in convallis velit enim nec enim."
+  },
+  {
+    "id": 2,
+    "img": "/imgs/img3.jpg",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque molestie, diam in condimentum consectetur, nibh tortor facilisis massa, in convallis velit enim nec enim."
+  },
+  {
+    "id": 3,
+    "img": "/imgs/img5.jpg",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque molestie, diam in condimentum consectetur, nibh tortor facilisis massa, in convallis velit enim nec enim."
+  },
+  {
+    "id": 4,
+    "img": "/imgs/img13.jpg",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque molestie, diam in condimentum consectetur, nibh tortor facilisis massa, in convallis velit enim nec enim."
+  },
+  {
+    "id": 5,
+    "img": "/imgs/img18.jpg",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque molestie, diam in condimentum consectetur, nibh tortor facilisis massa, in convallis velit enim nec enim."
+  }
+] 

@@ -1,0 +1,166 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id              Int               @id @default(autoincrement())
+  nome            String
+  email           String            @unique
+  senhaHash       String
+  role            String            // "admin" ou "viewer"
+  ativo           Boolean           @default(true)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  midias          Midia[]
+  artigos         Artigo[]
+  logsAtividades  LogAtividade[]
+}
+
+model Categoria {
+  id          Int       @id @default(autoincrement())
+  nome        String
+  descricao   String
+  slug        String    @unique
+  ativo       Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  midias      Midia[]
+  artigos     Artigo[]
+}
+
+model Midia {
+  id              Int               @id @default(autoincrement())
+  nome            String
+  arquivo         String
+  tipo            String
+  altText         String
+  descricao       String
+  categoriaId     Int
+  usuarioId       Int
+  tamanhoArquivo  Int
+  largura         Int
+  altura          Int
+  ativo           Boolean           @default(true)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  categoria       Categoria         @relation(fields: [categoriaId], references: [id])
+  usuario         Usuario           @relation(fields: [usuarioId], references: [id])
+  galeria         Galeria[]
+  carousel        Carousel[]
+  videosEspeciaisPrincipal  VideoEspecial[] @relation("MidiaPrincipal")
+  videosEspeciaisThumb      VideoEspecial[] @relation("MidiaThumbnail")
+  artigosMidias   ArtigoMidia[]
+  artigosDestaque Artigo[]
+}
+
+model Galeria {
+  id          Int       @id @default(autoincrement())
+  midiaId     Int
+  titulo      String
+  descricao   String
+  ordem       Int
+  ativo       Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  midia       Midia     @relation(fields: [midiaId], references: [id])
+}
+
+model Carousel {
+  id            Int       @id @default(autoincrement())
+  midiaId       Int
+  titulo        String
+  texto         String
+  linkExterno   String
+  ordem         Int
+  ativo         Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  midia         Midia     @relation(fields: [midiaId], references: [id])
+}
+
+model Artigo {
+  id               Int          @id @default(autoincrement())
+  titulo           String
+  slug             String       @unique
+  resumo           String
+  conteudo         String
+  imagemDestaqueId Int
+  categoriaId      Int
+  usuarioId        Int
+  status           String
+  dataPublicacao   DateTime
+  destaque         Boolean      @default(false)
+  visualizacoes    Int          @default(0)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  imagemDestaque   Midia        @relation(fields: [imagemDestaqueId], references: [id])
+  categoria        Categoria    @relation(fields: [categoriaId], references: [id])
+  usuario          Usuario      @relation(fields: [usuarioId], references: [id])
+  artigosMidias    ArtigoMidia[]
+}
+
+model ArtigoMidia {
+  id        Int     @id @default(autoincrement())
+  artigoId  Int
+  midiaId   Int
+  legenda   String
+  ordem     Int
+  artigo    Artigo  @relation(fields: [artigoId], references: [id])
+  midia     Midia   @relation(fields: [midiaId], references: [id])
+}
+
+model VideoEspecial {
+  id            Int       @id @default(autoincrement())
+  midiaId       Int
+  titulo        String
+  descricao     String
+  tipo          String
+  thumbnailId   Int
+  duracao       Int
+  ordem         Int
+  ativo         Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  midia         Midia     @relation("MidiaPrincipal", fields: [midiaId], references: [id])
+  thumbnail     Midia     @relation("MidiaThumbnail", fields: [thumbnailId], references: [id])
+}
+
+model ContadorVisitante {
+  id           Int       @id @default(autoincrement())
+  contador     Int
+  dataRegistro DateTime
+  ipOrigem     String
+  userAgent    String
+  createdAt    DateTime  @default(now())
+}
+
+model Configuracao {
+  id          Int       @id @default(autoincrement())
+  chave       String    @unique
+  valor       String
+  tipo        String
+  descricao   String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model LogAtividade {
+  id              Int       @id @default(autoincrement())
+  usuarioId       Int
+  acao            String
+  tabelaAfetada   String
+  idRegistro      Int
+  dadosAnteriores Json
+  dadosNovos      Json
+  ipOrigem        String
+  userAgent       String
+  createdAt       DateTime  @default(now())
+  usuario         Usuario   @relation(fields: [usuarioId], references: [id])
+}

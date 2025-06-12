@@ -5,109 +5,160 @@ import Header from '@/components/Header';
 import Image from 'next/image';
 import { useState } from 'react';
 
-const images = [
+const artigos = [
   {
     src: '/imgs/img1.jpg',
     alt: 'Imagem 1',
+    titulo: 'Título da obra 1',
     descricao:
-      'Esta é a descrição da imagem 1. Um item importante do nosso acervo.',
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    data: '5 de maio de 2005',
+    tags: [],
   },
   {
     src: '/imgs/img2.jpg',
     alt: 'Imagem 2',
+    titulo: 'Titulo da obra 2',
     descricao:
-      'Descrição da imagem 2, explicando seu contexto e importância histórica.',
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    data: '24 de setembro de 2010',
+    tags: [],
   },
   {
     src: '/imgs/img3.jpg',
     alt: 'Imagem 3',
+    titulo: 'Titulo da obra 3',
     descricao:
-      'Detalhes sobre a imagem 3, parte fundamental da exposição atual.',
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    data: '5 de outubro de 2014',
+    tags: [],
   },
   {
     src: '/imgs/img4.jpg',
-    alt: 'Imagem 4',
-    descricao: 'Informações sobre a imagem 4 e sua relevância para o museu.',
+    alt: 'Imagem 3',
+    titulo: 'Titulo da obra 4',
+    descricao:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    data: '19 de agosto de 2007',
+    tags: [],
   },
   {
     src: '/imgs/img5.jpg',
-    alt: 'Imagem 5',
-    descricao: 'A imagem 5 representa um momento marcante da história local.',
+    alt: 'Imagem 3',
+    titulo: 'Titulo da obra 5',
+    descricao:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    data: '12 de junho de 1990',
+    tags: [],
   },
 ];
 
-export default function Galeria() {
-  const [modalImage, setModalImage] = useState<null | (typeof images)[0]>(null);
-
-  const closeModal = () => setModalImage(null);
+export default function Artigos() {
+  const [modalAtivo, setModalAtivo] = useState<null | (typeof artigos)[0]>(
+    null,
+  );
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-white">
       <Header />
 
-      <main className="flex-grow bg-white py-10 px-4">
-        <div className="max-w-6xl mx-auto space-y-12">
-          <h1 className="text-3xl font-bold text-center text-primary mb-8">
-            Artigos do Museu
-          </h1>
+      <main className="flex-grow p-6 max-w-7xl mx-auto">
+        <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">
+          Artigos do Museu de São José
+        </h1>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            {images.map((item) => (
-              <button
-                type="button"
-                key={item.src}
-                onClick={() => setModalImage(item)}
-                className="flex flex-col md:flex-row bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition"
-              >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {artigos.map((artigo) => (
+            <button
+              key={artigo.src}
+              type="button"
+              className="cursor-pointer group text-left block w-full"
+              onClick={() => setModalAtivo(artigo)}
+            >
+              <div className="relative overflow-hidden shadow-md">
                 <Image
-                  src={item.src}
-                  alt={item.alt}
-                  width={300}
-                  height={200}
-                  className="object-contain w-full md:w-[300px] h-[200px] bg-gray-100"
+                  src={artigo.src}
+                  alt={artigo.alt}
+                  width={400}
+                  height={250}
+                  className="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <div className="p-4 flex items-center text-gray-800 text-left">
-                  <p className="text-base">{item.descricao}</p>
+                <div className="absolute top-2 left-2 flex flex-wrap gap-1">
+                  {artigo.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="bg-black bg-opacity-80 text-white text-xs px-2 py-1 rounded"
+                    >
+                      {tag}
+                    </span>
+                  ))}
                 </div>
-              </button>
-            ))}
-          </div>
+              </div>
+              <div className="mt-3">
+                <h2 className="font-semibold text-lg text-gray-900">
+                  {artigo.titulo}
+                </h2>
+                <p className="text-sm text-gray-600 mt-1 line-clamp-3">
+                  {artigo.descricao}
+                </p>
+                <p className="text-xs text-gray-400 mt-1">{artigo.data}</p>
+              </div>
+            </button>
+          ))}
         </div>
 
-        {/* Modal */}
-        {modalImage && (
+        {modalAtivo && (
           <dialog
             open
-            aria-modal="true"
-            onClick={closeModal}
-            onKeyDown={(e) => e.key === 'Escape' && closeModal()}
-            className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50 m-0 p-0 w-full h-full border-none"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 w-full h-full"
+            onClick={() => setModalAtivo(null)}
+            onKeyDown={(e) => {
+              if (e.key === 'Escape') {
+                setModalAtivo(null);
+              }
+            }}
           >
             <div
               role="document"
               onClick={(e) => e.stopPropagation()}
               onKeyDown={(e) => e.stopPropagation()}
-              className="bg-white p-6 rounded-lg max-w-4xl w-full flex flex-col md:flex-row gap-6"
+              className="bg-white rounded-lg p-6 max-w-3xl w-full mx-4 overflow-y-auto max-h-[90vh]"
             >
-              <div className="flex justify-center items-center">
-                <Image
-                  src={modalImage.src}
-                  alt={modalImage.alt}
-                  width={600}
-                  height={400}
-                  className="object-contain max-h-[80vh]"
-                />
+              <div className="mb-4">
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {modalAtivo.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="bg-black text-white text-xs px-2 py-1 rounded"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <h2 className="text-2xl font-bold text-gray-800">
+                  {modalAtivo.titulo}
+                </h2>
+                <p className="text-sm text-gray-500 mb-4">{modalAtivo.data}</p>
               </div>
-              <div className="flex items-center text-gray-800">
-                <p className="text-lg">{modalImage.descricao}</p>
+              <Image
+                src={modalAtivo.src}
+                alt={modalAtivo.alt}
+                width={800}
+                height={500}
+                className="w-full h-auto mb-4 rounded-md"
+              />
+              <p className="text-gray-700 text-base whitespace-pre-wrap">
+                {modalAtivo.descricao}
+              </p>
+              <div className="text-right mt-4">
+                <button
+                  type="button"
+                  onClick={() => setModalAtivo(null)}
+                  className="text-sm text-gray-600 hover:underline"
+                >
+                  Fechar
+                </button>
               </div>
-              <button
-                type="button"
-                onClick={closeModal}
-                className="absolute top-4 right-4 text-white text-3xl font-bold"
-              >
-                &times;
-              </button>
             </div>
           </dialog>
         )}
