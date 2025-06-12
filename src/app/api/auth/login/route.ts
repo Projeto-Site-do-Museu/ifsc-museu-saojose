@@ -17,14 +17,14 @@ export async function POST(request: Request) {
   const usuario = await prisma.usuario.findUnique({ where: { email } });
   if (!usuario) {
     return NextResponse.json(
-      { error: 'Usuário não encontrado.' },
+      { error: 'Credenciais inválidas.' },
       { status: 401 },
     );
   }
 
   const senhaCorreta = await bcrypt.compare(senha, usuario.senhaHash);
   if (!senhaCorreta) {
-    return NextResponse.json({ error: 'Senha incorreta.' }, { status: 401 });
+    return NextResponse.json({ error: 'Credenciais inválidas.' }, { status: 401 });
   }
 
   // Aqui você pode gerar um token JWT ou usar cookies para autenticação
