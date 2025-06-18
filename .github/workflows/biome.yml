@@ -2,13 +2,18 @@ name: Biome
 
 on:
   push:
-    branches: 
+    branches:
       - main
       - dev
+
+permissions:
+  contents: write
 
 jobs:
   lint:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -28,9 +33,10 @@ jobs:
             if [[ -n "$(git status --porcelain)" ]]; then
               git add .
               git commit --amend --no-edit
+              git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
               git push --force-with-lease
             fi
           else
             npm run lint
             npm run format
-          fi 
+          fi
