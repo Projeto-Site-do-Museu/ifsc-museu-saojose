@@ -1,6 +1,4 @@
 import '../globals.css';
-import fs from 'node:fs/promises';
-import path from 'node:path';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import InteractiveCarousel, {
@@ -9,9 +7,15 @@ import InteractiveCarousel, {
 
 async function getCarouselData(): Promise<CarouselItemData[]> {
   try {
-    const jsonPath = path.resolve(process.cwd(), 'public/data/carousel.json');
-    const jsonData = await fs.readFile(jsonPath, 'utf-8');
-    const data = JSON.parse(jsonData);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/carousel`, {
+      cache: 'no-store',
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const data = await response.json();
     return data;
   } catch (error) {
     console.error('Error fetching carousel data for /acervo page:', error);

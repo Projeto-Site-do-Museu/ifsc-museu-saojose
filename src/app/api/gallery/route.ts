@@ -1,15 +1,33 @@
-import fs from 'node:fs/promises';
-import path from 'node:path';
 import { NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
 
 export async function GET() {
   try {
-    const jsonPath = path.resolve(process.cwd(), 'public/data/gallery.json');
-    const jsonData = await fs.readFile(jsonPath, 'utf-8');
-    const data = JSON.parse(jsonData);
-    return NextResponse.json(data);
+    const acervos = await prisma.acervo.findMany({
+      where: {
+        ativo: true,
+      },
+      select: {
+        id: true,
+        titulo: true,
+        imagem: true,
+        ordem: true,
+      },
+      orderBy: [
+        { ordem: 'asc' },
+        { createdAt: 'desc' },
+      ],
+    });
+
+    const galleryData = acervos.map((acervo) => ({
+      id: acervo.id,
+      img: acervo.imagem || '/imgs/placeholder.jpg',
+      text: acervo.titulo,
+    }));
+
+    return NextResponse.json(galleryData);
   } catch (error) {
-    console.error('Erro ao ler dados da galeria:', error);
+    console.error('Erro ao buscar dados da galeria:', error);
     return NextResponse.json(
       { message: 'Erro ao buscar dados da galeria' },
       { status: 500 },
