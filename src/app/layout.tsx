@@ -1,17 +1,17 @@
 import './globals.css';
-import { Inter } from 'next/font/google';
+import FontLoader from '@/components/FontLoader';
+import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
-const inter = Inter({ subsets: ['latin'] });
-
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Museu de São José',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="pt-BR">
-      <body className={`${inter.className} bg-background text-white`}>
+      <body className="bg-background text-white font-worksans">
+        <FontLoader />
         {children}
       </body>
     </html>

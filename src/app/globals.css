@@ -2,8 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Magison&family=Michroma&family=Work+Sans:wght@400;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Michroma&display=swap");
+@font-face {
+  font-family: "Magison";
+  src: url("../../public/fonts/Magison.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
 
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
@@ -23,13 +28,6 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-}
-
-@font-face {
-  font-family: "Magison";
-  src: url("../../public/fonts/Magison.ttf") format("truetype");
-  font-weight: 200;
-  font-style: normal;
 }
 
 @layer base {

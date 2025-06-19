@@ -1,32 +1,35 @@
-# Use a imagem base do Node.js
-FROM node:20-alpine
-
-# Define o diretório de trabalho
+FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Copia o package.json e o package-lock.json
-COPY package.json package-lock.json* ./
+RUN apk add --no-cache libc6-compat
 
-# Instala as dependências
-RUN npm install --omit=optional --no-optional
+COPY package.json package-lock.json ./
+RUN npm ci
 
-# Copy Prisma schema
 COPY prisma ./prisma/
-
-# Generate Prisma Client
 RUN npx prisma generate
 
-# Copia o restante do código da aplicação
 COPY . .
-
-# Define variáveis de ambiente
 ENV NODE_ENV=production
-
-# Constrói a aplicação
 RUN npm run build
 
-# Expõe a porta da aplicação
-EXPOSE 3000
+FROM node:20-alpine AS runner
+WORKDIR /app
 
-# Inicia a aplicação
-CMD ["npm", "run", "start"]
+ENV NODE_ENV=production
+
+RUN apk add --no-cache libc6-compat
+RUN npm install sharp@latest
+
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs
+
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+EXPOSE 3000
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+CMD ["node", "server.js"]
