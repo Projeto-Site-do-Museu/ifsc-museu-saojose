@@ -1,0 +1,29 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/workspace:cached
+    command: sleep infinity
+    networks:
+      - dev-network
+
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: museu-db
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - dev-network
+    ports:
+      - "3306:3306"
+
+volumes:
+  mysql-data:
+
+networks:
+  dev-network: 

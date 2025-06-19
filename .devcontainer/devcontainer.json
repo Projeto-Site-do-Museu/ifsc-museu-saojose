@@ -1,0 +1,17 @@
+{
+  "name": "Projeto Museu Dev",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "forwardPorts": [3000, 3306],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "prisma.prisma",
+        "biomejs.biome",
+        "bradlc.vscode-tailwindcss"
+      ]
+    }
+  },
+  "postCreateCommand": "npm install"
+}
