@@ -115,15 +115,3 @@ export default function Home() {
     </div>
   );
 }
-
-/*
-@keyframes modalIn {
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-.animate-modalIn {
-  animation: modalIn 0.2s forwards;
-}
-  */
