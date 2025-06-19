@@ -10,9 +10,20 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        michroma: ['Michroma', 'ui-monospace', 'monospace'],
+        michroma: [
+          'var(--font-michroma)',
+          'Michroma',
+          'ui-monospace',
+          'monospace',
+        ],
         magison: ['Magison', 'ui-serif', 'serif'],
-        worksans: ['Work Sans', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        worksans: [
+          'var(--font-work-sans)',
+          'Work Sans',
+          'ui-sans-serif',
+          'system-ui',
+          'sans-serif',
+        ],
         ligconsolata: ['Ligconsolata', 'ui-monospace', 'monospace'],
       },
       colors: {
