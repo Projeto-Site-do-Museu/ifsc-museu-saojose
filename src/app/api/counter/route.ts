@@ -1,12 +1,12 @@
-import { type NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { type NextRequest, NextResponse } from 'next/server';
 
 const COOKIE_NAME = 'visitor_counted';
 
 async function getCurrentCount(): Promise<number> {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  
+
   const result = await prisma.contadorVisitante.findFirst({
     where: {
       dataRegistro: {
@@ -21,10 +21,13 @@ async function getCurrentCount(): Promise<number> {
   return result?.contador || 0;
 }
 
-async function incrementCounter(ipAddress?: string, userAgent?: string): Promise<number> {
+async function incrementCounter(
+  ipAddress?: string,
+  userAgent?: string,
+): Promise<number> {
   const currentCount = await getCurrentCount();
   const newCount = currentCount + 1;
-  
+
   await prisma.contadorVisitante.create({
     data: {
       contador: newCount,
@@ -59,9 +62,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ count, counted: false });
     }
 
-    const ipAddress = request.ip || request.headers.get('x-forwarded-for')?.split(',')[0] || undefined;
+    const ipAddress =
+      request.ip ||
+      request.headers.get('x-forwarded-for')?.split(',')[0] ||
+      undefined;
     const userAgent = request.headers.get('user-agent') || undefined;
-    
+
     const newCount = await incrementCounter(ipAddress, userAgent);
 
     const response = NextResponse.json({ count: newCount, counted: true });

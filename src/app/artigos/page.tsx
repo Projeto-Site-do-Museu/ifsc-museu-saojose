@@ -41,13 +41,13 @@ export default function Artigos() {
 
   const formatarData = (dataString?: string) => {
     if (!dataString) return 'Data não informada';
-    
+
     try {
       const data = new Date(dataString);
       return data.toLocaleDateString('pt-BR', {
         day: 'numeric',
         month: 'long',
-        year: 'numeric'
+        year: 'numeric',
       });
     } catch {
       return 'Data inválida';
@@ -158,11 +158,11 @@ export default function Artigos() {
                 className="w-full h-auto mb-4 rounded-md"
               />
               <div className="text-gray-700 text-base">
-                {modalAtivo.conteudo ? (
-                  <div dangerouslySetInnerHTML={{ __html: modalAtivo.conteudo }} />
-                ) : (
-                  <p>{modalAtivo.resumo || 'Conteúdo não disponível'}</p>
-                )}
+                <p>
+                  {modalAtivo.resumo ||
+                    modalAtivo.conteudo?.replace(/<[^>]*>/g, '') ||
+                    'Conteúdo não disponível'}
+                </p>
               </div>
               <div className="text-right mt-4">
                 <button

@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
@@ -15,10 +15,7 @@ export async function GET() {
         tipo: true,
         ordem: true,
       },
-      orderBy: [
-        { ordem: 'asc' },
-        { createdAt: 'desc' },
-      ],
+      orderBy: [{ ordem: 'asc' }, { createdAt: 'desc' }],
     });
 
     return NextResponse.json(videos);

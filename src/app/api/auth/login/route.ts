@@ -1,6 +1,6 @@
+import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
 
 export async function POST(request: Request) {
   try {
@@ -13,13 +13,13 @@ export async function POST(request: Request) {
       );
     }
 
-    const usuario = await prisma.usuario.findUnique({ 
-      where: { 
+    const usuario = await prisma.usuario.findUnique({
+      where: {
         email,
-        ativo: true, 
-      } 
+        ativo: true,
+      },
     });
-    
+
     if (!usuario) {
       return NextResponse.json(
         { error: 'Credenciais inválidas.' },
