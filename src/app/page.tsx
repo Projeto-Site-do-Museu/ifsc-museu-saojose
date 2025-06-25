@@ -16,8 +16,12 @@ export default function Home() {
 
   // Abre o modal automaticamente ao carregar a página
   useEffect(() => {
+  const hasVisited = localStorage.getItem('hasVisited');
+  if (!hasVisited) {
     setShowModal(true);
-  }, []);
+    localStorage.setItem('hasVisited', 'true');
+  }
+}, []);
 
   return (
     <div>
