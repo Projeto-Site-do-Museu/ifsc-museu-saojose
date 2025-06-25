@@ -86,6 +86,12 @@ export default function Header() {
             Sobre
           </a>
           <a
+            href="/colecoes"
+            className="font-worksans hover:text-accent hover:underline"
+          >
+            Coleções Culturais
+          </a>
+          <a
             href="/acervo"
             className="font-worksans hover:text-accent hover:underline"
           >

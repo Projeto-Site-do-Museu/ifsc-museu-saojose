@@ -52,6 +52,7 @@ model Acervo {
   imagem    String?  // URL da imagem
   video     String?  // URL do vídeo (opcional)
   ordem     Int?     // Para ordenação na galeria
+  colecao   String?
   ativo     Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
