@@ -6,21 +6,27 @@ services:
     volumes:
       - ..:/workspace:cached
     environment:
-      - DATABASE_URL=mysql://root:password@db:3306/database_museu
-    command: sleep infinity
+      DATABASE_URL: "mysql://root:password@db:3306/database_museu"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    command: sleep infinity   
 
   db:
     image: mysql:8.0
-    container_name: museu_db_dev
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: database_museu
-    volumes:
-      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-ppassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     ports:
       - "3306:3306"
+    volumes:
+      - museu_mysql_data:/var/lib/mysql
 
 volumes:
-  mysql-data:
+  museu_mysql_data: 

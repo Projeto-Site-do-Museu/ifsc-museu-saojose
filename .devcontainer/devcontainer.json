@@ -1,9 +1,17 @@
 {
-  "name": "Projeto Museu Dev",
-  "dockerComposeFile": "docker-compose.yml",
+  "name": "dev container museu",
+  "dockerComposeFile": ["docker-compose.yml"],
   "service": "app",
+  "runServices": ["db"],
   "workspaceFolder": "/workspace",
   "forwardPorts": [3000, 3306],
+
+  "postCreateCommand": "npm ci",
+
+  "postStartCommand": "npx prisma migrate deploy || npx prisma migrate dev",
+
+  "shutdownAction": "stopCompose",
+
   "customizations": {
     "vscode": {
       "extensions": [
@@ -13,6 +21,5 @@
         "ms-azuretools.vscode-docker"
       ]
     }
-  },
-  "postCreateCommand": "npm install"
+  }
 }
