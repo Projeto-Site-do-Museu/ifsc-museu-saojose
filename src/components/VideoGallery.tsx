@@ -1,74 +1,85 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export default function VideoGallery() {
-  const [videos, setVideos] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const videos = [
+    {
+      video:
+        'https://www.tiktok.com/@conexo.cultural/video/7473169845186530565?_r=1&_t=8lc9MZDFngU',
+      id: '7473169845186530565',
+    },
+    {
+      video:
+        'https://www.tiktok.com/@conexo.cultural/video/7468072826981928198?_r=1&_t=8lc9MZDFngU',
+      id: '7468072826981928198',
+    },
+    {
+      video:
+        'https://www.tiktok.com/@conexo.cultural/video/7466982716718730502?_r=1&_t=8lc9MZDFngU',
+      id: '7466982716718730502',
+    },
+    {
+      video:
+        'https://www.tiktok.com/@conexo.cultural/video/7435311742814620983?_r=1&_t=8lc9MZDFngU',
+      id: '7435311742814620983',
+    },
+    {
+      video:
+        'https://www.tiktok.com/@conexo.cultural/photo/7408304019745148166?_r=1&_t=8lc9MZDFngU',
+      id: '7408304019745148166',
+    },
+    {
+      video:
+        'https://www.tiktok.com/@conexo.cultural/video/7408280273139322117?_r=1&_t=8lc9MZDFngU',
+      id: '7408280273139322117',
+    },
+    {
+      video:
+        'https://www.tiktok.com/@conexo.cultural/video/7408278749197700357?_r=1&_t=8lc9MZDFngU',
+      id: '7408278749197700357',
+    },
+    {
+      video:
+        'https://www.tiktok.com/@conexo.cultural/photo/7400058666986114310?_r=1&_t=8lc9MZDFngU',
+      id: '7400058666986114310',
+    },
+    {
+      video:
+        'https://www.tiktok.com/@conexo.cultural/video/7397575845075766533?_r=1&_t=8lc9MZDFngU',
+      id: '7397575845075766533',
+    },
+    {
+      video:
+        'https://www.tiktok.com/@conexo.cultural/video/7395724890755648773?_r=1&_t=8lc9MZDFngU',
+      id: '7395724890755648773',
+    },
+    {
+      video:
+        'https://www.tiktok.com/@conexo.cultural/video/7387535726897876230?_r=1&_t=8lc9MZDFngU',
+      id: '7387535726897876230',
+    },
+  ];
 
   useEffect(() => {
-    const fetchVideos = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch('/api/videos');
-        if (!response.ok) {
-          throw new Error('Falha ao buscar vídeos');
-        }
-        const data = await response.json();
-        setVideos(data);
-      } catch (err: unknown) {
-        setError(err instanceof Error ? err.message : 'Erro desconhecido');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchVideos();
+    const script = document.createElement('script');
+    script.src = 'https://www.tiktok.com/embed.js';
+    script.async = true;
+    document.body.appendChild(script);
   }, []);
-
-  if (loading) {
-    return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-7xl mx-auto p-4 justify-center items-center">
-        <p className="text-xl text-gray-700 col-span-full text-center">
-          Carregando vídeos...
-        </p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-7xl mx-auto p-4 justify-center items-center">
-        <p className="text-xl text-red-500 col-span-full text-center">
-          Erro: {error}
-        </p>
-      </div>
-    );
-  }
-
-  if (videos.length === 0) {
-    return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-7xl mx-auto p-4 justify-center items-center">
-        <p className="text-xl text-gray-700 col-span-full text-center">
-          Nenhum vídeo encontrado.
-        </p>
-      </div>
-    );
-  }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-7xl mx-auto">
       {videos.map((video) => (
-        <div
-          key={`video-${video}`}
-          className="bg-background rounded-lg overflow-hidden"
+        <blockquote
+          key={video.id}
+          className="tiktok-embed"
+          cite={video.video}
+          data-video-id={video.id}
+          style={{ maxWidth: '325px', minWidth: '225px' }}
         >
-          <video className="w-full" controls>
-            <source src={`/videos/${video}`} type="video/mp4" />
-            Seu navegador não suporta a tag de vídeo.
-          </video>
-        </div>
+          <section>Loading...</section>
+        </blockquote>
       ))}
     </div>
   );

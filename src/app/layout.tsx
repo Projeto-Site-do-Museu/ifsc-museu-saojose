@@ -1,19 +1,30 @@
 import './globals.css';
-import { Inter } from 'next/font/google';
+import type { Metadata } from 'next';
+import { Michroma, Work_Sans } from 'next/font/google';
 import type { ReactNode } from 'react';
 
-const inter = Inter({ subsets: ['latin'] });
+const michroma = Michroma({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-michroma',
+});
 
-export const metadata = {
+const workSans = Work_Sans({
+  weight: ['400', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-work-sans',
+});
+
+export const metadata: Metadata = {
   title: 'Museu de São José',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="pt-BR">
-      <body className={`${inter.className} bg-background text-white`}>
-        {children}
-      </body>
+    <html lang="pt-BR" className={`${michroma.variable} ${workSans.variable}`}>
+      <body className="bg-background text-white font-worksans">{children}</body>
     </html>
   );
 }

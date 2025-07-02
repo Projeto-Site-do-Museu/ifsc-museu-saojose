@@ -5,7 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x", "debian-openssl-3.0.x", "debian-openssl-1.1.x"]
 }
 
 datasource db {
@@ -14,153 +15,80 @@ datasource db {
 }
 
 model Usuario {
-  id              Int               @id @default(autoincrement())
-  nome            String
-  email           String            @unique
-  senhaHash       String
-  role            String            // "admin" ou "viewer"
-  ativo           Boolean           @default(true)
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  midias          Midia[]
-  artigos         Artigo[]
-  logsAtividades  LogAtividade[]
-}
-
-model Categoria {
-  id          Int       @id @default(autoincrement())
-  nome        String
-  descricao   String
-  slug        String    @unique
-  ativo       Boolean   @default(true)
-  createdAt   DateTime  @default(now())
-  midias      Midia[]
-  artigos     Artigo[]
-}
-
-model Midia {
-  id              Int               @id @default(autoincrement())
-  nome            String
-  arquivo         String
-  tipo            String
-  altText         String
-  descricao       String
-  categoriaId     Int
-  usuarioId       Int
-  tamanhoArquivo  Int
-  largura         Int
-  altura          Int
-  ativo           Boolean           @default(true)
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  categoria       Categoria         @relation(fields: [categoriaId], references: [id])
-  usuario         Usuario           @relation(fields: [usuarioId], references: [id])
-  galeria         Galeria[]
-  carousel        Carousel[]
-  videosEspeciaisPrincipal  VideoEspecial[] @relation("MidiaPrincipal")
-  videosEspeciaisThumb      VideoEspecial[] @relation("MidiaThumbnail")
-  artigosMidias   ArtigoMidia[]
-  artigosDestaque Artigo[]
-}
-
-model Galeria {
-  id          Int       @id @default(autoincrement())
-  midiaId     Int
-  titulo      String
-  descricao   String
-  ordem       Int
-  ativo       Boolean   @default(true)
-  createdAt   DateTime  @default(now())
-  midia       Midia     @relation(fields: [midiaId], references: [id])
-}
-
-model Carousel {
-  id            Int       @id @default(autoincrement())
-  midiaId       Int
-  titulo        String
-  texto         String
-  linkExterno   String
-  ordem         Int
-  ativo         Boolean   @default(true)
-  createdAt     DateTime  @default(now())
-  midia         Midia     @relation(fields: [midiaId], references: [id])
+  id        Int       @id @default(autoincrement())
+  nome      String
+  email     String    @unique
+  senhaHash String
+  role      String    // apenas "admin"
+  ativo     Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  
+  // Relacionamentos
+  artigos        Artigo[]
+  acervos        Acervo[]
+  videosEspeciais VideoEspecial[]
 }
 
 model Artigo {
-  id               Int          @id @default(autoincrement())
-  titulo           String
-  slug             String       @unique
-  resumo           String
-  conteudo         String
-  imagemDestaqueId Int
-  categoriaId      Int
-  usuarioId        Int
-  status           String
-  dataPublicacao   DateTime
-  destaque         Boolean      @default(false)
-  visualizacoes    Int          @default(0)
-  createdAt        DateTime     @default(now())
-  updatedAt        DateTime     @updatedAt
-  imagemDestaque   Midia        @relation(fields: [imagemDestaqueId], references: [id])
-  categoria        Categoria    @relation(fields: [categoriaId], references: [id])
-  usuario          Usuario      @relation(fields: [usuarioId], references: [id])
-  artigosMidias    ArtigoMidia[]
+  id            Int       @id @default(autoincrement())
+  titulo        String
+  resumo        String?   @db.Text
+  conteudo      String    @db.LongText
+  imagem        String?   // URL da imagem principal
+  video         String?   // URL do vídeo (opcional)
+  dataPublicacao DateTime?
+  ativo         Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  usuarioId     Int
+  usuario       Usuario   @relation(fields: [usuarioId], references: [id])
 }
 
-model ArtigoMidia {
-  id        Int     @id @default(autoincrement())
-  artigoId  Int
-  midiaId   Int
-  legenda   String
-  ordem     Int
-  artigo    Artigo  @relation(fields: [artigoId], references: [id])
-  midia     Midia   @relation(fields: [midiaId], references: [id])
+model Acervo {
+  id        Int      @id @default(autoincrement())
+  titulo    String
+  descricao String?  @db.Text
+  imagem    String?  // URL da imagem
+  video     String?  // URL do vídeo (opcional)
+  ordem     Int?     // Para ordenação na galeria
+  colecao   String?
+  ativo     Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  usuarioId Int
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id])
 }
 
 model VideoEspecial {
-  id            Int       @id @default(autoincrement())
-  midiaId       Int
-  titulo        String
-  descricao     String
-  tipo          String
-  thumbnailId   Int
-  duracao       Int
-  ordem         Int
-  ativo         Boolean   @default(true)
-  createdAt     DateTime  @default(now())
-  midia         Midia     @relation("MidiaPrincipal", fields: [midiaId], references: [id])
-  thumbnail     Midia     @relation("MidiaThumbnail", fields: [thumbnailId], references: [id])
+  id        Int      @id @default(autoincrement())
+  titulo    String
+  descricao String?  @db.Text
+  tipo      String   // "intro", "banner", "capa"
+  video     String   // URL do vídeo
+  thumbnail String?  // URL da thumbnail
+  ordem     Int?
+  ativo     Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  usuarioId Int
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id])
 }
 
 model ContadorVisitante {
-  id           Int       @id @default(autoincrement())
+  id           Int      @id @default(autoincrement())
   contador     Int
   dataRegistro DateTime
-  ipOrigem     String
-  userAgent    String
-  createdAt    DateTime  @default(now())
+  ipOrigem     String?
+  userAgent    String?
+  createdAt    DateTime @default(now())
 }
 
 model Configuracao {
-  id          Int       @id @default(autoincrement())
-  chave       String    @unique
-  valor       String
-  tipo        String
-  descricao   String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-}
-
-model LogAtividade {
-  id              Int       @id @default(autoincrement())
-  usuarioId       Int
-  acao            String
-  tabelaAfetada   String
-  idRegistro      Int
-  dadosAnteriores Json
-  dadosNovos      Json
-  ipOrigem        String
-  userAgent       String
-  createdAt       DateTime  @default(now())
-  usuario         Usuario   @relation(fields: [usuarioId], references: [id])
+  id        Int      @id @default(autoincrement())
+  chave     String   @unique
+  valor     String   @db.Text
+  descricao String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

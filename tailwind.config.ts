@@ -1,19 +1,30 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+import type { Config } from 'tailwindcss';
+
+const config: Config = {
   darkMode: ['class'],
   content: [
-    './pages/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
-    './app/**/*.{js,ts,jsx,tsx}',
-    './app/**/*.{js,ts,jsx,tsx}',
+    './src/pages/**/*.{js,ts,jsx,tsx}',
+    './src/components/**/*.{js,ts,jsx,tsx}',
+    './src/app/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
       fontFamily: {
-        michroma: ['Michroma', 'sans-serif'],
-        magison: ['Magison', 'sans-serif'],
-        worksans: ['Work Sans', 'sans-serif'],
-        ligconsolata: ['Ligconsolata', 'monospace'],
+        michroma: [
+          'var(--font-michroma)',
+          'Michroma',
+          'ui-monospace',
+          'monospace',
+        ],
+        magison: ['Magison', 'ui-serif', 'serif'],
+        worksans: [
+          'var(--font-work-sans)',
+          'Work Sans',
+          'ui-sans-serif',
+          'system-ui',
+          'sans-serif',
+        ],
+        ligconsolata: ['Ligconsolata', 'ui-monospace', 'monospace'],
       },
       colors: {
         gradientStart: '#DEBEFF',
@@ -59,6 +70,14 @@ module.exports = {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
+        'gradient-primary': {
+          start: 'hsl(var(--gradient-purple-start))',
+          end: 'hsl(var(--gradient-purple-end))',
+        },
+        'page-gradient': {
+          start: 'hsl(var(--gradient-page-start))',
+          end: 'hsl(var(--gradient-page-end))',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -69,3 +88,5 @@ module.exports = {
   },
   plugins: [require('tailwindcss-animate')],
 };
+
+export default config;

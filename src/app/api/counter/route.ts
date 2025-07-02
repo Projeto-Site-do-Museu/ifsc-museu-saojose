@@ -1,45 +1,48 @@
-import fs from 'node:fs/promises';
-import path from 'node:path';
+import { prisma } from '@/lib/prisma';
 import { type NextRequest, NextResponse } from 'next/server';
 
-const COUNTER_FILE = path.join(process.cwd(), 'data', 'counter.json');
 const COOKIE_NAME = 'visitor_counted';
 
-async function ensureDataDir() {
-  const dataDir = path.dirname(COUNTER_FILE);
-  try {
-    await fs.access(dataDir);
-  } catch {
-    await fs.mkdir(dataDir, { recursive: true });
-  }
+async function getCurrentCount(): Promise<number> {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const result = await prisma.contadorVisitante.findFirst({
+    where: {
+      dataRegistro: {
+        gte: today,
+      },
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+
+  return result?.contador || 0;
 }
 
-async function getCounter(): Promise<number> {
-  try {
-    await ensureDataDir();
-    const data = await fs.readFile(COUNTER_FILE, 'utf-8');
-    const { count } = JSON.parse(data);
-    return count || 0;
-  } catch {
-    return 0;
-  }
-}
+async function incrementCounter(
+  ipAddress?: string,
+  userAgent?: string,
+): Promise<number> {
+  const currentCount = await getCurrentCount();
+  const newCount = currentCount + 1;
 
-async function saveCounter(count: number): Promise<void> {
-  await ensureDataDir();
-  await fs.writeFile(
-    COUNTER_FILE,
-    JSON.stringify({
-      count,
-      lastUpdated: new Date().toISOString(),
-    }),
-    'utf-8',
-  );
+  await prisma.contadorVisitante.create({
+    data: {
+      contador: newCount,
+      dataRegistro: new Date(),
+      ipOrigem: ipAddress,
+      userAgent: userAgent,
+    },
+  });
+
+  return newCount;
 }
 
 export async function GET() {
   try {
-    const count = await getCounter();
+    const count = await getCurrentCount();
     return NextResponse.json({ count });
   } catch (error) {
     console.error('Erro ao buscar contador:', error);
@@ -55,13 +58,17 @@ export async function POST(request: NextRequest) {
     const hasCookie = request.cookies.has(COOKIE_NAME);
 
     if (hasCookie) {
-      const count = await getCounter();
+      const count = await getCurrentCount();
       return NextResponse.json({ count, counted: false });
     }
 
-    const currentCount = await getCounter();
-    const newCount = currentCount + 1;
-    await saveCounter(newCount);
+    const ipAddress =
+      request.ip ||
+      request.headers.get('x-forwarded-for')?.split(',')[0] ||
+      undefined;
+    const userAgent = request.headers.get('user-agent') || undefined;
+
+    const newCount = await incrementCounter(ipAddress, userAgent);
 
     const response = NextResponse.json({ count: newCount, counted: true });
 

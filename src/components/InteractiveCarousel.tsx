@@ -90,7 +90,7 @@ export default function InteractiveCarousel({
             <button
               type="button"
               onClick={handleCloseExpandedCard}
-              className="mt-4 text-sm text-blue-600 hover:text-blue-800"
+              className="mt-4 text-sm text-accent hover:text-black"
             >
               Fechar
             </button>

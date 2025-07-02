@@ -16,7 +16,11 @@ export default function Home() {
 
   // Abre o modal automaticamente ao carregar a página
   useEffect(() => {
-    setShowModal(true);
+    const hasVisited = localStorage.getItem('hasVisited');
+    if (!hasVisited) {
+      setShowModal(true);
+      localStorage.setItem('hasVisited', 'true');
+    }
   }, []);
 
   return (
@@ -115,15 +119,3 @@ export default function Home() {
     </div>
   );
 }
-
-/*
-@keyframes modalIn {
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-.animate-modalIn {
-  animation: modalIn 0.2s forwards;
-}
-  */

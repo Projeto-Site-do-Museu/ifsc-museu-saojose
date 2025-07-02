@@ -256,132 +256,64 @@ erDiagram
         DateTime createdAt
         DateTime updatedAt
     }
-    Categoria {
-        Int id PK "autoincrement()"
-        String nome
-        String descricao
-        String slug "unique"
-        Boolean ativo
-        DateTime createdAt
-    }
-    Midia {
-        Int id PK "autoincrement()"
-        String nome
-        String arquivo
-        String tipo
-        String altText
-        String descricao
-        Int categoriaId FK
-        Int usuarioId FK
-        Int tamanhoArquivo
-        Int largura
-        Int altura
-        Boolean ativo
-        DateTime createdAt
-        DateTime updatedAt
-    }
-    Galeria {
-        Int id PK "autoincrement()"
-        Int midiaId FK
-        String titulo
-        String descricao
-        Int ordem
-        Boolean ativo
-        DateTime createdAt
-    }
-    Carousel {
-        Int id PK "autoincrement()"
-        Int midiaId FK
-        String titulo
-        String texto
-        String linkExterno
-        Int ordem
-        Boolean ativo
-        DateTime createdAt
-    }
     Artigo {
         Int id PK "autoincrement()"
         String titulo
-        String slug "unique"
-        String resumo
-        String conteudo
-        Int imagemDestaqueId FK
-        Int categoriaId FK
-        Int usuarioId FK
-        String status
-        DateTime dataPublicacao
-        Boolean destaque
-        Int visualizacoes
+        String resumo "optional"
+        String conteudo "longtext"
+        String imagem "optional"
+        String video "optional"
+        DateTime dataPublicacao "optional"
+        Boolean ativo
         DateTime createdAt
         DateTime updatedAt
+        Int usuarioId FK
     }
-    ArtigoMidia {
+    Acervo {
         Int id PK "autoincrement()"
-        Int artigoId FK
-        Int midiaId FK
-        String legenda
-        Int ordem
+        String titulo
+        String descricao "optional"
+        String imagem "optional"
+        String video "optional"
+        Int ordem "optional"
+        Boolean ativo
+        DateTime createdAt
+        DateTime updatedAt
+        Int usuarioId FK
     }
     VideoEspecial {
         Int id PK "autoincrement()"
-        Int midiaId FK
         String titulo
-        String descricao
+        String descricao "optional"
         String tipo
-        Int thumbnailId FK
-        Int duracao
-        Int ordem
+        String video
+        String thumbnail "optional"
+        Int ordem "optional"
         Boolean ativo
         DateTime createdAt
+        DateTime updatedAt
+        Int usuarioId FK
     }
     ContadorVisitante {
         Int id PK "autoincrement()"
         Int contador
         DateTime dataRegistro
-        String ipOrigem
-        String userAgent
+        String ipOrigem "optional"
+        String userAgent "optional"
         DateTime createdAt
     }
     Configuracao {
         Int id PK "autoincrement()"
         String chave "unique"
         String valor
-        String tipo
-        String descricao
+        String descricao "optional"
         DateTime createdAt
         DateTime updatedAt
     }
-    LogAtividade {
-        Int id PK "autoincrement()"
-        Int usuarioId FK
-        String acao
-        String tabelaAfetada
-        Int idRegistro
-        Json dadosAnteriores
-        Json dadosNovos
-        String ipOrigem
-        String userAgent
-        DateTime createdAt
-    }
 
-    Usuario ||--o{ Midia : "possui"
     Usuario ||--o{ Artigo : "escreve"
-    Usuario ||--o{ LogAtividade : "registra"
-    Categoria ||--o{ Midia : "possui"
-    Categoria ||--o{ Artigo : "possui"
-    Midia ||--o{ Galeria : "possui"
-    Midia ||--o{ Carousel : "possui"
-    Midia }o--|| VideoEspecial : "principal"
-    Midia }o--|| VideoEspecial : "thumbnail"
-    Midia ||--o{ ArtigoMidia : "possui"
-    Midia }o--|| Artigo : "destaque"
-    Artigo ||--o{ ArtigoMidia : "possui"
-    Artigo }o--|| Midia : "destaque"
-    Artigo ||--o{ Categoria : "pertence"
-    Artigo ||--o{ Usuario : "escrito por"
-    VideoEspecial }o--|| Midia : "midia"
-    VideoEspecial }o--|| Midia : "thumbnail"
-    LogAtividade }o--|| Usuario : "relacionado a"
+    Usuario ||--o{ Acervo : "gerencia"
+    Usuario ||--o{ VideoEspecial : "administra"
 ```
 
 ## Padrões e Boas Práticas

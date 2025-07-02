@@ -9,7 +9,8 @@
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "format": "biome format .",
-    "format:fix": "biome format --write ."
+    "format:fix": "biome format --write .",
+    "populate-db": "node scripts/populate-database.js"
   },
   "dependencies": {
     "@prisma/client": "^6.8.2",
