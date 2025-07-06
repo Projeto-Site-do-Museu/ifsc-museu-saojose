@@ -6,7 +6,9 @@ const JWT_ALGORITHM = 'HS256';
 
 // Verificar se está usando a chave padrão em produção
 if (process.env.NODE_ENV === 'production' && JWT_SECRET === '') {
-  throw new Error('JWT_SECRET deve ser definida em produção. Chave padrão não é segura.');
+  throw new Error(
+    'JWT_SECRET deve ser definida em produção. Chave padrão não é segura.',
+  );
 }
 
 export interface JWTPayload {
@@ -18,11 +20,11 @@ export interface JWTPayload {
 }
 
 export function generateToken(payload: JWTPayload): string {
-  return jwt.sign(payload, JWT_SECRET, { 
+  return jwt.sign(payload, JWT_SECRET, {
     expiresIn: JWT_EXPIRES_IN,
     algorithm: JWT_ALGORITHM,
     issuer: 'museu-sao-jose',
-    audience: 'museu-admin'
+    audience: 'museu-admin',
   });
 }
 
@@ -31,15 +33,15 @@ export function verifyToken(token: string): JWTPayload | null {
     const decoded = jwt.verify(token, JWT_SECRET, {
       algorithms: [JWT_ALGORITHM],
       issuer: 'museu-sao-jose',
-      audience: 'museu-admin'
+      audience: 'museu-admin',
     }) as JWTPayload;
-    
+
     // Verificações adicionais de segurança
     if (!decoded.userId || !decoded.email || !decoded.role) {
       console.error('Token inválido: campos obrigatórios ausentes');
       return null;
     }
-    
+
     return decoded;
   } catch (error) {
     console.error('Erro ao verificar token:', error);

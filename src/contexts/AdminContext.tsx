@@ -1,6 +1,6 @@
 'use client';
 
-import { isTokenValid, getTokenPayload, removeInvalidToken } from '@/lib/auth';
+import { getTokenPayload, isTokenValid, removeInvalidToken } from '@/lib/auth';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 interface AdminUser {

@@ -19,7 +19,6 @@ export function withAuth<T = unknown>(
       );
     }
 
-
     const user = verifyToken(token);
     if (!user) {
       return NextResponse.json(
@@ -30,7 +29,9 @@ export function withAuth<T = unknown>(
 
     if (user.exp && user.exp * 1000 < Date.now() + 60000) {
       return NextResponse.json(
-        { error: 'Token próximo do vencimento. Por favor, faça login novamente' },
+        {
+          error: 'Token próximo do vencimento. Por favor, faça login novamente',
+        },
         { status: 401 },
       );
     }

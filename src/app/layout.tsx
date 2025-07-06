@@ -1,4 +1,5 @@
 import './globals.css';
+import { AdminProvider } from '@/contexts/AdminContext';
 import type { Metadata } from 'next';
 import { Michroma, Work_Sans } from 'next/font/google';
 import type { ReactNode } from 'react';
@@ -24,7 +25,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="pt-BR" className={`${michroma.variable} ${workSans.variable}`}>
-      <body className="bg-background text-white font-worksans">{children}</body>
+      <body className="bg-background text-white font-worksans">
+        <AdminProvider>{children}</AdminProvider>
+      </body>
     </html>
   );
 }
