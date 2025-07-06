@@ -71,13 +71,13 @@ export default function AdminLogin({
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold text-gray-800">
-          Área do Administrador
+        <h2 className="text-xl font-bold text-secondary-foreground">
+          Login Administrador
         </h2>
         <button
           type="button"
           onClick={onClose}
-          className="text-gray-500 hover:text-gray-700"
+          className="text-secondary-foreground/70 hover:text-secondary-foreground"
         >
           <X size={24} />
         </button>
@@ -93,7 +93,7 @@ export default function AdminLogin({
         <div>
           <label
             htmlFor="email"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium mb-1 text-secondary-foreground"
           >
             Email
           </label>
@@ -104,15 +104,15 @@ export default function AdminLogin({
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-            placeholder="admin@museu.com"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-primary"
+            placeholder="admin@museu.com.br"
           />
         </div>
 
         <div>
           <label
             htmlFor="senha"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-secondary-foreground mb-1"
           >
             Senha
           </label>
@@ -123,7 +123,7 @@ export default function AdminLogin({
             value={formData.senha}
             onChange={handleChange}
             required
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-primary"
             placeholder="••••••••"
           />
         </div>
@@ -131,7 +131,7 @@ export default function AdminLogin({
         <button
           type="submit"
           disabled={carregando}
-          className="w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
+          className="w-full bg-primary text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
         >
           {carregando ? 'Entrando...' : 'Entrar'}
         </button>
