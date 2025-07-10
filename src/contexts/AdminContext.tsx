@@ -35,7 +35,7 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
           if (payload && payload.role === 'admin') {
             setAdminUser({
               id: Number.parseInt(payload.userId),
-              nome: payload.email, // Usar o email como nome temporário
+              nome: payload.email,
               email: payload.email,
               role: payload.role,
             });
@@ -67,7 +67,6 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
     removeInvalidToken();
   };
 
-  // Verificar periodicamente se o token ainda é válido
   useEffect(() => {
     if (token) {
       const interval = setInterval(() => {
@@ -78,7 +77,7 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
 
       return () => clearInterval(interval);
     }
-  }, [token]);
+  }, [token, logout]);
 
   const value = {
     isAdmin: !!adminUser && adminUser.role === 'admin',
