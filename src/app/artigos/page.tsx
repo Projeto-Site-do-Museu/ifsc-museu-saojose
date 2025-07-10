@@ -1,7 +1,10 @@
 'use client';
 
+import ArtigoEditor from '@/components/ArtigoEditor';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
+import { useAdmin } from '@/contexts/AdminContext';
+import { Edit, Plus, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
@@ -19,25 +22,85 @@ export default function Artigos() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [modalAtivo, setModalAtivo] = useState<Artigo | null>(null);
+  const [editorAtivo, setEditorAtivo] = useState<Artigo | null>(null);
+  const [showNovoArtigo, setShowNovoArtigo] = useState(false);
+  const { isAdmin, token } = useAdmin();
 
   useEffect(() => {
-    const fetchArtigos = async () => {
-      try {
-        const response = await fetch('/api/artigos');
-        if (!response.ok) {
-          throw new Error('Falha ao buscar artigos');
-        }
-        const data = await response.json();
-        setArtigos(data);
-      } catch (err: unknown) {
-        setError(err instanceof Error ? err.message : 'Erro desconhecido');
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchArtigos();
   }, []);
+
+  const fetchArtigos = async () => {
+    try {
+      const response = await fetch('/api/artigos');
+      if (!response.ok) {
+        throw new Error('Falha ao buscar artigos');
+      }
+      const data = await response.json();
+      setArtigos(data);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Erro desconhecido');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEditarArtigo = async (e: React.MouseEvent, artigo: Artigo) => {
+    e.stopPropagation();
+
+    try {
+      const response = await fetch(`/api/artigos/${artigo.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        const artigoCompleto = await response.json();
+        setEditorAtivo(artigoCompleto);
+      }
+    } catch (error) {
+      console.error('Erro ao buscar artigo:', error);
+    }
+  };
+
+  const handleDeletarArtigo = async (e: React.MouseEvent, artigo: Artigo) => {
+    e.stopPropagation();
+
+    if (
+      !confirm(`Tem certeza que deseja deletar o artigo "${artigo.titulo}"?`)
+    ) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/artigos/${artigo.id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        setArtigos(artigos.filter((a) => a.id !== artigo.id));
+      } else {
+        throw new Error('Erro ao deletar artigo');
+      }
+    } catch (error) {
+      console.error('Erro ao deletar artigo:', error);
+      alert('Erro ao deletar artigo');
+    }
+  };
+
+  const handleSalvarArtigo = (artigoAtualizado: Artigo) => {
+    setArtigos(
+      artigos.map((a) => (a.id === artigoAtualizado.id ? artigoAtualizado : a)),
+    );
+  };
+
+  const handleNovoArtigo = (novoArtigo: Artigo) => {
+    setArtigos([novoArtigo, ...artigos]);
+    setShowNovoArtigo(false);
+  };
 
   const formatarData = (dataString?: string) => {
     if (!dataString) return 'Data não informada';
@@ -71,7 +134,7 @@ export default function Artigos() {
       <div className="min-h-screen flex flex-col bg-white">
         <Header />
         <main className="flex-grow p-6 max-w-7xl mx-auto flex justify-center items-center">
-          <p className="text-xl text-red-500">Erro: {error}</p>
+          <p className="text-xl">Nenhum Artigo encontrado.</p>
         </main>
         <Footer />
       </div>
@@ -83,9 +146,21 @@ export default function Artigos() {
       <Header />
 
       <main className="flex-grow p-6 max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">
-          Artigos do Museu de São José
-        </h1>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold text-center text-gray-800">
+            Artigos do Museu de São José
+          </h1>
+          {isAdmin && (
+            <button
+              type="button"
+              onClick={() => setShowNovoArtigo(true)}
+              className="flex items-center gap-2 bg-primary text-white px-4 py-2"
+            >
+              <Plus size={16} />
+              Novo Artigo
+            </button>
+          )}
+        </div>
 
         {artigos.length === 0 ? (
           <p className="text-center text-gray-500 text-lg">
@@ -94,37 +169,60 @@ export default function Artigos() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {artigos.map((artigo) => (
-              <button
-                key={artigo.id}
-                type="button"
-                className="cursor-pointer group text-left block w-full"
-                onClick={() => setModalAtivo(artigo)}
-              >
-                <div className="relative overflow-hidden shadow-md">
-                  <Image
-                    src={artigo.imagem || '/imgs/placeholder.jpg'}
-                    alt={artigo.titulo}
-                    width={400}
-                    height={250}
-                    className="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                </div>
-                <div className="mt-3">
-                  <h2 className="font-semibold text-lg text-gray-900">
-                    {artigo.titulo}
-                  </h2>
-                  <p className="text-sm text-gray-600 mt-1 line-clamp-3">
-                    {artigo.resumo || 'Sem descrição disponível'}
-                  </p>
-                  <p className="text-xs text-gray-400 mt-1">
-                    {formatarData(artigo.dataPublicacao)}
-                  </p>
-                </div>
-              </button>
+              <div key={artigo.id} className="relative group">
+                <button
+                  type="button"
+                  className="cursor-pointer group text-left block w-full"
+                  onClick={() => setModalAtivo(artigo)}
+                >
+                  <div className="relative overflow-hidden shadow-md">
+                    <Image
+                      src={artigo.imagem || '/imgs/placeholder.jpg'}
+                      alt={artigo.titulo}
+                      width={400}
+                      height={250}
+                      className="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="mt-3">
+                    <h2 className="font-semibold text-lg text-gray-900">
+                      {artigo.titulo}
+                    </h2>
+                    <p className="text-sm text-gray-600 mt-1 line-clamp-3">
+                      {artigo.resumo || 'Sem descrição disponível'}
+                    </p>
+                    <p className="text-xs text-gray-400 mt-1">
+                      {formatarData(artigo.dataPublicacao)}
+                    </p>
+                  </div>
+                </button>
+
+                {isAdmin && (
+                  <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
+                    <button
+                      type="button"
+                      onClick={(e) => handleEditarArtigo(e, artigo)}
+                      className="text-foreground p-2 rounded-full shadow-lg bg-primary"
+                      title="Editar artigo"
+                    >
+                      <Edit size={16} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => handleDeletarArtigo(e, artigo)}
+                      className=" text-foreground p-2 rounded-full shadow-lg bg-primary"
+                      title="Deletar artigo"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                )}
+              </div>
             ))}
           </div>
         )}
 
+        {/* Modal de visualização */}
         {modalAtivo && (
           <dialog
             open
@@ -175,6 +273,30 @@ export default function Artigos() {
               </div>
             </div>
           </dialog>
+        )}
+
+        {/* Editor de artigo */}
+        {editorAtivo && (
+          <ArtigoEditor
+            artigo={editorAtivo}
+            onClose={() => setEditorAtivo(null)}
+            onSave={handleSalvarArtigo}
+          />
+        )}
+
+        {/* Editor de novo artigo */}
+        {showNovoArtigo && (
+          <ArtigoEditor
+            artigo={{
+              id: 0,
+              titulo: '',
+              resumo: '',
+              conteudo: '',
+              imagem: '',
+            }}
+            onClose={() => setShowNovoArtigo(false)}
+            onSave={handleNovoArtigo}
+          />
         )}
       </main>
 

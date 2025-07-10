@@ -1,19 +1,21 @@
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
-import InteractiveCarousel, { type Item as CarouselItemData } from '@/components/InteractiveCarousel';
+import InteractiveCarousel, {
+  type Item as CarouselItemData,
+} from '@/components/InteractiveCarousel';
 
 const mockAfricana: CarouselItemData[] = [
-    { id: 3, img: '/imgs/img-teste7.jpg', text: 'Coroa Africana' },
+  { id: 3, img: '/imgs/img-teste7.jpg', text: 'Coroa Africana' },
   { id: 1, img: '/imgs/img-teste6.jpg', text: 'Estátuas' },
   { id: 2, img: '/imgs/img-teste5.jpeg', text: 'Estampas Africanas' },
-  { id: 4, img: '/imgs/img13.jpg', text: 'Máscara Africana' }
+  { id: 4, img: '/imgs/img13.jpg', text: 'Máscara Africana' },
 ];
 
 const mockIndigena: CarouselItemData[] = [
   { id: 1, img: '/imgs/img-teste3.jpeg', text: 'Pulseiras' },
-  { id: 2, img: '/imgs/img-teste1.jpg', text: 'Brincos e Correntes'},
-  { id: 3, img: '/imgs/img-teste2.jpg', text: 'Cocar' },  
-  { id: 4, img: '/imgs/img-teste4.jpg', text: 'Zarabatana' }
+  { id: 2, img: '/imgs/img-teste1.jpg', text: 'Brincos e Correntes' },
+  { id: 3, img: '/imgs/img-teste2.jpg', text: 'Cocar' },
+  { id: 4, img: '/imgs/img-teste4.jpg', text: 'Zarabatana' },
 ];
 
 export default function ColecoesPage() {
@@ -24,9 +26,12 @@ export default function ColecoesPage() {
       <main className="flex-1 px-4 md:px-10">
         <section className="w-full pt-24 pb-16">
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Coleções Culturais</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+              Coleções Culturais
+            </h1>
             <p className="text-lg md:text-xl text-gray-300">
-              Explore objetos do acervo do Museu Histórico de São José que celebram as culturas africana e indígena.
+              Explore objetos do acervo do Museu Histórico de São José que
+              celebram as culturas africana e indígena.
             </p>
           </div>
 
@@ -59,7 +64,10 @@ export default function ColecoesPage() {
           {/* Botão */}
           <div className="mt-20 flex justify-center">
             <a href="/acervo/acervoCompleto">
-              <button className="bg-white text-black px-8 py-4 rounded-xl text-lg md:text-xl font-semibold shadow hover:scale-105 hover:bg-gray-200 transition">
+              <button
+                type="button"
+                className="bg-white text-black px-8 py-4 rounded-xl text-lg md:text-xl font-semibold shadow hover:scale-105 hover:bg-gray-200 transition"
+              >
                 Conheça nosso acervo completo!
               </button>
             </a>
