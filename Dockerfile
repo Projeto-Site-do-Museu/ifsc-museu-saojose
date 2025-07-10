@@ -3,6 +3,11 @@ WORKDIR /app
 
 RUN apk add --no-cache libc6-compat
 
+
+ENV JWT_SECRET=$JWT_SECRET
+ENV DATABASE_URL=$DATABASE_URL
+ENV NODE_ENV=production
+
 COPY package.json package-lock.json ./
 RUN npm ci
 
@@ -10,7 +15,6 @@ COPY prisma ./prisma/
 RUN npx prisma generate
 
 COPY . .
-ENV NODE_ENV=production
 RUN npm run build
 
 FROM node:20-alpine AS runner
