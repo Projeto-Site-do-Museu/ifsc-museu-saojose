@@ -1,7 +1,13 @@
 'use client';
 
 import { getTokenPayload, isTokenValid, removeInvalidToken } from '@/lib/auth';
-import { createContext, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 interface AdminUser {
   id: number;
@@ -51,7 +57,7 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const login = (newToken: string, user: AdminUser) => {
+  const login = useCallback((newToken: string, user: AdminUser) => {
     if (isTokenValid(newToken)) {
       setToken(newToken);
       setAdminUser(user);
@@ -59,13 +65,13 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
     } else {
       console.error('Token inválido fornecido no login');
     }
-  };
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     setToken(null);
     setAdminUser(null);
     removeInvalidToken();
-  };
+  }, []);
 
   useEffect(() => {
     if (token) {
