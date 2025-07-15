@@ -7,20 +7,34 @@ export async function GET() {
       where: {
         ativo: true,
       },
-      select: {
-        id: true,
-        titulo: true,
-        imagem: true,
-        ordem: true,
+      include: {
+        midias: {
+          where: {
+            ativo: true,
+            tipo: 'imagem',
+          },
+          orderBy: {
+            ordem: 'asc',
+          },
+          take: 1,
+          select: {
+            url: true,
+          },
+        },
       },
       orderBy: [{ ordem: 'asc' }, { createdAt: 'desc' }],
     });
 
-    const galleryData = acervos.map((acervo) => ({
-      id: acervo.id,
-      img: acervo.imagem || '/imgs/placeholder.jpg',
-      text: acervo.titulo,
-    }));
+    const galleryData = acervos.map((acervo) => {
+      const thumbnailUrl = acervo.midias[0]?.url || acervo.imagem || '/imgs/placeholder.jpg';
+      
+      return {
+        id: acervo.id,
+        img: thumbnailUrl,
+        text: acervo.titulo,
+        descricao: acervo.descricao,
+      };
+    });
 
     return NextResponse.json(galleryData);
   } catch (error) {

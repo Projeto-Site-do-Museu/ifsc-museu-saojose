@@ -1,4 +1,5 @@
 import '../globals.css';
+import AcervoActions from '@/components/AcervoActions';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import InteractiveCarousel, {
@@ -61,16 +62,7 @@ export default async function AcervoPage() {
               )}
             </div>
 
-            <div className="mt-16 flex justify-center">
-              <a href="/acervo/acervoCompleto">
-                <button
-                  type="button"
-                  className="bg-black hover:bg-gray-800 text-white px-10 py-4 rounded-2xl text-xl md:text-2xl font-semibold shadow-md hover:shadow-xl hover:scale-105 transition-transform duration-300 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-                >
-                  Ver acervo completo
-                </button>
-              </a>
-            </div>
+            <AcervoActions />
           </div>
         </section>
       </main>

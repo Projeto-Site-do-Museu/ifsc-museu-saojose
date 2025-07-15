@@ -1,10 +1,10 @@
 'use client';
 
-import ArtigoEditor from '@/components/ArtigoEditor';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
+import ItemEditor from '@/components/ItemEditor';
 import { useAdmin } from '@/contexts/AdminContext';
-import { Edit, Plus, Trash2 } from 'lucide-react';
+import { Edit, Plus, Trash2, FileText } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
@@ -119,7 +119,10 @@ export default function Artigos() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col bg-white">
+      <div 
+        className="min-h-screen flex flex-col"
+        style={{ backgroundColor: '#f2f2f2' }}
+      >
         <Header />
         <main className="flex-grow p-6 max-w-7xl mx-auto flex justify-center items-center">
           <p className="text-xl text-gray-700">Carregando artigos...</p>
@@ -131,7 +134,10 @@ export default function Artigos() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex flex-col bg-white">
+      <div 
+        className="min-h-screen flex flex-col"
+        style={{ backgroundColor: '#f2f2f2' }}
+      >
         <Header />
         <main className="flex-grow p-6 max-w-7xl mx-auto flex justify-center items-center">
           <p className="text-xl">Nenhum Artigo encontrado.</p>
@@ -142,7 +148,10 @@ export default function Artigos() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div 
+      className="min-h-screen flex flex-col"
+      style={{ backgroundColor: '#f2f2f2' }}
+    >
       <Header />
 
       <main className="flex-grow p-6 max-w-7xl mx-auto">
@@ -150,7 +159,7 @@ export default function Artigos() {
           <h1 className="text-3xl font-bold text-center text-gray-800">
             Artigos do Museu de São José
           </h1>
-          {isAdmin && (
+          {isAdmin && artigos.length > 0 && (
             <button
               type="button"
               onClick={() => setShowNovoArtigo(true)}
@@ -163,9 +172,25 @@ export default function Artigos() {
         </div>
 
         {artigos.length === 0 ? (
-          <p className="text-center text-gray-500 text-lg">
-            Nenhum artigo encontrado.
-          </p>
+          <div className="col-span-full flex flex-col items-center justify-center py-16">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                <FileText size={24} className="text-gray-400" />
+              </div>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">Nenhum artigo encontrado</h3>
+              <p className="text-gray-600 mb-4">Adicione artigos para começar a construir sua biblioteca</p>
+              {isAdmin && (
+                <button
+                  type="button"
+                  onClick={() => setShowNovoArtigo(true)}
+                  className="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded transition-colors"
+                >
+                  <Plus size={16} />
+                  Adicionar Primeiro Artigo
+                </button>
+              )}
+            </div>
+          </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {artigos.map((artigo) => (
@@ -277,8 +302,9 @@ export default function Artigos() {
 
         {/* Editor de artigo */}
         {editorAtivo && (
-          <ArtigoEditor
-            artigo={editorAtivo}
+          <ItemEditor
+            item={editorAtivo}
+            type="artigo"
             onClose={() => setEditorAtivo(null)}
             onSave={handleSalvarArtigo}
           />
@@ -286,14 +312,15 @@ export default function Artigos() {
 
         {/* Editor de novo artigo */}
         {showNovoArtigo && (
-          <ArtigoEditor
-            artigo={{
+          <ItemEditor
+            item={{
               id: 0,
               titulo: '',
               resumo: '',
               conteudo: '',
               imagem: '',
             }}
+            type="artigo"
             onClose={() => setShowNovoArtigo(false)}
             onSave={handleNovoArtigo}
           />
