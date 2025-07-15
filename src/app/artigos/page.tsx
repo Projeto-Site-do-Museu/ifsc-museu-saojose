@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import ItemEditor from '@/components/ItemEditor';
 import { useAdmin } from '@/contexts/AdminContext';
-import { Edit, Plus, Trash2, FileText } from 'lucide-react';
+import { Edit, FileText, Plus, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
@@ -119,7 +119,7 @@ export default function Artigos() {
 
   if (loading) {
     return (
-      <div 
+      <div
         className="min-h-screen flex flex-col"
         style={{ backgroundColor: '#f2f2f2' }}
       >
@@ -134,7 +134,7 @@ export default function Artigos() {
 
   if (error) {
     return (
-      <div 
+      <div
         className="min-h-screen flex flex-col"
         style={{ backgroundColor: '#f2f2f2' }}
       >
@@ -148,7 +148,7 @@ export default function Artigos() {
   }
 
   return (
-    <div 
+    <div
       className="min-h-screen flex flex-col"
       style={{ backgroundColor: '#f2f2f2' }}
     >
@@ -177,8 +177,12 @@ export default function Artigos() {
               <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
                 <FileText size={24} className="text-gray-400" />
               </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Nenhum artigo encontrado</h3>
-              <p className="text-gray-600 mb-4">Adicione artigos para começar a construir sua biblioteca</p>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">
+                Nenhum artigo encontrado
+              </h3>
+              <p className="text-gray-600 mb-4">
+                Adicione artigos para começar a construir sua biblioteca
+              </p>
               {isAdmin && (
                 <button
                   type="button"

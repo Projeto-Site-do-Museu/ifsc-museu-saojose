@@ -1,12 +1,12 @@
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
-const readline = require('readline');
+const readline = require('node:readline');
 
 const prisma = new PrismaClient();
 
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
+  output: process.stdout,
 });
 
 function pergunta(texto) {
@@ -44,7 +44,7 @@ async function main() {
 
     // Verificar se email já existe
     const usuarioExistente = await prisma.usuario.findUnique({
-      where: { email }
+      where: { email },
     });
 
     if (usuarioExistente) {
@@ -62,8 +62,8 @@ async function main() {
         email,
         senhaHash,
         role: 'admin',
-        ativo: true
-      }
+        ativo: true,
+      },
     });
 
     console.log('\n✅ Usuário criado com sucesso!');
@@ -71,7 +71,6 @@ async function main() {
     console.log(`Nome: ${usuario.nome}`);
     console.log(`Email: ${usuario.email}`);
     console.log(`Role: ${usuario.role}`);
-    
   } catch (error) {
     console.error('❌ Erro ao criar usuário:', error.message);
   } finally {
@@ -80,4 +79,4 @@ async function main() {
   }
 }
 
-main(); 
+main();

@@ -3,11 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { type NextRequest, NextResponse } from 'next/server';
 
 export const DELETE = withAuth(
-  async (
-    request: NextRequest,
-    user,
-    context?: { params: { id: string } },
-  ) => {
+  async (request: NextRequest, user, context?: { params: { id: string } }) => {
     if (user.role !== 'admin') {
       return NextResponse.json({ error: 'Acesso negado' }, { status: 403 });
     }
@@ -38,4 +34,4 @@ export const DELETE = withAuth(
       );
     }
   },
-); 
+);

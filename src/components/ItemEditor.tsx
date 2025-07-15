@@ -3,9 +3,9 @@
 import { useAdmin } from '@/contexts/AdminContext';
 import { Edit3, FileText, Image, Save } from 'lucide-react';
 import { useState } from 'react';
+import ColecaoSelector from './ColecaoSelector';
 import ImageUpload from './ImageUpload';
 import MediaManager from './MediaManager';
-import ColecaoSelector from './ColecaoSelector';
 
 interface BaseItem {
   id: number;
@@ -43,10 +43,15 @@ interface ItemEditorProps {
   onSave: (item: ItemType) => void;
 }
 
-export default function ItemEditor({ item, type, onClose, onSave }: ItemEditorProps) {
+export default function ItemEditor({
+  item,
+  type,
+  onClose,
+  onSave,
+}: ItemEditorProps) {
   const { token } = useAdmin();
-  
-  const [formData, setFormData] = useState<any>(() => {
+
+  const [formData, setFormData] = useState<Record<string, any>>(() => {
     if (type === 'artigo') {
       const artigo = item as ArtigoItem;
       return {
@@ -55,15 +60,14 @@ export default function ItemEditor({ item, type, onClose, onSave }: ItemEditorPr
         conteudo: artigo.conteudo || '',
         imagem: artigo.imagem || '',
       };
-    } else {
-      const acervo = item as AcervoItem;
-      return {
-        titulo: acervo.titulo,
-        descricao: acervo.descricao || '',
-        colecao: acervo.colecao || '',
-        midias: acervo.midias || [],
-      };
     }
+    const acervo = item as AcervoItem;
+    return {
+      titulo: acervo.titulo,
+      descricao: acervo.descricao || '',
+      colecao: acervo.colecao || '',
+      midias: acervo.midias || [],
+    };
   });
 
   const [loading, setLoading] = useState(false);
@@ -85,7 +89,9 @@ export default function ItemEditor({ item, type, onClose, onSave }: ItemEditorPr
       // Para acervo, definir a primeira imagem como principal
       const submitData = { ...formData };
       if (type === 'acervo' && formData.midias?.length > 0) {
-        const firstImage = formData.midias.find((m: Media) => m.tipo === 'imagem');
+        const firstImage = formData.midias.find(
+          (m: Media) => m.tipo === 'imagem',
+        );
         submitData.imagem = firstImage?.url || '';
       }
 
@@ -117,21 +123,21 @@ export default function ItemEditor({ item, type, onClose, onSave }: ItemEditorPr
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
-    setFormData((prev: any) => ({
+    setFormData((prev: Record<string, any>) => ({
       ...prev,
       [name]: value,
     }));
   };
 
   const handleImageChange = (imageUrl: string) => {
-    setFormData((prev: any) => ({
+    setFormData((prev: Record<string, any>) => ({
       ...prev,
       imagem: imageUrl,
     }));
   };
 
   const handleMediasChange = (medias: Media[]) => {
-    setFormData((prev: any) => ({
+    setFormData((prev: Record<string, any>) => ({
       ...prev,
       midias: medias,
     }));
@@ -178,7 +184,10 @@ export default function ItemEditor({ item, type, onClose, onSave }: ItemEditorPr
                 <div className="bg-card border border-border rounded p-6 shadow-sm">
                   <div className="flex items-center gap-3 mb-4">
                     <FileText size={20} className="text-muted-foreground" />
-                    <label htmlFor="titulo" className="text-base font-semibold text-card-foreground">
+                    <label
+                      htmlFor="titulo"
+                      className="text-base font-semibold text-card-foreground"
+                    >
                       Título
                     </label>
                     <span className="text-destructive text-sm">*</span>
@@ -200,7 +209,10 @@ export default function ItemEditor({ item, type, onClose, onSave }: ItemEditorPr
                     <div className="bg-card border border-border rounded p-6 shadow-sm">
                       <div className="flex items-center gap-3 mb-4">
                         <FileText size={20} className="text-muted-foreground" />
-                        <label htmlFor="resumo" className="text-base font-semibold text-card-foreground">
+                        <label
+                          htmlFor="resumo"
+                          className="text-base font-semibold text-card-foreground"
+                        >
                           Resumo
                         </label>
                       </div>
@@ -218,7 +230,10 @@ export default function ItemEditor({ item, type, onClose, onSave }: ItemEditorPr
                     <div className="bg-card border border-border rounded p-6 shadow-sm">
                       <div className="flex items-center gap-3 mb-4">
                         <Edit3 size={20} className="text-muted-foreground" />
-                        <label htmlFor="conteudo" className="text-base font-semibold text-card-foreground">
+                        <label
+                          htmlFor="conteudo"
+                          className="text-base font-semibold text-card-foreground"
+                        >
                           Conteúdo
                         </label>
                       </div>
@@ -240,7 +255,10 @@ export default function ItemEditor({ item, type, onClose, onSave }: ItemEditorPr
                     <div className="bg-card border border-border rounded p-6 shadow-sm">
                       <div className="flex items-center gap-3 mb-4">
                         <FileText size={20} className="text-muted-foreground" />
-                        <label htmlFor="descricao" className="text-base font-semibold text-card-foreground">
+                        <label
+                          htmlFor="descricao"
+                          className="text-base font-semibold text-card-foreground"
+                        >
                           Descrição
                         </label>
                       </div>
@@ -257,7 +275,12 @@ export default function ItemEditor({ item, type, onClose, onSave }: ItemEditorPr
 
                     <ColecaoSelector
                       value={formData.colecao}
-                      onChange={(value) => setFormData((prev: any) => ({ ...prev, colecao: value }))}
+                      onChange={(value) =>
+                        setFormData((prev: Record<string, any>) => ({
+                          ...prev,
+                          colecao: value,
+                        }))
+                      }
                     />
                   </>
                 )}
@@ -322,4 +345,4 @@ export default function ItemEditor({ item, type, onClose, onSave }: ItemEditorPr
       </div>
     </div>
   );
-} 
+}

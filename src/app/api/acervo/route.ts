@@ -17,10 +17,7 @@ export async function GET() {
         ordem: true,
         createdAt: true,
       },
-      orderBy: [
-        { ordem: 'asc' },
-        { createdAt: 'desc' },
-      ],
+      orderBy: [{ ordem: 'asc' }, { createdAt: 'desc' }],
     });
 
     return NextResponse.json(acervos);
@@ -71,14 +68,21 @@ export const POST = withAuth(async (request: NextRequest, user) => {
 
     if (midias && Array.isArray(midias) && midias.length > 0) {
       await prisma.acervoMidia.createMany({
-        data: midias.map((midia: any) => ({
-          acervoId: acervo.id,
-          tipo: midia.tipo,
-          url: midia.url,
-          titulo: midia.titulo || '',
-          ordem: midia.ordem || 0,
-          ativo: true,
-        })),
+        data: midias.map(
+          (midia: {
+            tipo: string;
+            url: string;
+            titulo?: string;
+            ordem?: number;
+          }) => ({
+            acervoId: acervo.id,
+            tipo: midia.tipo,
+            url: midia.url,
+            titulo: midia.titulo || '',
+            ordem: midia.ordem || 0,
+            ativo: true,
+          }),
+        ),
       });
     }
 
@@ -90,4 +94,4 @@ export const POST = withAuth(async (request: NextRequest, user) => {
       { status: 500 },
     );
   }
-}); 
+});

@@ -29,8 +29,9 @@ export async function GET() {
     });
 
     const carouselData = acervos.map((acervo) => {
-      const thumbnailUrl = acervo.midias[0]?.url || acervo.imagem || '/imgs/placeholder.jpg';
-      
+      const thumbnailUrl =
+        acervo.midias[0]?.url || acervo.imagem || '/imgs/placeholder.jpg';
+
       return {
         id: acervo.id,
         img: thumbnailUrl,

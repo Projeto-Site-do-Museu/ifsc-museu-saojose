@@ -19,11 +19,11 @@ interface MediaCarouselProps {
   initialIndex?: number;
 }
 
-export default function MediaCarousel({ 
-  medias, 
-  isOpen, 
-  onClose, 
-  initialIndex = 0 
+export default function MediaCarousel({
+  medias,
+  isOpen,
+  onClose,
+  initialIndex = 0,
 }: MediaCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
@@ -48,16 +48,13 @@ export default function MediaCarousel({
   };
 
   return (
-    <div
-      className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
+    <dialog
+      className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center border-none p-0 max-w-none max-h-none"
       onClick={onClose}
       onKeyDown={handleKeyDown}
-      tabIndex={0}
+      open
     >
-      <div
-        className="relative max-w-[90vw] max-h-[90vh] w-full h-full flex items-center justify-center"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="relative max-w-[90vw] max-h-[90vh] w-full h-full flex items-center justify-center">
         {/* Botão fechar */}
         <button
           type="button"
@@ -114,9 +111,9 @@ export default function MediaCarousel({
         {/* Indicadores */}
         {medias.length > 1 && (
           <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-            {medias.map((_, index) => (
+            {medias.map((media, index) => (
               <button
-                key={index}
+                key={`indicator-${media.id || index}`}
                 type="button"
                 onClick={() => setCurrentIndex(index)}
                 className={`w-3 h-3 rounded-full transition-colors ${
@@ -127,8 +124,6 @@ export default function MediaCarousel({
           </div>
         )}
 
-
-
         {/* Contador */}
         {medias.length > 1 && (
           <div className="absolute top-4 left-4 bg-black/50 text-white px-3 py-1 rounded">
@@ -136,6 +131,6 @@ export default function MediaCarousel({
           </div>
         )}
       </div>
-    </div>
+    </dialog>
   );
-} 
+}

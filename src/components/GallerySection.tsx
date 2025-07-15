@@ -1,7 +1,14 @@
 'use client';
 
 import { useAdmin } from '@/contexts/AdminContext';
-import { ChevronLeft, ChevronRight, Edit, Plus, Trash2, X, Image as ImageIcon } from 'lucide-react';
+import {
+  ChevronLeft,
+  ChevronRight,
+  Edit,
+  Image as ImageIcon,
+  Plus,
+  Trash2,
+} from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import ItemEditor from './ItemEditor';
@@ -62,7 +69,9 @@ export default function GallerySection() {
         const itemsWithImages = await Promise.all(
           galleryData.map(async (item: Item) => {
             try {
-              const mediasResponse = await fetch(`/api/acervo/${item.id}/midias`);
+              const mediasResponse = await fetch(
+                `/api/acervo/${item.id}/midias`,
+              );
 
               let allImages = [item.img];
               let totalMedias = 1;
@@ -72,11 +81,11 @@ export default function GallerySection() {
                 const imagemUrls = midias
                   .filter((m: Media) => m.tipo === 'imagem')
                   .map((m: Media) => m.url);
-                
+
                 if (imagemUrls.length > 0) {
                   allImages = imagemUrls;
                 }
-                
+
                 totalMedias = midias.length;
               }
 
@@ -87,7 +96,10 @@ export default function GallerySection() {
                 currentImageIndex: 0,
               };
             } catch (error) {
-              console.error(`Erro ao buscar mídias para item ${item.id}:`, error);
+              console.error(
+                `Erro ao buscar mídias para item ${item.id}:`,
+                error,
+              );
               return {
                 ...item,
                 allImages: [item.img],
@@ -95,7 +107,7 @@ export default function GallerySection() {
                 currentImageIndex: 0,
               };
             }
-          })
+          }),
         );
 
         setItems(itemsWithImages);
@@ -164,7 +176,7 @@ export default function GallerySection() {
     if (!token) return;
 
     const confirmDelete = window.confirm(
-      `Tem certeza que deseja deletar "${item.text}"?`
+      `Tem certeza que deseja deletar "${item.text}"?`,
     );
 
     if (!confirmDelete) return;
@@ -195,22 +207,22 @@ export default function GallerySection() {
   };
 
   const navigateImage = (itemId: number, direction: 'prev' | 'next') => {
-    setItems(prevItems =>
-      prevItems.map(item => {
+    setItems((prevItems) =>
+      prevItems.map((item) => {
         if (item.id === itemId) {
           const totalImages = item.allImages.length;
           let newIndex = item.currentImageIndex;
-          
+
           if (direction === 'prev') {
             newIndex = newIndex === 0 ? totalImages - 1 : newIndex - 1;
           } else {
             newIndex = newIndex === totalImages - 1 ? 0 : newIndex + 1;
           }
-          
+
           return { ...item, currentImageIndex: newIndex };
         }
         return item;
-      })
+      }),
     );
   };
 
@@ -234,11 +246,16 @@ export default function GallerySection() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-12">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Galeria do Acervo</h1>
-          <p className="text-gray-600">Explore os itens do acervo do Museu Histórico de São José</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            Galeria do Acervo
+          </h1>
+          <p className="text-gray-600">
+            Explore os itens do acervo do Museu Histórico de São José
+          </p>
         </div>
         {isAdmin && (
           <button
+            type="button"
             onClick={handleAddItem}
             className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded"
           >
@@ -255,10 +272,15 @@ export default function GallerySection() {
               <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
                 <ImageIcon size={24} className="text-gray-400" />
               </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Nenhum item no acervo</h3>
-              <p className="text-gray-600 mb-4">Adicione itens para começar a construir sua galeria</p>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">
+                Nenhum item no acervo
+              </h3>
+              <p className="text-gray-600 mb-4">
+                Adicione itens para começar a construir sua galeria
+              </p>
               {isAdmin && (
                 <button
+                  type="button"
                   onClick={handleAddItem}
                   className="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded hover:bg-primary/90 transition-colors"
                 >
@@ -275,9 +297,10 @@ export default function GallerySection() {
             const hasMultipleMedias = item.totalMedias > 1;
 
             return (
-              <div
+              <button
+                type="button"
                 key={item.id}
-                className="group relative bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+                className="group relative bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 text-left w-full"
                 onClick={() => handleViewItem(item)}
               >
                 {/* Área da imagem com fundo preto */}
@@ -295,6 +318,7 @@ export default function GallerySection() {
                   {hasMultipleImages && (
                     <>
                       <button
+                        type="button"
                         onClick={(e) => {
                           e.stopPropagation();
                           navigateImage(item.id, 'prev');
@@ -303,8 +327,9 @@ export default function GallerySection() {
                       >
                         <ChevronLeft size={16} />
                       </button>
-                      
+
                       <button
+                        type="button"
                         onClick={(e) => {
                           e.stopPropagation();
                           navigateImage(item.id, 'next');
@@ -318,9 +343,11 @@ export default function GallerySection() {
                       <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
                         {item.allImages.map((_, index) => (
                           <div
-                            key={index}
+                            key={`${item.id}-indicator-${index}`}
                             className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                              index === item.currentImageIndex ? 'bg-white' : 'bg-white/50'
+                              index === item.currentImageIndex
+                                ? 'bg-white'
+                                : 'bg-white/50'
                             }`}
                           />
                         ))}
@@ -331,8 +358,8 @@ export default function GallerySection() {
                   {/* Contador de mídias */}
                   {hasMultipleMedias && (
                     <div className="absolute top-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-xs">
-                      {hasMultipleImages 
-                        ? `${item.currentImageIndex + 1}/${item.allImages.length}${item.totalMedias > item.allImages.length ? ` • ${item.totalMedias} total` : ''}` 
+                      {hasMultipleImages
+                        ? `${item.currentImageIndex + 1}/${item.allImages.length}${item.totalMedias > item.allImages.length ? ` • ${item.totalMedias} total` : ''}`
                         : `${item.totalMedias} mídias`}
                     </div>
                   )}
@@ -341,6 +368,7 @@ export default function GallerySection() {
                   {isAdmin && (
                     <div className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
                       <button
+                        type="button"
                         onClick={(e) => {
                           e.stopPropagation();
                           handleEditItem(item);
@@ -351,6 +379,7 @@ export default function GallerySection() {
                         <Edit size={12} />
                       </button>
                       <button
+                        type="button"
                         onClick={(e) => {
                           e.stopPropagation();
                           handleDeleteItem(item);
@@ -377,7 +406,7 @@ export default function GallerySection() {
                     )}
                   </div>
                 </div>
-              </div>
+              </button>
             );
           })
         )}
@@ -401,7 +430,10 @@ export default function GallerySection() {
           <div className="max-w-7xl w-full h-full">
             {viewingItem.midias && viewingItem.midias.length > 0 ? (
               <MediaCarousel
-                medias={viewingItem.midias.map(m => ({...m, id: m.id || 0}))}
+                medias={viewingItem.midias.map((m) => ({
+                  ...m,
+                  id: m.id || 0,
+                }))}
                 isOpen={true}
                 onClose={() => {
                   setShowCarousel(false);

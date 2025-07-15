@@ -40,7 +40,8 @@ export const PUT = withAuth(
     token?: string,
   ) => {
     try {
-      const { titulo, descricao, imagem, colecao, midias } = await request.json();
+      const { titulo, descricao, imagem, colecao, midias } =
+        await request.json();
 
       const acervo = await prisma.acervo.update({
         where: {
@@ -66,14 +67,21 @@ export const PUT = withAuth(
 
         if (midias.length > 0) {
           await prisma.acervoMidia.createMany({
-            data: midias.map((midia: any) => ({
-              acervoId: acervo.id,
-              tipo: midia.tipo,
-              url: midia.url,
-              titulo: midia.titulo || '',
-              ordem: midia.ordem || 0,
-              ativo: true,
-            })),
+            data: midias.map(
+              (midia: {
+                tipo: string;
+                url: string;
+                titulo?: string;
+                ordem?: number;
+              }) => ({
+                acervoId: acervo.id,
+                tipo: midia.tipo,
+                url: midia.url,
+                titulo: midia.titulo || '',
+                ordem: midia.ordem || 0,
+                ativo: true,
+              }),
+            ),
           });
         }
       }
@@ -135,7 +143,9 @@ export const DELETE = withAuth(
         },
       });
 
-      return NextResponse.json({ message: 'Item do acervo deletado com sucesso' });
+      return NextResponse.json({
+        message: 'Item do acervo deletado com sucesso',
+      });
     } catch (error) {
       console.error('Erro ao deletar item do acervo:', error);
       return NextResponse.json(
@@ -144,4 +154,4 @@ export const DELETE = withAuth(
       );
     }
   },
-); 
+);

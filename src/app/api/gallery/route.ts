@@ -26,8 +26,9 @@ export async function GET() {
     });
 
     const galleryData = acervos.map((acervo) => {
-      const thumbnailUrl = acervo.midias[0]?.url || acervo.imagem || '/imgs/placeholder.jpg';
-      
+      const thumbnailUrl =
+        acervo.midias[0]?.url || acervo.imagem || '/imgs/placeholder.jpg';
+
       return {
         id: acervo.id,
         img: thumbnailUrl,

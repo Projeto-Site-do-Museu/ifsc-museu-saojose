@@ -1,7 +1,7 @@
 'use client';
 
 import { useAdmin } from '@/contexts/AdminContext';
-import { Image as ImageIcon, Trash2, X, Link, Monitor } from 'lucide-react';
+import { Image as ImageIcon, Link, Monitor, Trash2, X } from 'lucide-react';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 
@@ -24,11 +24,15 @@ export default function MediaManager({ medias, onChange }: MediaManagerProps) {
   const [dragActive, setDragActive] = useState(false);
   const [error, setError] = useState('');
   const [showUrlInput, setShowUrlInput] = useState(false);
-  const [urlData, setUrlData] = useState({ url: '', titulo: '', tipo: 'imagem' as 'imagem' | 'iframe' });
+  const [urlData, setUrlData] = useState({
+    url: '',
+    titulo: '',
+    tipo: 'imagem' as 'imagem' | 'iframe',
+  });
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const images = medias.filter(m => m.tipo === 'imagem');
-  const iframes = medias.filter(m => m.tipo === 'iframe');
+  const images = medias.filter((m) => m.tipo === 'imagem');
+  const iframes = medias.filter((m) => m.tipo === 'iframe');
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
@@ -56,7 +60,9 @@ export default function MediaManager({ medias, onChange }: MediaManagerProps) {
     }
   };
 
-  const uploadFile = async (file: File): Promise<{ url: string; error?: string }> => {
+  const uploadFile = async (
+    file: File,
+  ): Promise<{ url: string; error?: string }> => {
     const formData = new FormData();
     formData.append('file', file);
 
@@ -77,9 +83,9 @@ export default function MediaManager({ medias, onChange }: MediaManagerProps) {
       const data = await response.json();
       return { url: data.url };
     } catch (error) {
-      return { 
-        url: '', 
-        error: error instanceof Error ? error.message : 'Erro desconhecido' 
+      return {
+        url: '',
+        error: error instanceof Error ? error.message : 'Erro desconhecido',
       };
     }
   };
@@ -90,7 +96,7 @@ export default function MediaManager({ medias, onChange }: MediaManagerProps) {
       return;
     }
 
-    const validFiles = Array.from(files).filter(file => {
+    const validFiles = Array.from(files).filter((file) => {
       if (!file.type.startsWith('image/')) {
         setError('Apenas arquivos de imagem são aceitos');
         return false;
@@ -112,7 +118,7 @@ export default function MediaManager({ medias, onChange }: MediaManagerProps) {
       const results = await Promise.all(uploadPromises);
 
       const newImages = results
-        .filter(result => result.url)
+        .filter((result) => result.url)
         .map((result, index) => ({
           id: Date.now() + index,
           tipo: 'imagem' as const,
@@ -122,11 +128,11 @@ export default function MediaManager({ medias, onChange }: MediaManagerProps) {
         }));
 
       if (newImages.length > 0) {
-        const otherMedias = medias.filter(m => m.tipo !== 'imagem');
+        const otherMedias = medias.filter((m) => m.tipo !== 'imagem');
         onChange([...images, ...newImages, ...otherMedias]);
       }
 
-      const errorCount = results.filter(r => r.error).length;
+      const errorCount = results.filter((r) => r.error).length;
       if (errorCount > 0) {
         setError(`${errorCount} arquivos falharam`);
       }
@@ -152,7 +158,9 @@ export default function MediaManager({ medias, onChange }: MediaManagerProps) {
       id: Date.now(),
       tipo: urlData.tipo,
       url: urlData.url.trim(),
-      titulo: urlData.titulo.trim() || (urlData.tipo === 'iframe' ? 'Iframe' : 'Imagem externa'),
+      titulo:
+        urlData.titulo.trim() ||
+        (urlData.tipo === 'iframe' ? 'Iframe' : 'Imagem externa'),
       ordem: medias.length,
     };
 
@@ -174,11 +182,11 @@ export default function MediaManager({ medias, onChange }: MediaManagerProps) {
   const removeMedia = (index: number, tipo: 'imagem' | 'iframe') => {
     if (tipo === 'imagem') {
       const newImages = images.filter((_, i) => i !== index);
-      const otherMedias = medias.filter(m => m.tipo !== 'imagem');
+      const otherMedias = medias.filter((m) => m.tipo !== 'imagem');
       onChange([...newImages, ...otherMedias]);
     } else {
       const newIframes = iframes.filter((_, i) => i !== index);
-      const otherMedias = medias.filter(m => m.tipo !== 'iframe');
+      const otherMedias = medias.filter((m) => m.tipo !== 'iframe');
       onChange([...otherMedias, ...newIframes]);
     }
   };
@@ -187,8 +195,8 @@ export default function MediaManager({ medias, onChange }: MediaManagerProps) {
     const newImages = [...images];
     const [movedImage] = newImages.splice(fromIndex, 1);
     newImages.splice(toIndex, 0, movedImage);
-    
-    const otherMedias = medias.filter(m => m.tipo !== 'imagem');
+
+    const otherMedias = medias.filter((m) => m.tipo !== 'imagem');
     onChange([...newImages, ...otherMedias]);
   };
 
@@ -260,17 +268,19 @@ export default function MediaManager({ medias, onChange }: MediaManagerProps) {
 
       {/* Upload */}
       <div className="space-y-3">
-        <div
+        <button
+          type="button"
           onDragEnter={handleDrag}
           onDragLeave={handleDrag}
           onDragOver={handleDrag}
           onDrop={handleDrop}
-          className={`relative border-2 border-dashed rounded-lg p-6 text-center transition-colors cursor-pointer ${
+          className={`relative border-2 border-dashed rounded-lg p-6 text-center transition-colors cursor-pointer w-full ${
             dragActive
               ? 'border-primary bg-primary/5'
               : 'border-border bg-muted/20 hover:bg-muted/30'
           }`}
           onClick={openFileDialog}
+          aria-label="Selecionar ou arrastar arquivos para upload"
         >
           <input
             ref={fileInputRef}
@@ -280,7 +290,7 @@ export default function MediaManager({ medias, onChange }: MediaManagerProps) {
             onChange={handleFileSelect}
             className="hidden"
           />
-          
+
           <ImageIcon size={24} className="mx-auto mb-3 text-muted-foreground" />
           <p className="text-sm font-medium text-card-foreground mb-2">
             {uploading ? 'Enviando...' : 'Adicionar imagens'}
@@ -288,7 +298,7 @@ export default function MediaManager({ medias, onChange }: MediaManagerProps) {
           <p className="text-xs text-muted-foreground">
             Arraste ou clique para selecionar
           </p>
-        </div>
+        </button>
 
         {/* URL Externa */}
         {!showUrlInput ? (
@@ -305,7 +315,9 @@ export default function MediaManager({ medias, onChange }: MediaManagerProps) {
             <div className="flex gap-2">
               <button
                 type="button"
-                onClick={() => setUrlData(prev => ({ ...prev, tipo: 'imagem' }))}
+                onClick={() =>
+                  setUrlData((prev) => ({ ...prev, tipo: 'imagem' }))
+                }
                 className={`flex-1 py-2 px-3 rounded text-sm transition-colors ${
                   urlData.tipo === 'imagem'
                     ? 'bg-primary text-primary-foreground'
@@ -316,7 +328,9 @@ export default function MediaManager({ medias, onChange }: MediaManagerProps) {
               </button>
               <button
                 type="button"
-                onClick={() => setUrlData(prev => ({ ...prev, tipo: 'iframe' }))}
+                onClick={() =>
+                  setUrlData((prev) => ({ ...prev, tipo: 'iframe' }))
+                }
                 className={`flex-1 py-2 px-3 rounded text-sm transition-colors ${
                   urlData.tipo === 'iframe'
                     ? 'bg-primary text-primary-foreground'
@@ -326,15 +340,17 @@ export default function MediaManager({ medias, onChange }: MediaManagerProps) {
                 Iframe
               </button>
             </div>
-            
+
             <input
               type="url"
               value={urlData.url}
-              onChange={(e) => setUrlData(prev => ({ ...prev, url: e.target.value }))}
+              onChange={(e) =>
+                setUrlData((prev) => ({ ...prev, url: e.target.value }))
+              }
               placeholder="URL do conteúdo"
               className="w-full px-3 py-2 text-sm bg-background border border-input rounded focus:outline-none focus:ring-2 focus:ring-ring"
             />
-            
+
             <div className="flex gap-2">
               <button
                 type="button"
@@ -368,4 +384,4 @@ export default function MediaManager({ medias, onChange }: MediaManagerProps) {
       )}
     </div>
   );
-} 
+}
