@@ -49,15 +49,30 @@ model Acervo {
   id        Int      @id @default(autoincrement())
   titulo    String
   descricao String?  @db.Text
-  imagem    String?  // URL da imagem
-  video     String?  // URL do vídeo (opcional)
-  ordem     Int?     // Para ordenação na galeria
+  imagem    String?  
+  ordem     Int?     
   colecao   String?
   ativo     Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   usuarioId Int
   usuario   Usuario  @relation(fields: [usuarioId], references: [id])
+  
+  midias    AcervoMidia[]
+}
+
+model AcervoMidia {
+  id       Int     @id @default(autoincrement())
+  acervoId Int
+  tipo     String  // "imagem" ou "iframe"
+  url      String  @db.Text
+  titulo   String? // Título/descrição da mídia
+  ordem    Int?    // Ordem no carrossel
+  ativo    Boolean @default(true)
+  createdAt DateTime @default(now())
+  
+  // Relacionamento
+  acervo   Acervo  @relation(fields: [acervoId], references: [id], onDelete: Cascade)
 }
 
 model VideoEspecial {

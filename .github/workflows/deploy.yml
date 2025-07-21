@@ -4,14 +4,11 @@ on:
   push:
     tags:
       - '*'
-    branches:
-      - main
 
 jobs:
   deploy:
     name: Deploy to Server
     runs-on: ubuntu-latest
-
     steps:
     - name: Execute SSH Commands
       uses: appleboy/ssh-action@v1.2.2

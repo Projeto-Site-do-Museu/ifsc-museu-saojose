@@ -63,7 +63,7 @@ export default function ColecoesPage() {
 
           {/* Botão */}
           <div className="mt-20 flex justify-center">
-            <a href="/acervo/acervoCompleto">
+            <a href="/acervo/completo">
               <button
                 type="button"
                 className="bg-white text-black px-8 py-4 rounded-xl text-lg md:text-xl font-semibold shadow hover:scale-105 hover:bg-gray-200 transition"

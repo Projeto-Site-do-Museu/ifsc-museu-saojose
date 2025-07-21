@@ -10,13 +10,9 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        michroma: [
-          'Helvetica', 'Arial', 'sans-serif'
-        ],
+        michroma: ['Helvetica', 'Arial', 'sans-serif'],
         magison: ['Helvetica', 'Arial', 'sans-serif'],
-        worksans: [
-          'Helvetica', 'Arial', 'sans-serif'
-        ],
+        worksans: ['Helvetica', 'Arial', 'sans-serif'],
         ligconsolata: ['Helvetica', 'Arial', 'sans-serif'],
       },
       colors: {

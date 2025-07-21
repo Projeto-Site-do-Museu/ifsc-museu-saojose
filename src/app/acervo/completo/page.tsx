@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import GallerySection from '@/components/GallerySection';
 import Header from '@/components/Header';
 
-export default function Home() {
+export default function PaginaAcervoCompleto() {
   return (
     <div
       className="m-auto overflow-x-hidden"
@@ -16,7 +16,7 @@ export default function Home() {
           <div className="w-full flex flex-col items-center justify-center mt-16 mb-12">
             <div className="bg-white/90 border border-gray-200 rounded-2xl shadow-md px-8 py-8 max-w-2xl text-center">
               <h1 className="text-4xl font-bold text-primary mb-4">
-                Exposição de Arte
+                Acervo Completo
               </h1>
               <p className="text-lg text-gray-700 font-medium">
                 Explore nossa galeria de arte, onde obras e peças selecionadas
