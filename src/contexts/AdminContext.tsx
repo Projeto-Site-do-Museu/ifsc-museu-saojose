@@ -1,7 +1,13 @@
 'use client';
 
 import { getTokenPayload, isTokenValid, removeInvalidToken } from '@/lib/auth';
-import { createContext, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 interface AdminUser {
   id: number;
@@ -35,7 +41,7 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
           if (payload && payload.role === 'admin') {
             setAdminUser({
               id: Number.parseInt(payload.userId),
-              nome: payload.email, // Usar o email como nome temporário
+              nome: payload.email,
               email: payload.email,
               role: payload.role,
             });
@@ -51,7 +57,7 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const login = (newToken: string, user: AdminUser) => {
+  const login = useCallback((newToken: string, user: AdminUser) => {
     if (isTokenValid(newToken)) {
       setToken(newToken);
       setAdminUser(user);
@@ -59,15 +65,14 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
     } else {
       console.error('Token inválido fornecido no login');
     }
-  };
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     setToken(null);
     setAdminUser(null);
     removeInvalidToken();
-  };
+  }, []);
 
-  // Verificar periodicamente se o token ainda é válido
   useEffect(() => {
     if (token) {
       const interval = setInterval(() => {
@@ -78,7 +83,7 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
 
       return () => clearInterval(interval);
     }
-  }, [token]);
+  }, [token, logout]);
 
   const value = {
     isAdmin: !!adminUser && adminUser.role === 'admin',

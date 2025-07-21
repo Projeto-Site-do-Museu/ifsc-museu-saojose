@@ -3,6 +3,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - JWT_SECRET=${JWT_SECRET}
+        - DATABASE_URL=${DATABASE_URL}
     env_file:
       - .env
     ports:

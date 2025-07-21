@@ -3,30 +3,41 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    const artigos = await prisma.artigo.findMany({
+    const acervos = await prisma.acervo.findMany({
       where: {
         ativo: true,
-        dataPublicacao: {
-          not: null,
+      },
+      include: {
+        midias: {
+          where: {
+            ativo: true,
+            tipo: 'imagem',
+          },
+          orderBy: {
+            ordem: 'asc',
+          },
+          take: 1,
+          select: {
+            url: true,
+          },
         },
       },
-      select: {
-        id: true,
-        titulo: true,
-        resumo: true,
-        imagem: true,
-      },
       orderBy: {
-        dataPublicacao: 'desc',
+        createdAt: 'desc',
       },
       take: 5,
     });
 
-    const carouselData = artigos.map((artigo) => ({
-      id: artigo.id,
-      img: artigo.imagem || '/imgs/placeholder.jpg',
-      text: artigo.resumo || artigo.titulo,
-    }));
+    const carouselData = acervos.map((acervo) => {
+      const thumbnailUrl =
+        acervo.midias[0]?.url || acervo.imagem || '/imgs/placeholder.jpg';
+
+      return {
+        id: acervo.id,
+        img: thumbnailUrl,
+        text: acervo.descricao || acervo.titulo,
+      };
+    });
 
     return NextResponse.json(carouselData);
   } catch (error) {
