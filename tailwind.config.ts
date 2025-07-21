@@ -11,20 +11,13 @@ const config: Config = {
     extend: {
       fontFamily: {
         michroma: [
-          'var(--font-michroma)',
-          'Michroma',
-          'ui-monospace',
-          'monospace',
+          'Helvetica', 'Arial', 'sans-serif'
         ],
-        magison: ['Magison', 'ui-serif', 'serif'],
+        magison: ['Helvetica', 'Arial', 'sans-serif'],
         worksans: [
-          'var(--font-work-sans)',
-          'Work Sans',
-          'ui-sans-serif',
-          'system-ui',
-          'sans-serif',
+          'Helvetica', 'Arial', 'sans-serif'
         ],
-        ligconsolata: ['Ligconsolata', 'ui-monospace', 'monospace'],
+        ligconsolata: ['Helvetica', 'Arial', 'sans-serif'],
       },
       colors: {
         gradientStart: '#DEBEFF',
