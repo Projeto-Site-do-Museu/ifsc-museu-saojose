@@ -10,8 +10,9 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    command: sleep infinity   
-
+    command: sleep infinity
+    networks:
+      - museu_network
   db:
     image: mysql:8.0
     restart: unless-stopped
@@ -27,6 +28,14 @@ services:
       - "3306:3306"
     volumes:
       - museu_mysql_data:/var/lib/mysql
+    networks:
+      - museu_network
 
 volumes:
-  museu_mysql_data: 
+  museu_mysql_data:
+
+networks:
+  museu_network:
+    name: museu_network
+    driver: bridge
+    external: true
