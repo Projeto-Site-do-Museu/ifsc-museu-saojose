@@ -70,9 +70,11 @@ export async function GET(
           'Content-Length': imageBuffer.length.toString(),
         },
       });
-    } catch (uploadError: any) {
+    } catch (uploadError: unknown) {
+      const errorMessage =
+        uploadError instanceof Error ? uploadError.message : 'Unknown error';
       console.warn(
-        `[GET /api/images] Info: File not found in uploads directory. Error: ${uploadError.message}`,
+        `[GET /api/images] Info: File not found in uploads directory. Error: ${errorMessage}`,
       );
       const publicPath = join(process.cwd(), 'public', 'imgs', safeName);
       console.log(
@@ -105,9 +107,11 @@ export async function GET(
             'Content-Length': imageBuffer.length.toString(),
           },
         });
-      } catch (publicError: any) {
+      } catch (publicError: unknown) {
+        const errorMessage =
+          publicError instanceof Error ? publicError.message : 'Unknown error';
         console.error(
-          `[GET /api/images] Error: File not found in uploads or public. Final error: ${publicError.message}`,
+          `[GET /api/images] Error: File not found in uploads or public. Final error: ${errorMessage}`,
         );
         return NextResponse.json(
           { error: 'Imagem não encontrada' },
@@ -115,9 +119,11 @@ export async function GET(
         );
       }
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage =
+      error instanceof Error ? error.message : 'Unknown error';
     console.error(
-      `[GET /api/images] Unhandled server error: ${error.message}`,
+      `[GET /api/images] Unhandled server error: ${errorMessage}`,
       error,
     );
     return NextResponse.json(

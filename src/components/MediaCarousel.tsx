@@ -54,9 +54,11 @@ export default function MediaCarousel({
       onKeyDown={handleKeyDown}
       open
     >
-      <div 
-        className="relative max-w-[90vw] max-h-[90vh] w-full h-full flex items-center justify-center"
+      <button
+        type="button"
+        className="relative max-w-[90vw] max-h-[90vh] w-full h-full flex items-center justify-center bg-transparent border-none p-0"
         onClick={(e) => e.stopPropagation()}
+        aria-label="Área do conteúdo"
       >
         <button
           type="button"
@@ -86,9 +88,11 @@ export default function MediaCarousel({
           </button>
         )}
 
-        <div 
-          className="w-full h-full flex items-center justify-center"
+        <button
+          type="button"
+          className="w-full h-full flex items-center justify-center bg-transparent border-none p-0"
           onClick={(e) => e.stopPropagation()}
+          aria-label="Conteúdo da mídia"
         >
           {currentMedia.tipo === 'imagem' ? (
             <Image
@@ -108,7 +112,7 @@ export default function MediaCarousel({
               allowFullScreen
             />
           )}
-        </div>
+        </button>
 
         {medias.length > 1 && (
           <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
@@ -130,7 +134,7 @@ export default function MediaCarousel({
             {currentIndex + 1} / {medias.length}
           </div>
         )}
-      </div>
+      </button>
     </dialog>
   );
 }

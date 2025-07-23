@@ -22,6 +22,8 @@ export default function Artigos() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [modalAtivo, setModalAtivo] = useState<Artigo | null>(null);
+  const [artigoCompleto, setArtigoCompleto] = useState<Artigo | null>(null);
+  const [loadingModal, setLoadingModal] = useState(false);
   const [editorAtivo, setEditorAtivo] = useState<Artigo | null>(null);
   const [showNovoArtigo, setShowNovoArtigo] = useState(false);
   const { isAdmin, token } = useAdmin();
@@ -45,8 +47,26 @@ export default function Artigos() {
     }
   };
 
+  const buscarArtigoCompleto = async (artigo: Artigo) => {
+    setLoadingModal(true);
+    try {
+      const response = await fetch(`/api/artigos/${artigo.id}`);
+      if (response.ok) {
+        const artigoCompleto = await response.json();
+        setArtigoCompleto(artigoCompleto);
+        setModalAtivo(artigo);
+      }
+    } catch (error) {
+      console.error('Erro ao buscar artigo:', error);
+    } finally {
+      setLoadingModal(false);
+    }
+  };
+
   const handleEditarArtigo = async (e: React.MouseEvent, artigo: Artigo) => {
     e.stopPropagation();
+    setModalAtivo(null);
+    setArtigoCompleto(null);
 
     try {
       const response = await fetch(`/api/artigos/${artigo.id}`, {
@@ -202,7 +222,8 @@ export default function Artigos() {
                 <button
                   type="button"
                   className="cursor-pointer group text-left block w-full"
-                  onClick={() => setModalAtivo(artigo)}
+                  onClick={() => buscarArtigoCompleto(artigo)}
+                  disabled={loadingModal}
                 >
                   <div className="relative overflow-hidden shadow-md">
                     <Image
@@ -256,10 +277,14 @@ export default function Artigos() {
           <dialog
             open
             className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 w-full h-full"
-            onClick={() => setModalAtivo(null)}
+            onClick={() => {
+              setModalAtivo(null);
+              setArtigoCompleto(null);
+            }}
             onKeyDown={(e) => {
               if (e.key === 'Escape') {
                 setModalAtivo(null);
+                setArtigoCompleto(null);
               }
             }}
           >
@@ -269,44 +294,59 @@ export default function Artigos() {
               onKeyDown={(e) => e.stopPropagation()}
               className="bg-white rounded-lg p-6 max-w-3xl w-full mx-4 overflow-y-auto max-h-[90vh]"
             >
-              <div className="mb-4">
-                <h2 className="text-2xl font-bold text-gray-800">
-                  {modalAtivo.titulo}
-                </h2>
-                <p className="text-sm text-gray-500 mb-4">
-                  {formatarData(modalAtivo.dataPublicacao)}
-                </p>
-              </div>
-              <Image
-                src={modalAtivo.imagem || '/imgs/placeholder.jpg'}
-                alt={modalAtivo.titulo}
-                width={800}
-                height={500}
-                className="w-full h-auto mb-4 rounded-md"
-              />
-              <div className="text-gray-800 leading-relaxed">
-                {modalAtivo.resumo && (
-                  <div className="mb-6 pb-4 border-b border-gray-200">
-                    <p className="text-gray-700 text-lg italic">
-                      {modalAtivo.resumo}
+              {loadingModal ? (
+                <div className="flex items-center justify-center py-16">
+                  <p className="text-gray-600">Carregando artigo...</p>
+                </div>
+              ) : artigoCompleto ? (
+                <>
+                  <div className="mb-4">
+                    <h2 className="text-2xl font-bold text-gray-800">
+                      {artigoCompleto.titulo}
+                    </h2>
+                    <p className="text-sm text-gray-500 mb-4">
+                      {formatarData(artigoCompleto.dataPublicacao)}
                     </p>
                   </div>
-                )}
-                {modalAtivo.conteudo && (
-                  <div className="text-gray-800 text-base">
-                    <p className="whitespace-pre-wrap leading-7">
-                      {modalAtivo.conteudo.replace(/<[^>]*>/g, '')}
-                    </p>
+                  <Image
+                    src={artigoCompleto.imagem || '/imgs/placeholder.jpg'}
+                    alt={artigoCompleto.titulo}
+                    width={800}
+                    height={500}
+                    className="w-full h-auto mb-4 rounded-md"
+                  />
+                  <div className="text-gray-800 leading-relaxed">
+                    {artigoCompleto.resumo && (
+                      <div className="mb-6 pb-4 border-b border-gray-200">
+                        <p className="text-gray-700 text-lg italic">
+                          {artigoCompleto.resumo}
+                        </p>
+                      </div>
+                    )}
+                    {artigoCompleto.conteudo && (
+                      <div className="text-gray-800 text-base">
+                        <p className="whitespace-pre-wrap leading-7">
+                          {artigoCompleto.conteudo.replace(/<[^>]*>/g, '')}
+                        </p>
+                      </div>
+                    )}
+                    {!artigoCompleto.resumo && !artigoCompleto.conteudo && (
+                      <p className="text-gray-500">Conteúdo não disponível</p>
+                    )}
                   </div>
-                )}
-                {!modalAtivo.resumo && !modalAtivo.conteudo && (
-                  <p className="text-gray-500">Conteúdo não disponível</p>
-                )}
-              </div>
+                </>
+              ) : (
+                <div className="flex items-center justify-center py-16">
+                  <p className="text-gray-600">Erro ao carregar artigo</p>
+                </div>
+              )}
               <div className="text-right mt-4">
                 <button
                   type="button"
-                  onClick={() => setModalAtivo(null)}
+                  onClick={() => {
+                    setModalAtivo(null);
+                    setArtigoCompleto(null);
+                  }}
                   className="text-sm text-gray-600 hover:underline"
                 >
                   Fechar
