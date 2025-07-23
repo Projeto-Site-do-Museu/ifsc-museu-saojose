@@ -284,12 +284,24 @@ export default function Artigos() {
                 height={500}
                 className="w-full h-auto mb-4 rounded-md"
               />
-              <div className="text-gray-700 text-base">
-                <p>
-                  {modalAtivo.resumo ||
-                    modalAtivo.conteudo?.replace(/<[^>]*>/g, '') ||
-                    'Conteúdo não disponível'}
-                </p>
+              <div className="text-gray-800 leading-relaxed">
+                {modalAtivo.resumo && (
+                  <div className="mb-6 pb-4 border-b border-gray-200">
+                    <p className="text-gray-700 text-lg italic">
+                      {modalAtivo.resumo}
+                    </p>
+                  </div>
+                )}
+                {modalAtivo.conteudo && (
+                  <div className="text-gray-800 text-base">
+                    <p className="whitespace-pre-wrap leading-7">
+                      {modalAtivo.conteudo.replace(/<[^>]*>/g, '')}
+                    </p>
+                  </div>
+                )}
+                {!modalAtivo.resumo && !modalAtivo.conteudo && (
+                  <p className="text-gray-500">Conteúdo não disponível</p>
+                )}
               </div>
               <div className="text-right mt-4">
                 <button
