@@ -46,11 +46,9 @@ export const POST = withAuth(async (request: NextRequest, user) => {
     try {
       await mkdir(uploadsDir, { recursive: true });
       console.log('[POST /api/upload] Ensured uploads directory exists.');
-    } catch (error: unknown) {
-      const errorMessage =
-        error instanceof Error ? error.message : 'Unknown error';
+    } catch (error: any) {
       console.warn(
-        `[POST /api/upload] Could not create directory (may already exist): ${errorMessage}`,
+        `[POST /api/upload] Could not create directory (may already exist): ${error.message}`,
       );
     }
 
@@ -63,11 +61,9 @@ export const POST = withAuth(async (request: NextRequest, user) => {
     try {
       await stat(filePath);
       console.log(`[POST /api/upload] Verified file exists at: ${filePath}`);
-    } catch (error: unknown) {
-      const errorMessage =
-        error instanceof Error ? error.message : 'Unknown error';
+    } catch (error: any) {
       console.error(
-        `[POST /api/upload] CRITICAL: File write verification failed for ${filePath}. Error: ${errorMessage}`,
+        `[POST /api/upload] CRITICAL: File write verification failed for ${filePath}. Error: ${error.message}`,
       );
     }
 
@@ -79,11 +75,9 @@ export const POST = withAuth(async (request: NextRequest, user) => {
       url: imageUrl,
       fileName,
     });
-  } catch (error: unknown) {
-    const errorMessage =
-      error instanceof Error ? error.message : 'Unknown error';
+  } catch (error: any) {
     console.error(
-      `[POST /api/upload] Unhandled server error: ${errorMessage}`,
+      `[POST /api/upload] Unhandled server error: ${error.message}`,
       error,
     );
     return NextResponse.json(

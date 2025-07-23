@@ -54,12 +54,8 @@ export default function MediaCarousel({
       onKeyDown={handleKeyDown}
       open
     >
-      <button
-        type="button"
-        className="relative max-w-[90vw] max-h-[90vh] w-full h-full flex items-center justify-center bg-transparent border-none p-0"
-        onClick={(e) => e.stopPropagation()}
-        aria-label="Área do conteúdo"
-      >
+      <div className="relative max-w-[90vw] max-h-[90vh] w-full h-full flex items-center justify-center">
+        {/* Botão fechar */}
         <button
           type="button"
           onClick={onClose}
@@ -68,6 +64,7 @@ export default function MediaCarousel({
           <X size={24} />
         </button>
 
+        {/* Navegação anterior */}
         {medias.length > 1 && (
           <button
             type="button"
@@ -78,6 +75,7 @@ export default function MediaCarousel({
           </button>
         )}
 
+        {/* Navegação próxima */}
         {medias.length > 1 && (
           <button
             type="button"
@@ -88,12 +86,8 @@ export default function MediaCarousel({
           </button>
         )}
 
-        <button
-          type="button"
-          className="w-full h-full flex items-center justify-center bg-transparent border-none p-0"
-          onClick={(e) => e.stopPropagation()}
-          aria-label="Conteúdo da mídia"
-        >
+        {/* Conteúdo da mídia */}
+        <div className="w-full h-full flex items-center justify-center">
           {currentMedia.tipo === 'imagem' ? (
             <Image
               src={currentMedia.url}
@@ -107,13 +101,14 @@ export default function MediaCarousel({
             <iframe
               src={currentMedia.url}
               title={currentMedia.titulo || 'Iframe do acervo'}
-              className="w-[85vw] h-[80vh] max-w-none max-h-none"
+              className="w-full h-full max-w-4xl max-h-3xl"
               frameBorder="0"
               allowFullScreen
             />
           )}
-        </button>
+        </div>
 
+        {/* Indicadores */}
         {medias.length > 1 && (
           <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
             {medias.map((media, index) => (
@@ -129,12 +124,13 @@ export default function MediaCarousel({
           </div>
         )}
 
+        {/* Contador */}
         {medias.length > 1 && (
           <div className="absolute top-4 left-4 bg-black/50 text-white px-3 py-1 rounded">
             {currentIndex + 1} / {medias.length}
           </div>
         )}
-      </button>
+      </div>
     </dialog>
   );
 }

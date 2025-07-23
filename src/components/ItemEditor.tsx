@@ -34,16 +34,6 @@ interface Media {
   ordem?: number;
 }
 
-interface FormData {
-  titulo: string;
-  resumo?: string;
-  conteudo?: string;
-  descricao?: string;
-  colecao?: string;
-  imagem?: string;
-  midias?: Media[];
-}
-
 type ItemType = ArtigoItem | AcervoItem;
 
 interface ItemEditorProps {
@@ -61,7 +51,7 @@ export default function ItemEditor({
 }: ItemEditorProps) {
   const { token } = useAdmin();
 
-  const [formData, setFormData] = useState<FormData>(() => {
+  const [formData, setFormData] = useState<Record<string, any>>(() => {
     if (type === 'artigo') {
       const artigo = item as ArtigoItem;
       return {
@@ -98,7 +88,7 @@ export default function ItemEditor({
 
       // Para acervo, definir a primeira imagem como principal
       const submitData = { ...formData };
-      if (type === 'acervo' && formData.midias && formData.midias.length > 0) {
+      if (type === 'acervo' && formData.midias?.length > 0) {
         const firstImage = formData.midias.find(
           (m: Media) => m.tipo === 'imagem',
         );
@@ -133,21 +123,21 @@ export default function ItemEditor({
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
-    setFormData((prev: FormData) => ({
+    setFormData((prev: Record<string, any>) => ({
       ...prev,
       [name]: value,
     }));
   };
 
   const handleImageChange = (imageUrl: string) => {
-    setFormData((prev: FormData) => ({
+    setFormData((prev: Record<string, any>) => ({
       ...prev,
       imagem: imageUrl,
     }));
   };
 
   const handleMediasChange = (medias: Media[]) => {
-    setFormData((prev: FormData) => ({
+    setFormData((prev: Record<string, any>) => ({
       ...prev,
       midias: medias,
     }));
@@ -284,9 +274,9 @@ export default function ItemEditor({
                     </div>
 
                     <ColecaoSelector
-                      value={formData.colecao || ''}
+                      value={formData.colecao}
                       onChange={(value) =>
-                        setFormData((prev: FormData) => ({
+                        setFormData((prev: Record<string, any>) => ({
                           ...prev,
                           colecao: value,
                         }))
