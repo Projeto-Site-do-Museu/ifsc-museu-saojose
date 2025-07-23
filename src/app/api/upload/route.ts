@@ -1,4 +1,4 @@
-import { writeFile } from 'node:fs/promises';
+import { mkdir, stat, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { withAuth } from '@/lib/middleware';
 import { type NextRequest, NextResponse } from 'next/server';
@@ -19,7 +19,6 @@ export const POST = withAuth(async (request: NextRequest, user) => {
       );
     }
 
-    // Validar tipo de arquivo
     if (!file.type.startsWith('image/')) {
       return NextResponse.json(
         { error: 'Apenas arquivos de imagem são permitidos' },
@@ -27,7 +26,6 @@ export const POST = withAuth(async (request: NextRequest, user) => {
       );
     }
 
-    // Validar tamanho (5MB máximo)
     if (file.size > 5 * 1024 * 1024) {
       return NextResponse.json(
         { error: 'Arquivo muito grande. Máximo 5MB' },
@@ -38,27 +36,50 @@ export const POST = withAuth(async (request: NextRequest, user) => {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Gerar nome único para o arquivo
     const timestamp = Date.now();
     const originalName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
     const fileName = `${timestamp}_${originalName}`;
 
-    // Caminho onde salvar o arquivo
-    const path = join(process.cwd(), 'public/imgs', fileName);
+    const uploadsDir = join(process.cwd(), 'uploads');
+    console.log(`[POST /api/upload] Uploads directory path: ${uploadsDir}`);
 
-    // Salvar arquivo
-    await writeFile(path, buffer);
+    try {
+      await mkdir(uploadsDir, { recursive: true });
+      console.log('[POST /api/upload] Ensured uploads directory exists.');
+    } catch (error: any) {
+      console.warn(
+        `[POST /api/upload] Could not create directory (may already exist): ${error.message}`,
+      );
+    }
 
-    // Retornar URL da imagem
-    const imageUrl = `/imgs/${fileName}`;
+    const filePath = join(uploadsDir, fileName);
+    console.log(`[POST /api/upload] Writing file to: ${filePath}`);
+
+    await writeFile(filePath, buffer);
+    console.log('[POST /api/upload] Successfully wrote file to disk.');
+
+    try {
+      await stat(filePath);
+      console.log(`[POST /api/upload] Verified file exists at: ${filePath}`);
+    } catch (error: any) {
+      console.error(
+        `[POST /api/upload] CRITICAL: File write verification failed for ${filePath}. Error: ${error.message}`,
+      );
+    }
+
+    const imageUrl = `/api/images/${fileName}`;
+    console.log(`[POST /api/upload] Returning image URL: ${imageUrl}`);
 
     return NextResponse.json({
       success: true,
       url: imageUrl,
       fileName,
     });
-  } catch (error) {
-    console.error('Erro no upload:', error);
+  } catch (error: any) {
+    console.error(
+      `[POST /api/upload] Unhandled server error: ${error.message}`,
+      error,
+    );
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 },

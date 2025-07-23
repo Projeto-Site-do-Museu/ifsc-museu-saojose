@@ -19,7 +19,7 @@ export async function deleteLocalImage(
     return { success: false, error: 'URL da imagem é obrigatória' };
   }
 
-  if (!imageUrl.startsWith('/imgs/')) {
+  if (!imageUrl.startsWith('/api/images/') && !imageUrl.startsWith('/imgs/')) {
     return {
       success: false,
       error: 'Apenas imagens locais podem ser deletadas',
@@ -27,11 +27,19 @@ export async function deleteLocalImage(
   }
 
   try {
-    const fileName = imageUrl.replace('/imgs/', '');
-    const filePath = join(process.cwd(), 'public/imgs', fileName);
+    let fileName: string;
+
+    if (imageUrl.startsWith('/api/images/')) {
+      fileName = imageUrl.replace('/api/images/', '');
+    } else {
+      fileName = imageUrl.replace('/imgs/', '');
+    }
+
+    const filePath = join(process.cwd(), 'uploads', fileName);
 
     await unlink(filePath);
 
+    console.log(`Imagem deletada com sucesso: ${fileName}`);
     return { success: true };
   } catch (error) {
     console.error('Erro ao deletar arquivo:', error);
@@ -40,40 +48,27 @@ export async function deleteLocalImage(
 }
 
 export async function deleteMultipleLocalImages(
-  imageUrls: (string | null | undefined)[],
+  imageUrls: string[],
   token: string | null | undefined,
-): Promise<{ success: boolean; deletedCount: number; errors: string[] }> {
-  if (!token) {
-    return {
-      success: false,
-      deletedCount: 0,
-      errors: ['Token de autenticação obrigatório'],
-    };
+): Promise<{
+  success: boolean;
+  deletedCount: number;
+  errors: string[];
+}> {
+  const errors: string[] = [];
+  let deletedCount = 0;
+
+  for (const imageUrl of imageUrls) {
+    const result = await deleteLocalImage(imageUrl, token);
+    if (result.success) {
+      deletedCount++;
+    } else {
+      errors.push(result.error || `Erro ao deletar ${imageUrl}`);
+    }
   }
-
-  const user = verifyToken(token);
-  if (!user) {
-    return {
-      success: false,
-      deletedCount: 0,
-      errors: ['Token inválido ou expirado'],
-    };
-  }
-
-  const results = await Promise.all(
-    imageUrls.map(async (imageUrl) => {
-      const result = await deleteLocalImage(imageUrl, token);
-      return result;
-    }),
-  );
-
-  const deletedCount = results.filter((res) => res.success).length;
-  const errors = results
-    .filter((res) => !res.success && res.error)
-    .map((res) => res.error as string);
 
   return {
-    success: errors.length === 0,
+    success: deletedCount > 0,
     deletedCount,
     errors,
   };
