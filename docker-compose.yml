@@ -13,9 +13,14 @@ services:
     environment:
       - NODE_ENV=production
       - HOST=0.0.0.0
+    volumes:
+      - uploads_data:/app/uploads
     restart: unless-stopped
     networks:
       - museu_network
 networks:
   museu_network:
     external: true
+
+volumes:
+  uploads_data:
