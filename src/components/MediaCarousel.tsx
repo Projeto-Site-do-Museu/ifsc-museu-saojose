@@ -2,7 +2,7 @@
 
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface Media {
   id: number;
@@ -26,6 +26,23 @@ export default function MediaCarousel({
   initialIndex = 0,
 }: MediaCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleMouseOver = () => {
+      if (document.activeElement?.tagName === 'IFRAME') {
+        (document.activeElement as HTMLElement).blur();
+      }
+    };
+
+    window.addEventListener('mouseover', handleMouseOver);
+
+    return () => {
+      window.removeEventListener('mouseover', handleMouseOver);
+    };
+  }, [isOpen]);
 
   if (!isOpen || medias.length === 0) {
     return null;
@@ -48,13 +65,22 @@ export default function MediaCarousel({
   };
 
   return (
-    <dialog
-      className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center border-none p-0 max-w-none max-h-none"
+    <div
+      ref={carouselRef}
+      className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
       onClick={onClose}
       onKeyDown={handleKeyDown}
-      open
+      role="dialog"
+      tabIndex={-1}
+      aria-label="Carrossel de mídia"
     >
-      <div className="relative max-w-[90vw] max-h-[90vh] w-full h-full flex items-center justify-center">
+      <div
+        className="relative max-w-[90vw] max-h-[90vh] w-full h-full flex items-center justify-center"
+        onClick={(e) => e.stopPropagation()}
+        onKeyDown={(e) => e.stopPropagation()}
+        role="document"
+        tabIndex={-1}
+      >
         {/* Botão fechar */}
         <button
           type="button"
@@ -131,6 +157,6 @@ export default function MediaCarousel({
           </div>
         )}
       </div>
-    </dialog>
+    </div>
   );
 }

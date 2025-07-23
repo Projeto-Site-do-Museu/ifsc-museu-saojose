@@ -425,32 +425,40 @@ export default function GallerySection() {
       )}
 
       {/* Modal de visualização com carrossel */}
-      {viewingItem && showCarousel && (
-        <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center">
-          <div className="max-w-7xl w-full h-full">
-            {viewingItem.midias && viewingItem.midias.length > 0 ? (
-              <MediaCarousel
-                medias={viewingItem.midias.map((m) => ({
-                  ...m,
-                  id: m.id || 0,
-                }))}
-                isOpen={true}
-                onClose={() => {
-                  setShowCarousel(false);
-                  setViewingItem(null);
-                }}
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center text-white">
-                <div className="text-center">
-                  <p className="text-xl mb-4">Nenhuma mídia disponível</p>
-                  <p className="text-gray-300">{viewingItem.titulo}</p>
-                </div>
+      {viewingItem &&
+        showCarousel &&
+        (viewingItem.midias && viewingItem.midias.length > 0 ? (
+          <MediaCarousel
+            medias={viewingItem.midias.map((m) => ({
+              ...m,
+              id: m.id || 0,
+            }))}
+            isOpen={true}
+            onClose={() => {
+              setShowCarousel(false);
+              setViewingItem(null);
+            }}
+          />
+        ) : (
+          <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center">
+            <div className="w-full h-full flex items-center justify-center text-white">
+              <div className="text-center">
+                <p className="text-xl mb-4">Nenhuma mídia disponível</p>
+                <p className="text-gray-300">{viewingItem.titulo}</p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowCarousel(false);
+                    setViewingItem(null);
+                  }}
+                  className="mt-4 px-4 py-2 bg-white/20 text-white rounded hover:bg-white/30 transition-colors"
+                >
+                  Fechar
+                </button>
               </div>
-            )}
+            </div>
           </div>
-        </div>
-      )}
+        ))}
     </div>
   );
 }
