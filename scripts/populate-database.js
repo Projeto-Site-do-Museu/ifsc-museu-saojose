@@ -93,53 +93,7 @@ async function main() {
 
     console.log(`✅ ${carouselArtigos.length} artigos de destaque criados`);
 
-    // 4. Migrar galeria (gallery.json) para Acervo
-    console.log('🖼️  Migrando galeria para acervo...');
-    const galleryData = JSON.parse(
-      fs.readFileSync(
-        path.join(process.cwd(), 'public/data/gallery.json'),
-        'utf-8',
-      ),
-    );
-
-    const acervos = [];
-    for (const item of galleryData) {
-      const acervo = await prisma.acervo.create({
-        data: {
-          titulo: item.nome,
-          nome: item.nome,
-          descricao: item.contextoHistorico ?? "",
-          numeroInventario: item.numeroInventario ?? null,
-          artista: item.artista ?? null,
-          colecao: item.colecao ?? null,
-          tags: item.tags?.join(",") ?? null,
-          localizacao: item.localizacao ?? null,
-          periodo: item.periodo ?? null,
-          dataProducao: item.dataProducao ?? null,
-          material: item.material ?? null,
-          tecnica: item.tecnica ?? null,
-          altura: item.dimensoes?.altura ?? null,
-          largura: item.dimensoes?.largura ?? null,
-          profundidade: item.dimensoes?.profundidade ?? null,
-          cidadeOrigem: item.localOrigem?.cidade ?? null,
-          estadoOrigem: item.localOrigem?.estado ?? null,
-          paisOrigem: item.localOrigem?.pais ?? null,
-          contextoHistorico: item.contextoHistorico ?? null,
-          doador: item.doador ?? null,
-          formaAquisicao: item.formaAquisicao ?? null,
-          estadoConservacao: item.estadoConservacao ?? null,
-          imagem: `/imgs/${item.imagemCapa}` ?? null,
-          imagemCapa: `/imgs/${item.imagemCapa}` ?? null,
-          ativo: true,
-          usuarioId: admin.id,
-        },
-      });
-      acervos.push(acervo);
-    }
-
-    console.log(`✅ ${acervos.length} itens do acervo criados`);
-
-    // 5. Migrar vídeos (videos.json)
+    // 4. Migrar vídeos (videos.json) - NOTA: Acervo é importado via npm run setup-db
     console.log('🎥 Migrando vídeos especiais...');
     const videosData = JSON.parse(
       fs.readFileSync(
@@ -224,17 +178,19 @@ async function main() {
 
     console.log(`✅ ${configs.length} configurações criadas`);
 
-    // 8. Resumo final
+    // 7. Resumo final
     console.log('\n🎉 MIGRAÇÃO CONCLUÍDA COM SUCESSO!');
     console.log('='.repeat(50));
     console.log('👤 Usuários: 1 admin criado');
     console.log(
       `📰 Artigos: ${artigos.length + carouselArtigos.length} criados`,
     );
-    console.log(`🖼️  Acervo: ${acervos.length} itens criados`);
     console.log(`🎥 Vídeos: ${videos.length} criados`);
     console.log(`📊 Visitantes: ${counterData.count} registrados`);
     console.log(`⚙️  Configurações: ${configs.length} criadas`);
+    console.log('='.repeat(50));
+    console.log('📌 NOTA: Para importar o acervo do CSV, use:');
+    console.log('   npm run setup-db');
     console.log('='.repeat(50));
     console.log('🔐 Login Admin:');
     console.log('   Email: admin@museu.com');

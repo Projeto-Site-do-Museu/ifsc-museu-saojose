@@ -112,7 +112,7 @@ export default function GallerySection() {
                 `/api/acervo/${acervo.id}/midias`,
               );
 
-              let allImages = [acervo.imagem || '/imgs/placeholder.jpg'];
+              let allImages = [acervo.imagem || acervo.imagemCapa || null].filter(Boolean) as string[];
               let totalMedias = 1;
 
               if (mediasResponse.ok) {
@@ -145,11 +145,11 @@ export default function GallerySection() {
               );
               return {
                 id: acervo.id,
-                img: acervo.imagem || '/imgs/placeholder.jpg',
+                img: acervo.imagem || acervo.imagemCapa || '',
                 text: acervo.titulo,
                 descricao: acervo.descricao,
                 colecao: acervo.colecao || null,
-                allImages: [acervo.imagem || '/imgs/placeholder.jpg'],
+                allImages: [acervo.imagem || acervo.imagemCapa || ''].filter(Boolean) as string[],
                 totalMedias: 1,
                 currentImageIndex: 0,
               };
@@ -524,11 +524,12 @@ export default function GallerySection() {
               </div>
 
               <Image
-                src={viewingItem.imagemCapa || viewingItem.imagem || "/imgs/placeholder.jpg"}
+                src={viewingItem.imagemCapa || viewingItem.imagem || ''}
                 alt={viewingItem.titulo}
                 width={800}
                 height={500}
-                className="w-full h-auto mb-6 rounded-md"
+                className="w-full h-auto mb-6 rounded-md object-contain"
+                unoptimized
               />
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-700 mb-6">

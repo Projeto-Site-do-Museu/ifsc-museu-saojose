@@ -11,7 +11,10 @@
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "populate-db": "node scripts/populate-database.js",
-    "create-user": "node scripts/create-user.js"
+    "create-user": "node scripts/create-user.js",
+    "seed": "prisma db seed",
+    "import-acervo": "npx tsx scripts/import-acervo.ts",
+    "setup-db": "npx tsx scripts/setup-database.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.8.2",
@@ -22,6 +25,7 @@
     "bcryptjs": "^3.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "csv-parser": "^3.2.1",
     "embla-carousel-react": "^8.3.0",
     "i": "^0.3.7",
     "jsonwebtoken": "^9.0.2",
@@ -41,6 +45,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@types/bcryptjs": "^3.0.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -52,5 +57,8 @@
     "tailwindcss": "^3.4.13",
     "typescript": "^5",
     "vite": "^6.1.1"
+  },
+  "prisma": {
+    "seed": "npx tsx prisma/seed.ts"
   }
 }
