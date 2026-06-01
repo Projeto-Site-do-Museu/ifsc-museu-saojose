@@ -545,165 +545,239 @@ export default function GallerySection() {
             <div
               role="document"
               onClick={(e) => e.stopPropagation()}
-              className="bg-white rounded-lg p-6 max-w-3xl w-full mx-4 overflow-y-auto max-h-[90vh] shadow-2xl"
+              className="bg-white rounded-lg max-w-4xl w-full mx-4 overflow-y-auto max-h-[90vh] shadow-2xl flex flex-col"
             >
-              <div className="mb-4">
-                <h2 className="text-2xl font-bold text-gray-800">
-                  {viewingItem.titulo}
-                </h2>
-                {viewingItem.numeroInventario && (
-                  <p className="text-sm text-gray-500">
-                    Inventário: {viewingItem.numeroInventario}
-                  </p>
-                )}
-              </div>
-
-              <div className="mb-6">
-                <Image
-                  src={mainImageUrl}
-                  alt={viewingItem.titulo}
-                  width={800}
-                  height={500}
-                  className="w-full h-auto rounded-md object-contain"
-                  unoptimized
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-700 mb-6">
-                {viewingItem.artista && (
-                  <p><strong>Artista:</strong> {viewingItem.artista}</p>
-                )}
-                {viewingItem.colecao && (
-                  <p><strong>Coleção:</strong> {viewingItem.colecao}</p>
-                )}
-                {viewingItem.localizacao && (
-                  <p><strong>Localização:</strong> {viewingItem.localizacao}</p>
-                )}
-                {viewingItem.periodo && (
-                  <p><strong>Período:</strong> {viewingItem.periodo}</p>
-                )}
-                {viewingItem.material && (
-                  <p><strong>Material:</strong> {viewingItem.material}</p>
-                )}
-                {viewingItem.tecnica && (
-                  <p><strong>Técnica:</strong> {viewingItem.tecnica}</p>
-                )}
-                {viewingItem.dataProducao && (
-                  <p><strong>Data de produção:</strong> {viewingItem.dataProducao}</p>
-                )}
-                {viewingItem.estadoConservacao && (
-                  <p><strong>Estado de conservação:</strong> {viewingItem.estadoConservacao}</p>
-                )}
-              </div>
-
-              {(viewingItem.altura || viewingItem.largura || viewingItem.profundidade) && (
-                <div className="mb-4 text-sm text-gray-700">
-                  <h3 className="font-semibold mb-1">Dimensões</h3>
-                  <p>
-                    {viewingItem.altura && `Altura: ${viewingItem.altura} `}
-                    {viewingItem.largura && `| Largura: ${viewingItem.largura} `}
-                    {viewingItem.profundidade && `| Profundidade: ${viewingItem.profundidade}`}
-                  </p>
+              {/* Header com Título - Sticky */}
+              <div className="sticky top-0 bg-white border-b border-gray-200 p-6 z-10">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h2 className="text-3xl font-bold text-gray-800">
+                      {viewingItem.titulo}
+                    </h2>
+                    {viewingItem.nome && viewingItem.nome !== viewingItem.titulo && (
+                      <p className="text-gray-600 mt-1">{viewingItem.nome}</p>
+                    )}
+                    {viewingItem.numeroInventario && (
+                      <p className="text-sm text-gray-500 mt-2">
+                        Nº Inventário: <strong>{viewingItem.numeroInventario}</strong>
+                      </p>
+                    )}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowCarousel(false);
+                      setViewingItem(null);
+                    }}
+                    className="text-gray-400 hover:text-gray-600 text-xl"
+                    title="Fechar (ESC)"
+                  >
+                    ✕
+                  </button>
                 </div>
-              )}
+              </div>
 
-              {(viewingItem.cidadeOrigem ||
-                viewingItem.estadoOrigem ||
-                viewingItem.paisOrigem) && (
-                  <div className="mb-4 text-sm text-gray-700">
-                    <h3 className="font-semibold mb-1">Local de origem</h3>
-                    <p>
+              {/* Conteúdo Principal */}
+              <div className="p-6 space-y-6">
+                {/* Imagem Principal */}
+                {mainImageUrl && (
+                  <div className="rounded-lg overflow-hidden bg-gray-100 border border-gray-200">
+                    <Image
+                      src={mainImageUrl}
+                      alt={viewingItem.titulo}
+                      width={800}
+                      height={500}
+                      className="w-full h-auto object-contain max-h-96"
+                      unoptimized
+                    />
+                  </div>
+                )}
+
+                {/* Informações Básicas */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 p-4 rounded-lg">
+                  {viewingItem.colecao && (
+                    <div>
+                      <p className="text-xs text-gray-500 uppercase tracking-wide">Coleção</p>
+                      <p className="text-gray-800 font-medium">{viewingItem.colecao}</p>
+                    </div>
+                  )}
+                  {viewingItem.periodo && (
+                    <div>
+                      <p className="text-xs text-gray-500 uppercase tracking-wide">Período</p>
+                      <p className="text-gray-800 font-medium">{viewingItem.periodo}</p>
+                    </div>
+                  )}
+                  {viewingItem.dataProducao && (
+                    <div>
+                      <p className="text-xs text-gray-500 uppercase tracking-wide">Data de Produção</p>
+                      <p className="text-gray-800 font-medium">{viewingItem.dataProducao}</p>
+                    </div>
+                  )}
+                  {viewingItem.artista && (
+                    <div>
+                      <p className="text-xs text-gray-500 uppercase tracking-wide">Artista</p>
+                      <p className="text-gray-800 font-medium">{viewingItem.artista}</p>
+                    </div>
+                  )}
+                  {viewingItem.localizacao && (
+                    <div>
+                      <p className="text-xs text-gray-500 uppercase tracking-wide">Localização</p>
+                      <p className="text-gray-800 font-medium">{viewingItem.localizacao}</p>
+                    </div>
+                  )}
+                  {viewingItem.doador && (
+                    <div>
+                      <p className="text-xs text-gray-500 uppercase tracking-wide">Doador</p>
+                      <p className="text-gray-800 font-medium">{viewingItem.doador}</p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Características Técnicas */}
+                {(viewingItem.material || viewingItem.tecnica || viewingItem.estadoConservacao || viewingItem.formaAquisicao) && (
+                  <div className="border-l-4 border-blue-500 pl-4">
+                    <h3 className="font-semibold text-gray-800 mb-3">Características</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-gray-800">
+                      {viewingItem.material && (
+                        <p><strong className="text-gray-900">Material:</strong> {viewingItem.material}</p>
+                      )}
+                      {viewingItem.tecnica && (
+                        <p><strong className="text-gray-900">Técnica:</strong> {viewingItem.tecnica}</p>
+                      )}
+                      {viewingItem.estadoConservacao && (
+                        <p><strong className="text-gray-900">Estado:</strong> {viewingItem.estadoConservacao}</p>
+                      )}
+                      {viewingItem.formaAquisicao && (
+                        <p><strong className="text-gray-900">Aquisição:</strong> {viewingItem.formaAquisicao}</p>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Dimensões */}
+                {(viewingItem.altura || viewingItem.largura || viewingItem.profundidade) && (
+                  <div className="border-l-4 border-green-500 pl-4">
+                    <h3 className="font-semibold text-gray-800 mb-2">Dimensões</h3>
+                    <div className="text-sm text-gray-700 space-y-1">
+                      {viewingItem.altura && <p>Altura: <strong>{viewingItem.altura}</strong></p>}
+                      {viewingItem.largura && <p>Largura: <strong>{viewingItem.largura}</strong></p>}
+                      {viewingItem.profundidade && <p>Profundidade: <strong>{viewingItem.profundidade}</strong></p>}
+                    </div>
+                  </div>
+                )}
+
+                {/* Local de Origem */}
+                {(viewingItem.cidadeOrigem || viewingItem.estadoOrigem || viewingItem.paisOrigem) && (
+                  <div className="border-l-4 border-purple-500 pl-4">
+                    <h3 className="font-semibold text-gray-800 mb-2">Local de Origem</h3>
+                    <p className="text-sm text-gray-700">
                       {[viewingItem.cidadeOrigem, viewingItem.estadoOrigem, viewingItem.paisOrigem]
                         .filter(Boolean)
-                        .join(' - ')}
+                        .join(', ')}
                     </p>
                   </div>
                 )}
 
-              {viewingItem.tags && (
-                <div className="mb-6">
-                  <h3 className="font-semibold text-sm mb-2 text-gray-700">Tags</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {viewingItem.tags.split(',').map((tag: string, index: number) => (
-                      <span
-                        key={index}
-                        className="bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded"
-                      >
-                        {tag.trim()}
-                      </span>
-                    ))}
+                {/* Descrição */}
+                {(viewingItem.descricao || viewingItem.conteudo) && (
+                  <div className="border-l-4 border-yellow-500 pl-4">
+                    <h3 className="font-semibold text-gray-800 mb-2">Descrição</h3>
+                    <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
+                      {viewingItem.descricao || viewingItem.conteudo}
+                    </p>
                   </div>
-                </div>
-              )}
+                )}
 
-              <div className="text-gray-700 text-base mb-6">
-                <h3 className="font-semibold mb-2">Contexto histórico</h3>
-                <p className="whitespace-pre-line">
-                  {viewingItem.contextoHistorico ||
-                    viewingItem.conteudo ||
-                    viewingItem.descricao ||
-                    'Conteúdo não disponível'}
-                </p>
+                {/* Contexto Histórico */}
+                {viewingItem.contextoHistorico && (
+                  <div className="border-l-4 border-orange-500 pl-4 bg-orange-50 p-4 rounded">
+                    <h3 className="font-semibold text-gray-800 mb-2">Contexto Histórico</h3>
+                    <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
+                      {viewingItem.contextoHistorico}
+                    </p>
+                  </div>
+                )}
+
+                {/* Tags */}
+                {viewingItem.tags && (
+                  <div>
+                    <h3 className="font-semibold text-gray-800 mb-2 text-sm">Tags</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {viewingItem.tags.split(',').map((tag: string, index: number) => (
+                        <span
+                          key={index}
+                          className="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full"
+                        >
+                          {tag.trim()}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Documentos */}
+                {(viewingItem.textosDrive || viewingItem.linkDrive || viewingItem.outrasFontes) && (
+                  <div className="bg-blue-50 p-4 rounded-lg">
+                    <h3 className="font-semibold text-gray-800 mb-2">Documentação</h3>
+                    <div className="space-y-2 text-sm">
+                      {viewingItem.textosDrive && (
+                        <p className="text-gray-700"><strong>Textos:</strong> {viewingItem.textosDrive}</p>
+                      )}
+                      {viewingItem.linkDrive && (
+                        <p>
+                          <a
+                            href={viewingItem.linkDrive}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-600 hover:underline font-medium"
+                          >
+                            📁 Acessar Google Drive
+                          </a>
+                        </p>
+                      )}
+                      {viewingItem.outrasFontes && (
+                        <p className="text-gray-700"><strong>Outras fontes:</strong> {viewingItem.outrasFontes}</p>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Outras Imagens */}
+                {otherImages.length > 0 && (
+                  <div>
+                    <h3 className="font-semibold text-lg text-gray-800 mb-4">
+                      Galeria adicional ({otherImages.length})
+                    </h3>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                      {otherImages.map((media) => (
+                        <div
+                          key={media.id || media.url}
+                          className="overflow-hidden rounded-lg border-2 border-gray-200 hover:border-blue-400 transition-all"
+                        >
+                          <Image
+                            src={media.url}
+                            alt={media.titulo || 'Imagem adicional do item'}
+                            width={200}
+                            height={200}
+                            className="w-full h-40 object-cover hover:scale-105 transition-transform"
+                            unoptimized
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
-              {(viewingItem.textosDrive || viewingItem.linkDrive) && (
-                <div className="text-sm text-gray-700 mb-6">
-                  <h3 className="font-semibold mb-2">Documentos</h3>
-
-                  {viewingItem.textosDrive && (
-                    <p>
-                      <strong>Textos:</strong> {viewingItem.textosDrive}
-                    </p>
-                  )}
-
-                  {viewingItem.linkDrive && (
-                    <p>
-                      <a
-                        href={viewingItem.linkDrive}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:underline"
-                      >
-                        Acessar Google Drive
-                      </a>
-                    </p>
-                  )}
-                </div>
-              )}
-
-              {otherImages.length > 0 && (
-                <div className="mb-6">
-                  <h3 className="font-semibold text-lg text-gray-800 mb-4">
-                    Outras imagens vinculadas
-                  </h3>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    {otherImages.map((media) => (
-                      <div
-                        key={media.id || media.url}
-                        className="overflow-hidden rounded-lg border border-gray-200 bg-gray-50"
-                      >
-                        <Image
-                          src={media.url}
-                          alt={media.titulo || 'Imagem adicional do item'}
-                          width={320}
-                          height={240}
-                          className="w-full h-32 object-cover"
-                          unoptimized
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <div className="text-right mt-4">
+              {/* Footer com Botão Fechar */}
+              <div className="sticky bottom-0 bg-white border-t border-gray-200 p-4 flex justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => {
                     setShowCarousel(false);
                     setViewingItem(null);
                   }}
-                  className="text-sm text-gray-600 hover:underline"
+                  className="px-6 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-medium transition-colors"
                 >
                   Fechar
                 </button>
