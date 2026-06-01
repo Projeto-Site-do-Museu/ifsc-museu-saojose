@@ -112,3 +112,19 @@ body {
   animation: modalIn 0.2s forwards;
 }
 }
+
+/* Modal open state - disables header interactions */
+html.modal-open header {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+html.modal-open header * {
+  pointer-events: none;
+}
+
+/* Ensure modal dialog stays on top */
+html.modal-open [role="dialog"] {
+  position: fixed !important;
+  z-index: 99999 !important;
+}

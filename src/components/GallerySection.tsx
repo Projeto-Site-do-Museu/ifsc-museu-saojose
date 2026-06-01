@@ -219,6 +219,36 @@ export default function GallerySection() {
     }
   };
 
+  useEffect(() => {
+    if (!showCarousel) {
+      // Remove modal styles when closed
+      document.documentElement.classList.remove('modal-open');
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+      return;
+    }
+
+    // Add modal styles when opened
+    document.documentElement.classList.add('modal-open');
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+
+    const handleEsc = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setShowCarousel(false);
+        setViewingItem(null);
+      }
+    };
+
+    window.addEventListener('keydown', handleEsc);
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+      document.documentElement.classList.remove('modal-open');
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+    };
+  }, [showCarousel]);
+
   const handleDeleteItem = async (item: Item) => {
     if (!token) return;
 
@@ -486,31 +516,36 @@ export default function GallerySection() {
         />
       )}
 
-      {/* Modal de visualização com carrossel */}
-      {viewingItem &&
-        showCarousel &&
-        (viewingItem.midias && viewingItem.midias.length > 0 ? (
-          <MediaCarousel
-            medias={viewingItem.midias.map((m) => ({
-              ...m,
-              id: m.id || 0,
-            }))}
-            isOpen={true}
-            onClose={() => {
-              setShowCarousel(false);
-              setViewingItem(null);
+      {viewingItem && showCarousel && (() => {
+        const imageMedias = (viewingItem.midias || []).filter(
+          (m) => m.tipo === 'imagem',
+        );
+        const mainImageUrl =
+          imageMedias[0]?.url || viewingItem.imagemCapa || viewingItem.imagem || '';
+        const otherImages = imageMedias.slice(1);
+
+        return (
+          <div
+            role="dialog"
+            className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/80 w-screen h-screen pointer-events-auto"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) {
+                setShowCarousel(false);
+                setViewingItem(null);
+              }
             }}
-          />
-        ) : (
-          <dialog
-            open
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 w-full h-full"
+            onKeyDown={(e) => {
+              if (e.key === 'Escape') {
+                setShowCarousel(false);
+                setViewingItem(null);
+              }
+            }}
+            tabIndex={-1}
           >
             <div
               role="document"
               onClick={(e) => e.stopPropagation()}
-              onKeyDown={(e) => e.stopPropagation()}
-              className="bg-white rounded-lg p-6 max-w-3xl w-full mx-4 overflow-y-auto max-h-[80vh]"
+              className="bg-white rounded-lg p-6 max-w-3xl w-full mx-4 overflow-y-auto max-h-[90vh] shadow-2xl"
             >
               <div className="mb-4">
                 <h2 className="text-2xl font-bold text-gray-800">
@@ -523,14 +558,16 @@ export default function GallerySection() {
                 )}
               </div>
 
-              <Image
-                src={viewingItem.imagemCapa || viewingItem.imagem || ''}
-                alt={viewingItem.titulo}
-                width={800}
-                height={500}
-                className="w-full h-auto mb-6 rounded-md object-contain"
-                unoptimized
-              />
+              <div className="mb-6">
+                <Image
+                  src={mainImageUrl}
+                  alt={viewingItem.titulo}
+                  width={800}
+                  height={500}
+                  className="w-full h-auto rounded-md object-contain"
+                  unoptimized
+                />
+              </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-700 mb-6">
                 {viewingItem.artista && (
@@ -578,7 +615,7 @@ export default function GallerySection() {
                     <p>
                       {[viewingItem.cidadeOrigem, viewingItem.estadoOrigem, viewingItem.paisOrigem]
                         .filter(Boolean)
-                        .join(" - ")}
+                        .join(' - ')}
                     </p>
                   </div>
                 )}
@@ -587,7 +624,7 @@ export default function GallerySection() {
                 <div className="mb-6">
                   <h3 className="font-semibold text-sm mb-2 text-gray-700">Tags</h3>
                   <div className="flex flex-wrap gap-2">
-                    {viewingItem.tags.split(",").map((tag: string, index: number) => (
+                    {viewingItem.tags.split(',').map((tag: string, index: number) => (
                       <span
                         key={index}
                         className="bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded"
@@ -605,7 +642,7 @@ export default function GallerySection() {
                   {viewingItem.contextoHistorico ||
                     viewingItem.conteudo ||
                     viewingItem.descricao ||
-                    "Conteúdo não disponível"}
+                    'Conteúdo não disponível'}
                 </p>
               </div>
 
@@ -634,6 +671,31 @@ export default function GallerySection() {
                 </div>
               )}
 
+              {otherImages.length > 0 && (
+                <div className="mb-6">
+                  <h3 className="font-semibold text-lg text-gray-800 mb-4">
+                    Outras imagens vinculadas
+                  </h3>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    {otherImages.map((media) => (
+                      <div
+                        key={media.id || media.url}
+                        className="overflow-hidden rounded-lg border border-gray-200 bg-gray-50"
+                      >
+                        <Image
+                          src={media.url}
+                          alt={media.titulo || 'Imagem adicional do item'}
+                          width={320}
+                          height={240}
+                          className="w-full h-32 object-cover"
+                          unoptimized
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               <div className="text-right mt-4">
                 <button
                   type="button"
@@ -647,8 +709,9 @@ export default function GallerySection() {
                 </button>
               </div>
             </div>
-          </dialog>
-        ))}
+          </div>
+        );
+      })()}
     </div>
   );
 }

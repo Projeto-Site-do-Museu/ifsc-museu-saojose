@@ -116,43 +116,48 @@ function buildImageMap(dadosImagensDir: string) {
   return map;
 }
 
-function resolveImagePath(
+function resolveImagePaths(
   rawPath: string | null,
   availableImages: Map<string, string>,
   dadosImagensDir: string,
   publicAcervoDir: string,
-): string | null {
-  if (!rawPath) return null;
+): string[] {
+  if (!rawPath) return [];
 
   const candidates = rawPath
     .split(',')
     .map((item) => item.trim())
     .filter(Boolean);
 
-  if (candidates.length === 0) return null;
+  const urls: string[] = [];
 
-  const firstCandidate = candidates[0];
-  const baseName = path.basename(firstCandidate).trim();
-  const key = path.basename(baseName, path.extname(baseName)).trim().toLowerCase();
-  const matched = availableImages.get(key);
-  if (!matched) {
-    console.warn(`⚠️ Imagem não encontrada no diretório de imagens: ${baseName}`);
-    return null;
+  for (const candidate of candidates) {
+    const baseName = path.basename(candidate).trim();
+    const key = path.basename(baseName, path.extname(baseName)).trim().toLowerCase();
+    const matched = availableImages.get(key);
+
+    if (!matched) {
+      console.warn(`⚠️ Imagem não encontrada no diretório de imagens: ${baseName}`);
+      continue;
+    }
+
+    const normalized = normalizeImageName(matched);
+    const sourceFile = path.join(dadosImagensDir, matched);
+    const destFile = path.join(publicAcervoDir, normalized);
+
+    if (!fs.existsSync(destFile) && fs.existsSync(sourceFile)) {
+      fs.copyFileSync(sourceFile, destFile);
+    }
+
+    if (fs.existsSync(destFile)) {
+      const url = `/imagens/acervo/${normalized}`;
+      if (!urls.includes(url)) {
+        urls.push(url);
+      }
+    }
   }
 
-  const normalized = normalizeImageName(matched);
-  const sourceFile = path.join(dadosImagensDir, matched);
-  const destFile = path.join(publicAcervoDir, normalized);
-
-  if (!fs.existsSync(destFile) && fs.existsSync(sourceFile)) {
-    fs.copyFileSync(sourceFile, destFile);
-  }
-
-  if (fs.existsSync(destFile)) {
-    return `/imagens/acervo/${normalized}`;
-  }
-
-  return null;
+  return urls;
 }
 
 async function getOrCreateAdminUser() {
@@ -265,11 +270,17 @@ async function main() {
         continue;
       }
 
-      const imagem = resolveImagePath(row['Arquivos e mídia'], imageMap, dadosImagensDir, publicAcervoDir);
+      const imagens = resolveImagePaths(
+        row['Arquivos e mídia'],
+        imageMap,
+        dadosImagensDir,
+        publicAcervoDir,
+      );
+      const imagem = imagens[0] ?? null;
       const { cidadeOrigem, estadoOrigem, paisOrigem } = parseLocalOrigem(cleanField(row['Local de Origem']));
       const { altura, largura, profundidade } = parseDimensoes(cleanField(row.Dimensões));
 
-      await prisma.acervo.create({
+      const acervo = await prisma.acervo.create({
         data: {
           titulo,
           nome: titulo,
@@ -300,6 +311,17 @@ async function main() {
           estadoConservacao: cleanField(row['Estado de Conservação']),
         },
       });
+
+      if (imagens.length > 0) {
+        await prisma.acervoMidia.createMany({
+          data: imagens.map((url, idx) => ({
+            acervoId: acervo.id,
+            tipo: 'imagem',
+            url,
+            ordem: idx + 1,
+          })),
+        });
+      }
 
       successCount += 1;
     } catch (error) {
