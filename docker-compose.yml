@@ -25,8 +25,6 @@ services:
       - MYSQL_ROOT_PASSWORD=${MY_SECRET_PW}
       - MYSQL_DATABASE=${MY_DATABASE}
       - MYSQL_PASSWORD=${MY_SECRET_PW}
-    ports:
-      - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
     networks:
