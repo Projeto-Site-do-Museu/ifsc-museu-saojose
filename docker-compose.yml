@@ -27,6 +27,7 @@ services:
       - MYSQL_PASSWORD=${MY_SECRET_PW}
     volumes:
       - db_data:/var/lib/mysql
+      - ./dados_acervo:/app/dados_acervo
     networks:
       - museu_network
 networks:
