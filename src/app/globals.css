@@ -112,3 +112,45 @@ body {
   animation: modalIn 0.2s forwards;
 }
 }
+
+/* Modal open state - disables header interactions */
+html.modal-open header {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+html.modal-open header * {
+  pointer-events: none;
+}
+
+/* Ensure modal dialog stays on top */
+html.modal-open [role="dialog"] {
+  position: fixed !important;
+  z-index: 99999 !important;
+}
+
+.outras_linhas {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  justify-content: center;
+  align-items: center;
+}
+
+.conteiner_outras_linhas {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 30%;
+}
+
+.button_lenguage {
+  padding: 5px;
+  background-color: #323232;
+  border-radius: 15px;
+}
+
+.button_lenguage:hover {
+  scale: 1.2;
+  transition: 0.2s;
+}
