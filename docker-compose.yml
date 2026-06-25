@@ -15,6 +15,7 @@ services:
       - HOST=0.0.0.0
     volumes:
       - uploads_data:/app/uploads
+      - ./dados_acervo:/app/dados_acervo
     restart: unless-stopped
     networks:
       - museu_network
@@ -27,7 +28,6 @@ services:
       - MYSQL_PASSWORD=${MY_SECRET_PW}
     volumes:
       - db_data:/var/lib/mysql
-      - ./dados_acervo:/app/dados_acervo
     networks:
       - museu_network
 networks:
