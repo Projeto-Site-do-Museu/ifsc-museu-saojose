@@ -21,7 +21,31 @@ export default function Jogos() {
       descricao: 'Investigue mistérios dentro do museu de São José.',
       iframe: 'jogos/jogoIsac/index.html',
     },
+    {
+      id: 'JogoResgateReliquiasSJ',
+      nome: 'Missão de resgate as reliquias de São José',
+      img: '/jogos/jogomissaoResgateSJ/assets/tela_inicial_1280x720.png',
+      descricao:
+        'DESCRICAO AQUI: Missão de resgate as reliquias de São José.',
+      iframe: 'jogos/jogoMissaoResgateSJ/index.html',
+    },
+    {
+      id: 'JogoMuseuOuro',
+      nome: 'Museu do ouro',
+      img: '/jogos/jogoMuseuOuro/img/sprites/terra.jpeg',
+      descricao:
+      'DESCRICAO AQUI: museu do ouro SJ.',
+      iframe: 'jogos/jogoMuseuOuro/index.html',
+    },
   ];
+
+  // ALTERAR IMAGEM DO JOGO MUSEU DO OURO
+  // ALTERAR IMAGEM DO JOGO MUSEU DO OURO
+  // ALTERAR IMAGEM DO JOGO MUSEU DO OURO
+  // FAZER DESCRICAO PARA OS 2 JOGOS
+  // FAZER DESCRICAO PARA OS 2 JOGOS
+  // FAZER DESCRICAO PARA OS 2 JOGOS
+
 
   // Quando o usuário escolhe um jogo → mostrar iframe
   if (jogoSelecionado) {

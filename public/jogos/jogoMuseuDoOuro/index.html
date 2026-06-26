@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Museu do Ouro - Museu Histórico de São José</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.js"></script>
+    
+    <style>
+        /* Zerando margens e travando a tela */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #111; /* Fundo da página web bem escuro */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden; /* Tira as barras de rolagem do navegador */
+        }
+
+        /* A nossa caixa onde o Phaser vai renderizar o jogo */
+        #game-container {
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.8); /* Dá uma sombra maneira pro jogo saltar da tela */
+            border-radius: 8px; /* Arredonda as pontinhas da tela do jogo */
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game-container"></div>
+
+    <script src="game.js"></script>
+
+</body>
+</html>
