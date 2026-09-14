@@ -154,3 +154,51 @@ html.modal-open [role="dialog"] {
   scale: 1.2;
   transition: 0.2s;
 }
+
+
+/* O Google continua traduzindo, mas os controles são os do Museu. */
+#google_translate_element,
+.goog-te-banner-frame,
+iframe.VIpgJd-ZVi9od-ORHb-OEVmcd,
+#goog-gt-tt,
+.goog-te-balloon-frame,
+.VIpgJd-yAWNEb-L7lbkb {
+  display: none !important;
+}
+
+/* Retira o espaço que o banner injeta acima da página. */
+body {
+  top: 0 !important;
+}
+
+.goog-text-highlight,
+.VIpgJd-yAWNEb-VIpgJd-fmcmS {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.museum-language-selector {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 0.35rem;
+  margin-inline: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 0.5rem;
+  color: white;
+  background: black;
+}
+
+.museum-language-selector select {
+  min-height: 2.25rem;
+  background: black;
+  color: white;
+  cursor: pointer;
+  font: inherit;
+}
+
+.museum-language-selector:focus-within {
+  outline: 2px solid white;
+  outline-offset: 3px;
+}
