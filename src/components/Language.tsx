@@ -12,10 +12,17 @@ declare global {
 }
 
 export default function Translate() {
-  const [showModal, setShowModal] = useState(true)
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     // Only add the script if it doesn't exist yet
+
+    const languagePromptSeen = localStorage.getItem("languagePromptSeen");
+
+if (!languagePromptSeen) {
+  setShowModal(true);
+}
+
     if (!document.getElementById("google-translate-script")) {
       const script = document.createElement("script");
       script.id = "google-translate-script";
@@ -23,6 +30,7 @@ export default function Translate() {
         "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
       script.async = true;
       document.body.appendChild(script);
+      
     }
 
     // Define the callback
@@ -48,6 +56,11 @@ export default function Translate() {
     select.dispatchEvent(new Event("change"));
   };
 
+  const closeModal = () => {
+  localStorage.setItem("languagePromptSeen", "true");
+  setShowModal(false);
+};
+
   return (
     <div>
       <div id="google_translate_element" />
@@ -59,16 +72,42 @@ export default function Translate() {
             <button
               type="button"
               className="absolute sm:top-0 sm:right-2 sm:text-2xl top-0 right-2 text-2xl"
-              onClick={() => setShowModal(false)}
+              onClick={closeModal}
             >
               &times;
             </button>
 
               <div className="outras_linhas">
                 <div className="conteiner_outras_linhas">
-                  <button onClick={() => {changeLanguage("en"), setShowModal(false)}} className="button_lenguage">English</button>
-                  <button onClick={() => {changeLanguage("es"), setShowModal(false)}} className="button_lenguage">Español</button>
-                  <button onClick={() => {changeLanguage("pt"), setShowModal(false)}} className="button_lenguage">Português</button>
+                  <button
+  onClick={() => {
+    changeLanguage("en");
+    closeModal();
+  }}
+  className="button_lenguage"
+>
+  English
+</button>
+
+<button
+  onClick={() => {
+    changeLanguage("es");
+    closeModal();
+  }}
+  className="button_lenguage"
+>
+  Español
+</button>
+
+<button
+  onClick={() => {
+    changeLanguage("pt");
+    closeModal();
+  }}
+  className="button_lenguage"
+>
+  Português
+</button>
               </div>
             </div>
           </div>
