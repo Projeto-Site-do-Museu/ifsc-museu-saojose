@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import ColecaoSelector from './ColecaoSelector';
+import { filterAcervo, getCategories } from './acervoFilters';
 import ItemEditor from './ItemEditor';
 import MediaCarousel from './MediaCarousel';
 
@@ -19,6 +19,7 @@ interface Item {
   id: number;
   img: string;
   text: string;
+  nome?: string | null;
   descricao?: string;
   colecao?: string | null;
 }
@@ -87,6 +88,7 @@ interface ItemWithImages extends Item {
 export default function GallerySection() {
   const [items, setItems] = useState<ItemWithImages[]>([]);
   const [colecaoFilter, setColecaoFilter] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showEditor, setShowEditor] = useState(false);
@@ -132,6 +134,7 @@ export default function GallerySection() {
                 id: acervo.id,
                 img: allImages[0],
                 text: acervo.titulo,
+                nome: acervo.nome,
                 descricao: acervo.descricao,
                 colecao: acervo.colecao || null,
                 allImages,
@@ -147,6 +150,7 @@ export default function GallerySection() {
                 id: acervo.id,
                 img: acervo.imagem || acervo.imagemCapa || '',
                 text: acervo.titulo,
+                nome: acervo.nome,
                 descricao: acervo.descricao,
                 colecao: acervo.colecao || null,
                 allImages: [acervo.imagem || acervo.imagemCapa || ''].filter(Boolean) as string[],
@@ -303,6 +307,9 @@ export default function GallerySection() {
     );
   };
 
+  const categories = getCategories(items);
+  const filteredItems = filterAcervo(items, searchQuery, colecaoFilter);
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -321,9 +328,39 @@ export default function GallerySection() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-gray-950">Filtrar por coleção</h1>
-        <ColecaoSelector value={colecaoFilter} onChange={setColecaoFilter} />
+      <div className="mb-8 rounded-lg border border-gray-300 bg-white p-5 text-gray-900">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div>
+            <label htmlFor="acervo-search" className="mb-2 block font-semibold">Buscar por nome ou categoria</label>
+            <input
+              id="acervo-search" type="search" value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              placeholder="Ex.: Chapéus, Terço ou Textil"
+              className="w-full rounded border border-gray-400 bg-white px-3 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-700"
+            />
+          </div>
+          <div>
+            <label htmlFor="acervo-category" className="mb-2 block font-semibold">Filtrar por categoria</label>
+            <select
+              id="acervo-category" value={colecaoFilter}
+              onChange={(event) => setColecaoFilter(event.target.value)}
+              className="w-full rounded border border-gray-400 bg-white px-3 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-700"
+            >
+              <option value="">Todas as categorias</option>
+              {categories.map((category) => <option key={category} value={category}>{category}</option>)}
+            </select>
+          </div>
+        </div>
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+          <p role="status" aria-live="polite" translate="no" className="notranslate text-sm text-gray-600">
+            {filteredItems.length} de {items.length} itens
+          </p>
+          <button type="button" disabled={!searchQuery && !colecaoFilter}
+            onClick={() => { setSearchQuery(''); setColecaoFilter(''); }}
+            className="rounded border border-gray-400 px-3 py-2 text-sm hover:bg-gray-100 disabled:cursor-default disabled:opacity-40">
+            Limpar filtros
+          </button>
+        </div>
       </div>
       <div className="flex justify-between items-center mb-12">
         <div>
@@ -371,15 +408,13 @@ export default function GallerySection() {
               )}
             </div>
           </div>
+        ) : filteredItems.length === 0 ? (
+          <div className="col-span-full py-16 text-center text-gray-700">
+            <h3 className="mb-2 text-lg font-semibold">Nenhum item encontrado</h3>
+            <p>Tente outro nome, outra categoria ou limpe os filtros.</p>
+          </div>
         ) : (
-          items
-            .filter((it) => {
-              if (!colecaoFilter || colecaoFilter.trim() === '') return true;
-              return (it.colecao || '')
-                .toLowerCase()
-                .includes(colecaoFilter.toLowerCase());
-            })
-            .map((item) => {
+          filteredItems.map((item) => {
               const currentImage = item.allImages[item.currentImageIndex];
               const hasMultipleImages = item.allImages.length > 1;
               const hasMultipleMedias = item.totalMedias > 1;
