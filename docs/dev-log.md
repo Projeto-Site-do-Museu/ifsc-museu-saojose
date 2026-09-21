@@ -2,6 +2,34 @@
 
 Este arquivo serve como passagem de contexto para continuar o trabalho em outra instalação do Codex CLI. Acrescente uma entrada datada a cada sessão, distinguindo o que foi confirmado do que ainda precisa ser verificado.
 
+## 2026-09-21 — Revisão de `database.md`
+
+### Objetivo da sessão
+
+Avaliar se `database.md` ainda serve como referência para entender e configurar o banco de dados.
+
+### O que foi analisado
+
+- Diagrama, lista de tabelas e comandos operacionais de `database.md`, comparados com `prisma/schema.prisma`, as migrações e `docker-compose.yml`.
+
+### Alterações realizadas
+
+- Registradas estas conclusões no log. `database.md`, Prisma, Compose e o código da aplicação não foram alterados.
+
+### Conclusões e decisões
+
+- O arquivo é útil como histórico do projeto, mas está desatualizado como guia de configuração. O esquema Prisma e as migrações são a referência atual para modelos e relações.
+- O diagrama e a lista de tabelas omitem `AcervoMidia`; o desenho do `Acervo` inclui `video`, que não existe no modelo atual, e omite campos de catalogação.
+- Os exemplos usam o host `db` e containers `museu_db_dev` / `projetomuseu_devcontainer-app-1`, enquanto o Compose versionado define o serviço `mysql` e o container `my_mysql_site`. Ele também exige a rede externa `museu_network`.
+- O exemplo de `.env` não inclui `MY_SECRET_PW` e `MY_DATABASE`, usados pelo Compose. O Compose não publica a porta do MySQL no host; portanto, seu exemplo com `localhost:3306` não descreve essa configuração sem ajustes adicionais.
+- Há senha de exemplo fixa para o banco e para o administrador. As instruções de reset e limpeza de volumes podem apagar dados e precisam ser revisadas antes de uso.
+- Antes de atualizar `database.md`, decidir se ele continuará como guia operacional. Caso continue, alinhar diagrama, nomes, variáveis, comandos de migração, backup e instruções de acesso ao Compose atual.
+
+### Problemas pendentes e próximos passos
+
+1. Confirmar o ambiente de banco realmente usado pela equipe e se há dados que precisam ser preservados.
+2. Atualizar `database.md` em uma tarefa própria, com comandos verificados no ambiente escolhido.
+
 ## 2026-09-21 — Estado do pull request e documentação do banco
 
 - O usuário informou que já criou o pull request da branch `docs/atualizar-diagrama-banco-readme` para `main`. A integração à `main` ainda não foi confirmada nesta conversa.
