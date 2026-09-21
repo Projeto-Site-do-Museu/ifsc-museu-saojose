@@ -2,6 +2,12 @@
 
 Este arquivo serve como passagem de contexto para continuar o trabalho em outra instalação do Codex CLI. Acrescente uma entrada datada a cada sessão, distinguindo o que foi confirmado do que ainda precisa ser verificado.
 
+## 2026-09-21 — Banco usado pelo projeto
+
+- Confirmado pelo repositório: `prisma/schema.prisma` define `provider = "mysql"`, `docker-compose.yml` declara um serviço `mysql` com imagem `mysql:latest`, e `.env.example` indica uma URL `mysql://`.
+- O usuário informou que não está rodando o banco neste computador e considera fazê-lo. Portanto, não houve verificação de uma instância MySQL em execução nem de seus dados.
+- Próximo passo, caso decida executar localmente: escolher entre MySQL local ou Compose, ajustar as variáveis de ambiente e conferir o estado das migrações antes de importar ou alterar dados.
+
 ## 2026-09-21 — Revisão de `database.md`
 
 ### Objetivo da sessão
