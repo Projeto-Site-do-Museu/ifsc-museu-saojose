@@ -3,6 +3,10 @@
 ## Visão Geral
 Este projeto é uma landing page responsiva para o Museu Histórico de São José, desenvolvida com **Next.js** e **Tailwind CSS**. O objetivo é proporcionar uma experiência imersiva para os visitantes, incluindo um **tour 3D interativo**.
 
+## Documentação funcional
+
+- [Casos de uso observados no código](docs/casos-de-uso.md) — documentação reversa dos fluxos de visitantes e administradores, com pontos ainda pendentes de validação.
+
 ## Tecnologias Utilizadas
 - **Next.js** (React Framework)
 - **Tailwind CSS** (Estilização)

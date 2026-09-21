@@ -2,6 +2,34 @@
 
 Este arquivo serve como passagem de contexto para continuar o trabalho em outra instalação do Codex CLI. Acrescente uma entrada datada a cada sessão, distinguindo o que foi confirmado do que ainda precisa ser verificado.
 
+## 2026-09-21 — Documentação reversa dos casos de uso
+
+### Objetivo da sessão
+
+Descrever os fluxos identificados no código em um documento acessível pelo README, preservando também os limites da análise.
+
+### O que foi analisado
+
+- Páginas públicas, componentes de administração, rotas de API, autenticação, contador de visitas e modelos Prisma.
+
+### Alterações realizadas
+
+- Criado `docs/casos-de-uso.md` com atores, dez casos de uso, evidências no código e pontos que ainda precisam de validação.
+- Adicionado ao `README.md` um link para essa documentação.
+- Nenhum código da aplicação foi modificado; os fluxos não foram executados com banco e navegador nesta sessão.
+
+### Decisões e achados
+
+- A documentação descreve o comportamento observado no código, sem apresentar todos os fluxos como requisitos aprovados ou validados em produção.
+- A página `/colecoes` ainda usa dados estáticos de exemplo; o filtro de coleção do acervo consulta a API e usa o campo `colecao` dos itens.
+- A rota `POST /api/auth/register` cria administradores sem `withAuth`; a política de cadastro e a exposição dessa rota merecem revisão antes de publicar o sistema.
+- O tour usa uma imagem panorâmica local e inclui marcadores com texto de exemplo.
+
+### Próximos passos
+
+1. Revisar os casos de uso com quem conhece as regras do museu e marcar diferenças entre comportamento atual e comportamento desejado.
+2. Validar os fluxos em um ambiente com MySQL e registrar resultados, sem assumir que a análise estática garante funcionamento.
+
 ## 2026-09-21 — Banco usado pelo projeto
 
 - Confirmado pelo repositório: `prisma/schema.prisma` define `provider = "mysql"`, `docker-compose.yml` declara um serviço `mysql` com imagem `mysql:latest`, e `.env.example` indica uma URL `mysql://`.
