@@ -2,6 +2,12 @@
 
 Este arquivo serve como passagem de contexto para continuar o trabalho em outra instalação do Codex CLI. Acrescente uma entrada datada a cada sessão, distinguindo o que foi confirmado do que ainda precisa ser verificado.
 
+## 2026-09-21 — Estado do pull request e documentação do banco
+
+- O usuário informou que já criou o pull request da branch `docs/atualizar-diagrama-banco-readme` para `main`. A integração à `main` ainda não foi confirmada nesta conversa.
+- `database.md` foi consultado como referência de contexto, mas não foi editado nesta sessão. A atualização do diagrama foi feita somente no `README.md`.
+- Próximo passo: acompanhar a revisão e a integração do PR. Uma eventual atualização de `database.md` deve ser tratada como trabalho separado após comparar seu conteúdo com o esquema Prisma atual.
+
 ## 2026-09-21 — Atualização do diagrama e registro das decisões
 
 ### Objetivo da sessão
