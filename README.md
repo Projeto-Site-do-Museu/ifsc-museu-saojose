@@ -244,12 +244,15 @@ O site foi desenhado para que todos as imagens e textos sejam dinamicos a partir
 ```
 
 ## Diagrama do Banco de Dados
+
+Fonte: `prisma/schema.prisma`. Campos marcados como "opcional" aceitam `NULL`.
+
 ```mermaid
 erDiagram
     Usuario {
         Int id PK "autoincrement()"
         String nome
-        String email "unique"
+        String email UK
         String senhaHash
         String role
         Boolean ativo
@@ -259,11 +262,11 @@ erDiagram
     Artigo {
         Int id PK "autoincrement()"
         String titulo
-        String resumo "optional"
-        String conteudo "longtext"
-        String imagem "optional"
-        String video "optional"
-        DateTime dataPublicacao "optional"
+        String resumo "opcional; Text"
+        String conteudo "LongText"
+        String imagem "opcional"
+        String video "opcional"
+        DateTime dataPublicacao "opcional"
         Boolean ativo
         DateTime createdAt
         DateTime updatedAt
@@ -272,23 +275,53 @@ erDiagram
     Acervo {
         Int id PK "autoincrement()"
         String titulo
-        String descricao "optional"
-        String imagem "optional"
-        String video "optional"
-        Int ordem "optional"
+        String descricao "opcional; Text"
+        String imagem "opcional"
+        Int ordem "opcional"
+        String colecao "opcional"
         Boolean ativo
         DateTime createdAt
         DateTime updatedAt
         Int usuarioId FK
+        String nome "opcional"
+        String numeroInventario "opcional"
+        String artista "opcional"
+        String tags "opcional"
+        String localizacao "opcional"
+        String periodo "opcional"
+        String dataProducao "opcional"
+        String material "opcional"
+        String tecnica "opcional"
+        String altura "opcional"
+        String largura "opcional"
+        String profundidade "opcional"
+        String cidadeOrigem "opcional"
+        String estadoOrigem "opcional"
+        String paisOrigem "opcional"
+        String contextoHistorico "opcional; Text"
+        String doador "opcional"
+        String formaAquisicao "opcional"
+        String estadoConservacao "opcional"
+        String imagemCapa "opcional"
+    }
+    AcervoMidia {
+        Int id PK "autoincrement()"
+        Int acervoId FK
+        String tipo
+        String url "Text"
+        String titulo "opcional"
+        Int ordem "opcional"
+        Boolean ativo
+        DateTime createdAt
     }
     VideoEspecial {
         Int id PK "autoincrement()"
         String titulo
-        String descricao "optional"
+        String descricao "opcional; Text"
         String tipo
         String video
-        String thumbnail "optional"
-        Int ordem "optional"
+        String thumbnail "opcional"
+        Int ordem "opcional"
         Boolean ativo
         DateTime createdAt
         DateTime updatedAt
@@ -298,15 +331,15 @@ erDiagram
         Int id PK "autoincrement()"
         Int contador
         DateTime dataRegistro
-        String ipOrigem "optional"
-        String userAgent "optional"
+        String ipOrigem "opcional"
+        String userAgent "opcional"
         DateTime createdAt
     }
     Configuracao {
         Int id PK "autoincrement()"
-        String chave "unique"
-        String valor
-        String descricao "optional"
+        String chave UK
+        String valor "Text"
+        String descricao "opcional"
         DateTime createdAt
         DateTime updatedAt
     }
@@ -314,7 +347,10 @@ erDiagram
     Usuario ||--o{ Artigo : "escreve"
     Usuario ||--o{ Acervo : "gerencia"
     Usuario ||--o{ VideoEspecial : "administra"
+    Acervo ||--o{ AcervoMidia : "possui"
 ```
+
+A exclusão de um `Acervo` remove suas `AcervoMidia` em cascata, conforme a relação definida no Prisma.
 
 ## Padrões e Boas Práticas
 - **Componentização**: Componentes reutilizáveis para facilitar a manutenção.
