@@ -2,6 +2,40 @@
 
 Este arquivo serve como passagem de contexto para continuar o trabalho em outra instalação do Codex CLI. Acrescente uma entrada datada a cada sessão, distinguindo o que foi confirmado do que ainda precisa ser verificado.
 
+## 2026-09-21 — Atualização do diagrama e registro das decisões
+
+### Objetivo da sessão
+
+Atualizar o diagrama do banco no README e manter as decisões desta conversa disponíveis para continuar o trabalho em outra instalação do Codex CLI.
+
+### O que foi analisado
+
+- O diagrama Mermaid do `README.md`, os modelos de `prisma/schema.prisma` e a migração que acrescentou campos ao `Acervo`.
+- A regra do repositório no GitHub: alterações na branch `main` devem passar por pull request; o envio direto foi recusado.
+- A necessidade de preservar não apenas mudanças feitas, mas também ideias, justificativas e dúvidas de arquitetura.
+
+### Alterações realizadas
+
+- O diagrama do `README.md` foi alinhado aos sete modelos atuais do Prisma: inclusão de `AcervoMidia` e dos campos de catalogação do `Acervo`, remoção do campo `video` inexistente em `Acervo`, atualização de chaves e relacionamentos. Foi registrada a exclusão em cascata das mídias vinculadas a um item do acervo.
+- O README foi publicado na branch `docs/atualizar-diagrama-banco-readme` no commit `ac8ef46`; a primeira versão deste log foi publicada na mesma branch no commit `aa51420`.
+- Nenhum código da aplicação ou esquema do banco foi alterado. A correspondência dos campos do diagrama com os modelos Prisma foi conferida; a renderização visual do Mermaid no GitHub não foi verificada nesta sessão.
+
+### Decisões tomadas
+
+- Usar este log, por enquanto, também para ideias de arquitetura: registrar a proposta, a razão, alternativas consideradas, decisão e questões abertas, sempre indicando se a ideia ainda não foi aprovada ou implementada.
+- Criar documentos próprios de arquitetura apenas quando uma decisão ou desenho ficar extenso o bastante para dificultar a leitura do diário; nesse caso, deixar aqui um resumo e um link para o documento.
+- Integrar a branch à `main` por pull request. Não há necessidade de instalar o GitHub CLI para abrir ou aprovar o PR pelo navegador.
+
+### Problemas pendentes
+
+- Confirmar se o pull request foi criado e se a branch foi integrada à `main`. Isso não foi verificado nesta sessão.
+- O histórico desta conversa no Codex CLI não é transferido automaticamente pelo Git; registrar aqui os pontos relevantes é necessário para recuperá-los em outro computador.
+
+### Próximos passos
+
+1. Abrir ou revisar o pull request da branch `docs/atualizar-diagrama-banco-readme` para `main` e cumprir as verificações e aprovações exigidas pelo GitHub.
+2. Em sessões futuras, adicionar entradas que preservem também o raciocínio das decisões e as ideias ainda em discussão.
+
 ## 2026-09-21 — Preparação da passagem de contexto
 
 ### Objetivo da sessão
