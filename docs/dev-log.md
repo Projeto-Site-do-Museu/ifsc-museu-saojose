@@ -1,0 +1,146 @@
+# Diário de desenvolvimento — Museu Histórico Gilberto Gerlach
+
+Este arquivo serve como passagem de contexto para continuar o trabalho em outra instalação do Codex CLI. Acrescente uma entrada datada a cada sessão, distinguindo o que foi confirmado do que ainda precisa ser verificado.
+
+## 2026-09-21 — Documentação reversa dos casos de uso
+
+### Objetivo da sessão
+
+Descrever os fluxos identificados no código em um documento acessível pelo README, preservando também os limites da análise.
+
+### O que foi analisado
+
+- Páginas públicas, componentes de administração, rotas de API, autenticação, contador de visitas e modelos Prisma.
+
+### Alterações realizadas
+
+- Criado `docs/casos-de-uso.md` com atores, dez casos de uso, evidências no código e pontos que ainda precisam de validação.
+- Adicionado ao `README.md` um link para essa documentação.
+- Nenhum código da aplicação foi modificado; os fluxos não foram executados com banco e navegador nesta sessão.
+
+### Decisões e achados
+
+- A documentação descreve o comportamento observado no código, sem apresentar todos os fluxos como requisitos aprovados ou validados em produção.
+- A página `/colecoes` ainda usa dados estáticos de exemplo; o filtro de coleção do acervo consulta a API e usa o campo `colecao` dos itens.
+- A rota `POST /api/auth/register` cria administradores sem `withAuth`; a política de cadastro e a exposição dessa rota merecem revisão antes de publicar o sistema.
+- O tour usa uma imagem panorâmica local e inclui marcadores com texto de exemplo.
+
+### Próximos passos
+
+1. Revisar os casos de uso com quem conhece as regras do museu e marcar diferenças entre comportamento atual e comportamento desejado.
+2. Validar os fluxos em um ambiente com MySQL e registrar resultados, sem assumir que a análise estática garante funcionamento.
+
+## 2026-09-21 — Banco usado pelo projeto
+
+- Confirmado pelo repositório: `prisma/schema.prisma` define `provider = "mysql"`, `docker-compose.yml` declara um serviço `mysql` com imagem `mysql:latest`, e `.env.example` indica uma URL `mysql://`.
+- O usuário informou que não está rodando o banco neste computador e considera fazê-lo. Portanto, não houve verificação de uma instância MySQL em execução nem de seus dados.
+- Próximo passo, caso decida executar localmente: escolher entre MySQL local ou Compose, ajustar as variáveis de ambiente e conferir o estado das migrações antes de importar ou alterar dados.
+
+## 2026-09-21 — Revisão de `database.md`
+
+### Objetivo da sessão
+
+Avaliar se `database.md` ainda serve como referência para entender e configurar o banco de dados.
+
+### O que foi analisado
+
+- Diagrama, lista de tabelas e comandos operacionais de `database.md`, comparados com `prisma/schema.prisma`, as migrações e `docker-compose.yml`.
+
+### Alterações realizadas
+
+- Registradas estas conclusões no log. `database.md`, Prisma, Compose e o código da aplicação não foram alterados.
+
+### Conclusões e decisões
+
+- O arquivo é útil como histórico do projeto, mas está desatualizado como guia de configuração. O esquema Prisma e as migrações são a referência atual para modelos e relações.
+- O diagrama e a lista de tabelas omitem `AcervoMidia`; o desenho do `Acervo` inclui `video`, que não existe no modelo atual, e omite campos de catalogação.
+- Os exemplos usam o host `db` e containers `museu_db_dev` / `projetomuseu_devcontainer-app-1`, enquanto o Compose versionado define o serviço `mysql` e o container `my_mysql_site`. Ele também exige a rede externa `museu_network`.
+- O exemplo de `.env` não inclui `MY_SECRET_PW` e `MY_DATABASE`, usados pelo Compose. O Compose não publica a porta do MySQL no host; portanto, seu exemplo com `localhost:3306` não descreve essa configuração sem ajustes adicionais.
+- Há senha de exemplo fixa para o banco e para o administrador. As instruções de reset e limpeza de volumes podem apagar dados e precisam ser revisadas antes de uso.
+- Antes de atualizar `database.md`, decidir se ele continuará como guia operacional. Caso continue, alinhar diagrama, nomes, variáveis, comandos de migração, backup e instruções de acesso ao Compose atual.
+
+### Problemas pendentes e próximos passos
+
+1. Confirmar o ambiente de banco realmente usado pela equipe e se há dados que precisam ser preservados.
+2. Atualizar `database.md` em uma tarefa própria, com comandos verificados no ambiente escolhido.
+
+## 2026-09-21 — Estado do pull request e documentação do banco
+
+- O usuário informou que já criou o pull request da branch `docs/atualizar-diagrama-banco-readme` para `main`. A integração à `main` ainda não foi confirmada nesta conversa.
+- `database.md` foi consultado como referência de contexto, mas não foi editado nesta sessão. A atualização do diagrama foi feita somente no `README.md`.
+- Próximo passo: acompanhar a revisão e a integração do PR. Uma eventual atualização de `database.md` deve ser tratada como trabalho separado após comparar seu conteúdo com o esquema Prisma atual.
+
+## 2026-09-21 — Atualização do diagrama e registro das decisões
+
+### Objetivo da sessão
+
+Atualizar o diagrama do banco no README e manter as decisões desta conversa disponíveis para continuar o trabalho em outra instalação do Codex CLI.
+
+### O que foi analisado
+
+- O diagrama Mermaid do `README.md`, os modelos de `prisma/schema.prisma` e a migração que acrescentou campos ao `Acervo`.
+- A regra do repositório no GitHub: alterações na branch `main` devem passar por pull request; o envio direto foi recusado.
+- A necessidade de preservar não apenas mudanças feitas, mas também ideias, justificativas e dúvidas de arquitetura.
+
+### Alterações realizadas
+
+- O diagrama do `README.md` foi alinhado aos sete modelos atuais do Prisma: inclusão de `AcervoMidia` e dos campos de catalogação do `Acervo`, remoção do campo `video` inexistente em `Acervo`, atualização de chaves e relacionamentos. Foi registrada a exclusão em cascata das mídias vinculadas a um item do acervo.
+- O README foi publicado na branch `docs/atualizar-diagrama-banco-readme` no commit `ac8ef46`; a primeira versão deste log foi publicada na mesma branch no commit `aa51420`.
+- Nenhum código da aplicação ou esquema do banco foi alterado. A correspondência dos campos do diagrama com os modelos Prisma foi conferida; a renderização visual do Mermaid no GitHub não foi verificada nesta sessão.
+
+### Decisões tomadas
+
+- Usar este log, por enquanto, também para ideias de arquitetura: registrar a proposta, a razão, alternativas consideradas, decisão e questões abertas, sempre indicando se a ideia ainda não foi aprovada ou implementada.
+- Criar documentos próprios de arquitetura apenas quando uma decisão ou desenho ficar extenso o bastante para dificultar a leitura do diário; nesse caso, deixar aqui um resumo e um link para o documento.
+- Integrar a branch à `main` por pull request. Não há necessidade de instalar o GitHub CLI para abrir ou aprovar o PR pelo navegador.
+
+### Problemas pendentes
+
+- Confirmar se o pull request foi criado e se a branch foi integrada à `main`. Isso não foi verificado nesta sessão.
+- O histórico desta conversa no Codex CLI não é transferido automaticamente pelo Git; registrar aqui os pontos relevantes é necessário para recuperá-los em outro computador.
+
+### Próximos passos
+
+1. Abrir ou revisar o pull request da branch `docs/atualizar-diagrama-banco-readme` para `main` e cumprir as verificações e aprovações exigidas pelo GitHub.
+2. Em sessões futuras, adicionar entradas que preservem também o raciocínio das decisões e as ideias ainda em discussão.
+
+## 2026-09-21 — Preparação da passagem de contexto
+
+### Objetivo da sessão
+
+Registrar o estado observável do repositório e os passos para retomar o projeto em outro computador, sem alterar o código da aplicação.
+
+### O que foi analisado
+
+- Repositório `Projeto-Site-do-Museu/ifsc-museu-saojose`, branch `main`. O commit atual é `59bd506` (25/06/2026); os commits recentes tratam de volumes de dados do MySQL e atualização de dependências.
+- Aplicação em Next.js 14, React 18, TypeScript e Tailwind CSS. Há páginas para apresentação do museu, acervo, coleções, artigos, vídeos, exposições, jogos e tour 3D em `src/app/`.
+- Há rotas de API para autenticação, acervo, artigos, vídeos, coleções, imagens, uploads e contador em `src/app/api/`, além de componentes de administração em `src/components/`. A existência desses arquivos não confirma que todos os fluxos funcionam.
+- O banco usa MySQL e Prisma; o esquema e as migrações estão em `prisma/`. Há scripts de configuração, importação e população em `scripts/`.
+- `package.json` define `dev`, `build`, `lint`, `setup-db` e `import-acervo`, entre outros comandos. Há `package-lock.json` e `yarn.lock`; convém escolher um gerenciador antes de instalar dependências.
+- `docker-compose.yml` usa `.env`, volumes `db_data` e `uploads_data`, diretório `dados_acervo/` e uma rede externa chamada `museu_network`. O `README.md` menciona `docker-compose.dev.yml`, mas esse arquivo não está presente nesta cópia.
+- `.env.example` contém valores de exemplo para a aplicação, mas não lista `MY_SECRET_PW` nem `MY_DATABASE`, usados pelo Compose. `README.md` e `database.md` contêm instruções que precisam ser confrontadas com a configuração atual.
+
+### Alterações realizadas
+
+- Criado e atualizado apenas `docs/dev-log.md`. Nenhum arquivo da aplicação foi modificado.
+- Não foram executados instalação de dependências, lint, build, migrações, testes funcionais ou comandos Docker nesta sessão.
+- No momento desta revisão, `docs/dev-log.md` é o único arquivo não rastreado; ainda não houve commit nem push.
+
+### Decisões tomadas
+
+- Usar este diário como ponto de partida para a próxima instalação do Codex CLI e registrar observações verificadas, decisões e pendências em entradas datadas.
+- Apresentar o documento para revisão antes de qualquer commit.
+
+### Problemas pendentes
+
+- Confirmar o funcionamento real das páginas, APIs, autenticação, administração, persistência e tour 3D.
+- Conciliar a documentação existente com o repositório: o `README.md` ainda apresenta a API e a interface de gestão como trabalho futuro; ele também cita um arquivo Compose de desenvolvimento ausente.
+- Verificar as variáveis e a rede necessárias ao Compose antes de subir os serviços. Não há validação do ambiente de banco nesta sessão.
+- Dados locais não acompanham automaticamente o clone: `.env`, `uploads/` e `dados_acervo/` são ignorados pelo Git; os volumes Docker e o banco também exigem transferência ou recriação separada se forem necessários no outro computador.
+
+### Próximos passos para retomar em outro computador
+
+1. Após revisão e publicação deste arquivo no repositório, clonar ou atualizar a branch `main` e ler esta entrada, `README.md`, `package.json`, `prisma/schema.prisma` e `docker-compose.yml`.
+2. Preparar as variáveis de ambiente a partir de `.env.example`, conferindo também as exigidas pelo Compose. Obter por canal seguro os segredos e, se necessário, os dados locais ou um backup do banco; não incluí-los no Git.
+3. Instalar as dependências com o gerenciador escolhido e executar `npm run lint` e `npm run build` para estabelecer uma linha de base. Registrar aqui os resultados e eventuais falhas.
+4. Configurar MySQL/Prisma e validar os fluxos principais em execução. Só então atualizar as instruções desatualizadas do `README.md` e de `database.md`.
